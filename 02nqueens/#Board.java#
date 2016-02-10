@@ -18,7 +18,7 @@ public class Board{
     public void addQueen(){
 	if (board[row][col]<0){
 	    if (row>=board.length-1){ // at end of column
-		//removeQueen(); // abort -- no room in this column
+		removeQueen(); // abort -- no room in this column
 	    }else{
 		row++;
 		addQueen(); // try to add queen in next slot
