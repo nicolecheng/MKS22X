@@ -3,11 +3,9 @@ public class Board{
     int[][]board;
     int row;
     int col;
-    int dim;
 
     public Board(int n){
-	dim = n;
-	int[][]board = new int[n][n];
+	board = new int[n][n];
 	for (int r = 0; r < n; r++){
 	    for (int c = 0; c < n; c++){
 		board[r][c] = 0;
@@ -25,9 +23,15 @@ public class Board{
 	    }
 	}else{
 	    board[row][col]=1; // yes plant the queen
-   	}
-	for (int i = col+1; i < board.length; i++){
-	    
+	    for (int i = col+1; i < board.length; i++){ // across
+		board[row][i] -= 1;
+		for (int m = row+1; m < board.length; m++){ // diagonally down
+		    board[m][i] -= 1;
+		}
+		for (int n = row-1; n >= 0; n--){ // diagonally up
+		    board[n][i] -= 1;
+		}
+	    }
 	}
     }
 
@@ -39,10 +43,10 @@ public class Board{
 
     public String toString(){
 	String s = "";
-	for (int r = 0; r < dim; r++){
-	    s += "[";
-	    for (int c = 0; c < dim; c++){
-		s += "n";//board[r][c] + "   ";
+	for (int r = 0; r < board.length; r++){
+	    s += "[   ";
+	    for (int c = 0; c < board.length; c++){
+		s += board[r][c] + "   ";
 	    }
 	    s += "]\n";
 	}
