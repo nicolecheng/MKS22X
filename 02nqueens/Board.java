@@ -6,6 +6,8 @@ public class Board{
 
     public Board(int n){
 	board = new int[n][n];
+	row = 0;
+	col = 0;
 	for (int r = 0; r < n; r++){
 	    for (int c = 0; c < n; c++){
 		board[r][c] = 0;
@@ -25,20 +27,33 @@ public class Board{
 	    board[row][col]=1; // yes plant the queen
 	    for (int i = col+1; i < board.length; i++){ // across
 		board[row][i] -= 1;
-		for (int m = row+1; m < board.length; m++){ // diagonally down
-		    board[m][i] -= 1;
-		}
-		for (int n = row-1; n >= 0; n--){ // diagonally up
-		    board[n][i] -= 1;
-		}
+	    }
+	    for (int m = 1; row+m < board.length && col+m <board.length; m++){ // diagonally down
+		board[row+m][col+m] -= 1;
+	    }
+	    for (int n = 1; row-n >= 0 && col + n < board.length; n--){ // diagonally up
+		board[row-n][col+n] -= 1;
 	    }
 	}
     }
 
     public void removeQueen(){
+	board[row][col]=-1; // queen cannot be here
+	for (int i = col+1; i < board.length; i++){ // across
+	    board[row][i] += 1;
+	}
+	for (int m = 1; row+m < board.length && col+m <board.length; m++){ // diagonally down
+	    board[row+m][col+m] += 1;
+	}
+	for (int n = 1; row-n >= 0 && col + n < board.length; n--){ // diagonally up
+	    board[row-n][col+n] += 1;
+	}
+    }
 
+    public void fill(){
+	for (int i = 0; i < board.length; i++){
 
-
+	}
     }
 
     public String toString(){
@@ -54,11 +69,11 @@ public class Board{
     }
     
     public static void main(String[]args){
-	Board b = new Board(2);
+	Board b = new Board(3);
+	b.addQueen();
 	System.out.println(b.toString());
-
-
-
+	b.removeQueen();
+	System.out.println(b.toString());	
     }
     
 }
