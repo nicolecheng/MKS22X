@@ -17,6 +17,7 @@ public class QueenBoard{
     public boolean solve(){
 	int i = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (i >= board.length){
 	    return true;
 	}else if(i < 0){
@@ -32,6 +33,18 @@ public class QueenBoard{
 	}
 	return false;
 	//	return false;
+=======
+	if (i >= board.length){return false;}
+	while(i<board.length){
+	    if (solveH(i)){
+		i++;
+	    }else{
+		i--;
+	    }
+	    return solveH(i);
+	}
+	return true;
+>>>>>>> parent of 87cc118... still not working ??
 =======
 	if (i >= board.length){return false;}
 	while(i<board.length){
@@ -135,6 +148,7 @@ public class QueenBoard{
     
     public static void main(String[]args){
 <<<<<<< HEAD
+<<<<<<< HEAD
 	QueenBoard b = new QueenBoard(2);
 	/*
 	  System.out.println(b);
@@ -149,6 +163,10 @@ public class QueenBoard{
 =======
 	TestBoard b = new TestBoard(4);
 	/*
+=======
+	TestBoard b = new TestBoard(4);
+	/*
+>>>>>>> parent of 87cc118... still not working ??
 	System.out.println(b);
 	b.addQueen(3,0);
 	b.addQueen(0,1);
@@ -158,6 +176,9 @@ public class QueenBoard{
 	System.out.println(b.solve());
 	System.out.println(b);
 
+<<<<<<< HEAD
+>>>>>>> parent of 87cc118... still not working ??
+=======
 >>>>>>> parent of 87cc118... still not working ??
     }
     
