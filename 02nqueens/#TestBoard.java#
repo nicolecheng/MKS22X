@@ -1,14 +1,9 @@
 
-public class QueenBoard{
+public class TestBoard{
     private int[][]board;
-    private int[]queens;
     
-    public QueenBoard(int size){
+    public TestBoard(int size){
 	board = new int[size][size];
-	queens = new int[size]; // keeps track of which row the queen is in in each row
-	for (int i = 0; i < board.length; i++){
-	    queens[i] = -1; // initialize to no queens
-	}
     }
 
     /**
@@ -31,31 +26,40 @@ public class QueenBoard{
 	    return solve();
 	    //return solveH(i+1);
 	}else{
-	    return true;
-	}//else{
-	 //   i--;
-	 //   return solve();
+	    i--;
+	    return solve();
 	    //return solveH(i-1);
-	//}
-	//	return false;
+	}
+	return false;
     }
 
     /**
      *Helper method fr solve. 
      */
+    int startRow = 0;
     private boolean solveH(int col){
 	System.out.println(toString());
-	for (int i = 0; i < board.length; i++){
-	    if (board[i][col]==0){
-		addQueen(i,col); // fill in empty slot
-		col++;
-		return solveH(col);
+	if(startRow<board.length){
+	    if (addQueen(startRow,col)){
+		startRow=0;
+		return true;
+	    }else{
+		startRow++;
+		solveH(col);
 	    }
+	}else{
+	    int hold=0;
+	    col--;
+	    for (int i = 0; i < board.length; i++){
+		if (board[i][col]==1){ // queen to remove
+		    hold = i;
+		}
+	    } 
+	    removeQueen(hold,col);
+	    startRow = hold+1;
+	    return solveH(col);
 	}
-	col--;
-	if(col<0){return false;}
-	removeQueen(queens[col],col); // remove previous
-	return solveH(col);
+	return false;
     }
 
     public void printSolution(){
@@ -83,7 +87,6 @@ public class QueenBoard{
 	    }
 	    offset++;
 	}
-	queens[col] = row;
 	return true;
     }
 
@@ -91,7 +94,7 @@ public class QueenBoard{
 	if(board[row][col] != 1){
 	    return false;
 	}
-	board[row][col] = -1; // 0;
+	board[row][col] = 0;
 	int offset = 1;
 	while(col+offset < board[row].length){
 	    board[row][col+offset]++;
@@ -103,7 +106,6 @@ public class QueenBoard{
 	    }
 	    offset++;
 	}
-	queens[col] = -1;
 	return true;
     }
 
@@ -119,7 +121,8 @@ public class QueenBoard{
     }
     
     public static void main(String[]args){
-	QueenBoard b = new QueenBoard(3);
+
+	TestBoard b = new TestBoard(2);
 	/*
 	  System.out.println(b);
 	  b.addQueen(3,0);
@@ -127,9 +130,10 @@ public class QueenBoard{
 	  System.out.println(b);
 	  b.removeQueen(3,0);
 	  System.out.println(b);*/
-	//System.out.println(b.solve());
+
+	System.out.println(b.solve());
 	System.out.println(b);
-	b.solve();
+
     }
     
     
