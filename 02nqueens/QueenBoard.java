@@ -21,6 +21,8 @@ public class QueenBoard{
      *all n queens.
      */
     public boolean solve(){
+	return solveH(0);
+	/*
 	int i = 0;
 	if (i >= board.length){
 	    return true;
@@ -32,12 +34,8 @@ public class QueenBoard{
 	    //return solveH(i+1);
 	}else{
 	    return true;
-	}//else{
-	 //   i--;
-	 //   return solve();
-	    //return solveH(i-1);
-	//}
-	//	return false;
+	}
+	return false;*/
     }
 
     /**
@@ -49,7 +47,7 @@ public class QueenBoard{
 	    if (board[i][col]==0){
 		addQueen(i,col); // fill in empty slot
 		col++;
-		return solveH(col);
+		return solveH(col); // *****COL INCREASES FOREVER
 	    }
 	}
 	col--;
@@ -119,7 +117,7 @@ public class QueenBoard{
     }
     
     public static void main(String[]args){
-	QueenBoard b = new QueenBoard(3);
+	QueenBoard b = new QueenBoard(4);
 	/*
 	  System.out.println(b);
 	  b.addQueen(3,0);
