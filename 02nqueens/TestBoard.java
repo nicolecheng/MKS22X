@@ -1,24 +1,18 @@
-public class Board{
+public class TestBoard{
 
     int[][]board;
     int row;
     int col;
 
-    public Board(int n){
+    public TestBoard(int n){
 	board = new int[n][n];
-	row = 0;
-	col = 0;
-	for (int r = 0; r < n; r++){
-	    for (int c = 0; c < n; c++){
-		board[r][c] = 0;
-	    }
-	}
     }
 
-    public void addQueen(){
+    public boolean addQueen(){
 	if (board[row][col]<0){
 	    if (row>=board.length-1){ // at end of column
 		//removeQueen(); // abort -- no room in this column
+		return false;
 	    }else{
 		row++;
 		addQueen(); // try to add queen in next slot
@@ -34,32 +28,44 @@ public class Board{
 	    for (int n = 1; row-n >= 0 && col + n < board.length; n++){ // diagonally up
 		board[row-n][col+n] -= 1;
 	    }
+	    return true;
 	}
+	return true;
     }
 
-    public void removeQueen(){
+    public boolean removeQueen(){
 	col--;
 	for (int i = 0; i < board.length; i++){
 	    if (board[i][col]==1){ // queen to remove
 		row = i;
 	    }
 	}
-	board[row][col]=-1; // queen cannot be here
-	for (int i = col+1; i < board.length; i++){ // across
-	    board[row][i] += 1;
-	}
-	for (int m = 1; row+m < board.length && col+m <board.length; m++){ // diagonally down
-	    board[row+m][col+m] += 1;
-	}
-	for (int n = 1; row-n >= 0 && col + n < board.length; n++){ // diagonally up
-	    board[row-n][col+n] += 1;
+	if (board[row][col]!=1){return false;
+	}else{
+	    board[row][col]=3;//-1; // queen cannot be here
+	    for (int i = col+1; i < board.length; i++){ // across
+		board[row][i] += 1;
+	    }
+	    for (int m = 1; row+m < board.length && col+m <board.length; m++){ // diagonally down
+		board[row+m][col+m] += 1;
+	    }
+	    for (int n = 1; row-n >= 0 && col + n < board.length; n++){ // diagonally up
+		board[row-n][col+n] += 1;
+	    }
+	    return true;
 	}
     }
 
-    public void fill(){
-	for (int i = 0; i < board.length; i++){
-	    col = i;
-	    addQueen();
+    public boolean fill(){
+	for (col = 0; col < board.length; col++){
+	    if (openSlot()){
+		System.out.println(toString());
+		if(!addQueen()){
+		    removeQueen();
+		}
+	    }else{
+		return false;
+	    }
 	}
     }
 
@@ -76,12 +82,12 @@ public class Board{
     }
     
     public static void main(String[]args){
-	Board b = new Board(3);
+	TestBoard b = new TestBoard(3);
 	//b.addQueen();
 	//System.out.println(b.toString());
 	//b.removeQueen();
 	b.fill();
-	System.out.println(b.toString());	
+	System.out.println(b);	
     }
     
 }
