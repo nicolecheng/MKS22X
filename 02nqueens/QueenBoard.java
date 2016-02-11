@@ -1,8 +1,8 @@
-public class TestBoard{
+public class QueenBoard{
     private int[][]board;
     private int[]queens;
     
-    public TestBoard(int size){
+    public QueenBoard(int size){
 	board = new int[size][size];
 	queens = new int[size]; // keeps track of which row the queen is in in each row
 	for (int i = 0; i < board.length; i++){
@@ -31,9 +31,10 @@ public class TestBoard{
 	    //return solveH(i+1);
 	}else{
 	    i--;
-	    return solve();
-	    //return solveH(i-1);
+	    //return solve();
+	    return solveH(i-1);
 	}
+	return false;
 	//	return false;
     }
 
@@ -116,7 +117,7 @@ public class TestBoard{
     }
     
     public static void main(String[]args){
-	TestBoard b = new TestBoard(2);
+	QueenBoard b = new QueenBoard(2);
 	/*
 	  System.out.println(b);
 	  b.addQueen(3,0);
@@ -124,8 +125,8 @@ public class TestBoard{
 	  System.out.println(b);
 	  b.removeQueen(3,0);
 	  System.out.println(b);*/
-	//System.out.println(b.solve());
-	//System.out.println(b);
+	System.out.println(b.solve());
+	System.out.println(b);
 	b.solve();
     }
     
