@@ -1,8 +1,13 @@
 public class TestBoard{
     private int[][]board;
+    private int[]queens;
     
     public TestBoard(int size){
 	board = new int[size][size];
+	queens = new int[size]; // keeps track of which row the queen is in in each row
+	for (int i = 0; i < board.length; i++){
+	    queens[i] = -1; // initialize to no queens
+	}
     }
 
     /**
@@ -17,47 +22,39 @@ public class TestBoard{
     public boolean solve(){
 	int i = 0;
 	if (i >= board.length){
+	    return true;
+	}else if(i < 0){
 	    return false;
-	}
-	while(i<board.length){
-	    if (solveH(i)){
-		i++;
-	    }else{
-		i--;
-	    }
-	    return solveH(i);
-	}
-	return true;
+	}else if (solveH(i)){
+	    i++;
+	    return solve();
+	    //return solveH(i+1);
+	}else{
+	    return true;
+	}//else{
+	 //   i--;
+	 //   return solve();
+	    //return solveH(i-1);
+	//}
+	//	return false;
     }
 
     /**
      *Helper method fr solve. 
      */
-   int startRow = 0;
     private boolean solveH(int col){
 	System.out.println(toString());
-       int hold=0;
-          //col--;
-          	for (int i = 0; i < board.length; i++){
-	    if (board[i][col]==1){ // queen to remove
-		hold = i;
-          startRow=hold+1;
-          removeQueen(i,col);
+	for (int i = 0; i < board.length; i++){
+	    if (board[i][col]==0){
+		addQueen(i,col); // fill in empty slot
+		col++;
+		return solveH(col);
 	    }
-	} 
-       if(startRow<board.length){
-          if (addQueen(startRow,col)){
-             startRow=0;
-             return true;
-          }else{
-             startRow++;
-             solveH(col);
-          }
-       }else{
-          col--;
-          return solveH(col);
-       }
-	return solveH(col-1);//false;
+	}
+	col--;
+	if(col<0){return false;}
+	removeQueen(queens[col],col); // remove previous
+	return solveH(col);
     }
 
     public void printSolution(){
@@ -85,6 +82,7 @@ public class TestBoard{
 	    }
 	    offset++;
 	}
+	queens[col] = row;
 	return true;
     }
 
@@ -92,7 +90,7 @@ public class TestBoard{
 	if(board[row][col] != 1){
 	    return false;
 	}
-	board[row][col] = 0;
+	board[row][col] = -1; // 0;
 	int offset = 1;
 	while(col+offset < board[row].length){
 	    board[row][col+offset]++;
@@ -104,6 +102,7 @@ public class TestBoard{
 	    }
 	    offset++;
 	}
+	queens[col] = -1;
 	return true;
     }
 
@@ -119,17 +118,17 @@ public class TestBoard{
     }
     
     public static void main(String[]args){
-	TestBoard b = new TestBoard(3);
+	TestBoard b = new TestBoard(2);
 	/*
-	System.out.println(b);
-	b.addQueen(3,0);
-	b.addQueen(0,1);
-	System.out.println(b);
-	b.removeQueen(3,0);
-	System.out.println(b);*/
+	  System.out.println(b);
+	  b.addQueen(3,0);
+	  b.addQueen(0,1);
+	  System.out.println(b);
+	  b.removeQueen(3,0);
+	  System.out.println(b);*/
 	//System.out.println(b.solve());
 	System.out.println(b);
-b.solve();
+	b.solve();
     }
     
     
