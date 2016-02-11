@@ -33,6 +33,7 @@ public class QueenBoard{
      */
    int startRow = 0;
     private boolean solveH(int col){
+	System.out.println(toString());
        if(startRow<board.length){
           if (addQueen(startRow,col)){
              startRow=0;
@@ -123,8 +124,8 @@ public class QueenBoard{
 	System.out.println(b);
 	b.removeQueen(3,0);
 	System.out.println(b);*/
-	b.solve();
-	//System.out.println(b);
+	System.out.println(b.solve());
+	System.out.println(b);
 
     }
     

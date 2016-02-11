@@ -1,93 +1,133 @@
 public class TestBoard{
-
-    int[][]board;
-    int row;
-    int col;
-
-    public TestBoard(int n){
-	board = new int[n][n];
+    private int[][]board;
+    
+    public TestBoard(int size){
+	board = new int[size][size];
     }
 
-    public boolean addQueen(){
-	if (board[row][col]<0){
-	    if (row>=board.length-1){ // at end of column
-		//removeQueen(); // abort -- no room in this column
-		return false;
+    /**
+     *precondition: board is filled with 0's only.
+     *postcondition: 
+     *-return false, and board is still filled
+     *with 0's for a board that cannot be solved.
+     *-return true, and board is filled with the 
+     *final configuration of the board after adding 
+     *all n queens.
+     */
+    public boolean solve(){
+	int i = 0;
+	if (i >= board.length){return false;}
+	while(i<board.length){
+	    if (solveH(i)){
+		i++;
 	    }else{
-		row++;
-		addQueen(); // try to add queen in next slot
+		i--;
 	    }
-	}else{
-	    board[row][col]=1; // yes plant the queen
-	    for (int i = col+1; i < board.length; i++){ // across
-		board[row][i] -= 1;
-	    }
-	    for (int m = 1; row+m < board.length && col+m <board.length; m++){ // diagonally down
-		board[row+m][col+m] -= 1;
-	    }
-	    for (int n = 1; row-n >= 0 && col + n < board.length; n++){ // diagonally up
-		board[row-n][col+n] -= 1;
-	    }
-	    return true;
+	    return solveH(i);
 	}
 	return true;
     }
 
-    public boolean removeQueen(){
-	col--;
-	for (int i = 0; i < board.length; i++){
+    /**
+     *Helper method fr solve. 
+     */
+   int startRow = 0;
+    private boolean solveH(int col){
+	System.out.println(toString());
+       if(startRow<board.length){
+          if (addQueen(startRow,col)){
+             startRow=0;
+             return true;
+          }else{
+             startRow++;
+             solveH(col);
+          }
+       }else{
+          int hold=0;
+          col--;
+          	for (int i = 0; i < board.length; i++){
 	    if (board[i][col]==1){ // queen to remove
-		row = i;
+		hold = i;
 	    }
-	}
-	if (board[row][col]!=1){return false;
-	}else{
-	    board[row][col]=3;//-1; // queen cannot be here
-	    for (int i = col+1; i < board.length; i++){ // across
-		board[row][i] += 1;
-	    }
-	    for (int m = 1; row+m < board.length && col+m <board.length; m++){ // diagonally down
-		board[row+m][col+m] += 1;
-	    }
-	    for (int n = 1; row-n >= 0 && col + n < board.length; n++){ // diagonally up
-		board[row-n][col+n] += 1;
-	    }
-	    return true;
-	}
+	} 
+          removeQueen(hold,col);
+          startRow = hold+1;
+          return solveH(col);
+       }
+	return false;
     }
 
-    public boolean fill(){
-	for (col = 0; col < board.length; col++){
-	    if (openSlot()){
-		System.out.println(toString());
-		if(!addQueen()){
-		    removeQueen();
-		}
-	    }else{
-		return false;
-	    }
-	}
+    public void printSolution(){
+	/**Print the board like toString, except
+	   all negative numbers, and 0's are replaced with '_'
+	   and all 1's are replaced with 'Q'
+	*/
     }
 
-    public String toString(){
-	String s = "";
-	for (int r = 0; r < board.length; r++){
-	    s += "[   ";
-	    for (int c = 0; c < board.length; c++){
-		s += board[r][c] + "   ";
-	    }
-	    s += "]\n";
+    /********Do Not Edit Below This Line**********************************/
+
+    private boolean addQueen(int row, int col){
+	if(board[row][col] != 0){
+	    return false;
 	}
-	return s;
+	board[row][col] = 1;
+	int offset = 1;
+	while(col+offset < board[row].length){
+	    board[row][col+offset]--;
+	    if(row - offset >= 0){
+		board[row-offset][col+offset]--;
+	    }
+	    if(row + offset < board.length){
+		board[row+offset][col+offset]--;
+	    }
+	    offset++;
+	}
+	return true;
+    }
+
+    private boolean removeQueen(int row, int col){
+	if(board[row][col] != 1){
+	    return false;
+	}
+	board[row][col] = 0;
+	int offset = 1;
+	while(col+offset < board[row].length){
+	    board[row][col+offset]++;
+	    if(row - offset >= 0){
+		board[row-offset][col+offset]++;
+	    }
+	    if(row + offset < board.length){
+		board[row+offset][col+offset]++;
+	    }
+	    offset++;
+	}
+	return true;
+    }
+
+    public String  toString(){
+	String ans = "";
+	for(int r = 0; r < board.length; r++){
+	    for(int c = 0; c < board[0].length; c++){
+		ans+= board[r][c]+"\t";
+	    }
+	    ans+="\n";
+	}
+	return ans;
     }
     
     public static void main(String[]args){
-	TestBoard b = new TestBoard(3);
-	//b.addQueen();
-	//System.out.println(b.toString());
-	//b.removeQueen();
-	b.fill();
-	System.out.println(b);	
+	TestBoard b = new TestBoard(4);
+	/*
+	System.out.println(b);
+	b.addQueen(3,0);
+	b.addQueen(0,1);
+	System.out.println(b);
+	b.removeQueen(3,0);
+	System.out.println(b);*/
+	System.out.println(b.solve());
+	System.out.println(b);
+
     }
+    
     
 }
