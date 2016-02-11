@@ -60,6 +60,7 @@ public class Board{
 	for (int i = 0; i < board.length; i++){
 	    col = i;
 	    addQueen();
+	    
 	}
     }
 
