@@ -1,7 +1,7 @@
-public class QueenBoard{
+public class TestBoard{
     private int[][]board;
     
-    public QueenBoard(int size){
+    public TestBoard(int size){
 	board = new int[size][size];
     }
 
@@ -17,15 +17,15 @@ public class QueenBoard{
     public boolean solve(){
 	int i = 0;
 	if (i >= board.length){return false;}
-	//toString();
-	if (solveH(i)){
-	    i++;
-	    return solveH(i);
-	}else{
-	    i--;
+	while(i<board.length){
+	    if (solveH(i)){
+		i++;
+	    }else{
+		i--;
+	    }
 	    return solveH(i);
 	}
-	//return false;
+	return true;
     }
 
     /**
@@ -116,7 +116,7 @@ public class QueenBoard{
     }
     
     public static void main(String[]args){
-	QueenBoard b = new QueenBoard(4);
+	TestBoard b = new TestBoard(4);
 	/*
 	System.out.println(b);
 	b.addQueen(3,0);

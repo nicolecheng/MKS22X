@@ -16,7 +16,9 @@ public class TestBoard{
      */
     public boolean solve(){
 	int i = 0;
-	if (i >= board.length){return false;}
+	if (i >= board.length){
+	    return false;
+	}
 	while(i<board.length){
 	    if (solveH(i)){
 		i++;
@@ -34,6 +36,15 @@ public class TestBoard{
    int startRow = 0;
     private boolean solveH(int col){
 	System.out.println(toString());
+       int hold=0;
+          //col--;
+          	for (int i = 0; i < board.length; i++){
+	    if (board[i][col]==1){ // queen to remove
+		hold = i;
+          startRow=hold+1;
+          removeQueen(i,col);
+	    }
+	} 
        if(startRow<board.length){
           if (addQueen(startRow,col)){
              startRow=0;
@@ -43,18 +54,10 @@ public class TestBoard{
              solveH(col);
           }
        }else{
-          int hold=0;
           col--;
-          	for (int i = 0; i < board.length; i++){
-	    if (board[i][col]==1){ // queen to remove
-		hold = i;
-	    }
-	} 
-          removeQueen(hold,col);
-          startRow = hold+1;
           return solveH(col);
        }
-	return false;
+	return solveH(col-1);//false;
     }
 
     public void printSolution(){
@@ -116,7 +119,7 @@ public class TestBoard{
     }
     
     public static void main(String[]args){
-	TestBoard b = new TestBoard(4);
+	TestBoard b = new TestBoard(3);
 	/*
 	System.out.println(b);
 	b.addQueen(3,0);
@@ -124,9 +127,9 @@ public class TestBoard{
 	System.out.println(b);
 	b.removeQueen(3,0);
 	System.out.println(b);*/
-	System.out.println(b.solve());
+	//System.out.println(b.solve());
 	System.out.println(b);
-
+b.solve();
     }
     
     
