@@ -1,5 +1,5 @@
-
 public class QueenBoard{
+    private static boolean DEBUG = false;
     private int[][]board;
     private int[]queens;
     
@@ -8,6 +8,12 @@ public class QueenBoard{
 	queens = new int[size]; // keeps track of which row the queen is in in each row
 	for (int i = 0; i < board.length; i++){
 	    queens[i] = -1; // initialize to no queens
+	}
+    }
+
+    private void debug(String s){
+	if (DEBUG){
+	    System.out.println(s);
 	}
     }
 
@@ -22,38 +28,27 @@ public class QueenBoard{
      */
     public boolean solve(){
 	return solveH(0);
-	/*
-	int i = 0;
-	if (i >= board.length){
-	    return true;
-	}else if(i < 0){
-	    return false;
-	}else if (solveH(i)){
-	    i++;
-	    return solve();
-	    //return solveH(i+1);
-	}else{
-	    return true;
-	}
-	return false;*/
     }
 
     /**
      *Helper method fr solve. 
      */
     private boolean solveH(int col){
-	System.out.println(toString());
-	for (int i = 0; i < board.length; i++){
-	    if (board[i][col]==0){
-		addQueen(i,col); // fill in empty slot
-		col++;
-		return solveH(col); // *****COL INCREASES FOREVER
+	debug(toString());
+        if (col >= board.length) {
+	    return true;
+	}
+	for (int row = 0; row < board.length; row++) {
+	    if (board[row][col]==0){
+		addQueen(row,col);
+		if (solveH(col+1)) {
+		    return true;
+		}else{
+		    removeQueen(queens[col],col);
+		}
 	    }
 	}
-	col--;
-	if(col<0){return false;}
-	removeQueen(queens[col],col); // remove previous
-	return solveH(col);
+	return false;
     }
 
     public void printSolution(){
@@ -61,6 +56,20 @@ public class QueenBoard{
 	   all negative numbers, and 0's are replaced with '_'
 	   and all 1's are replaced with 'Q'
 	*/
+	String ans = "";
+	for(int r = 0; r < board.length; r++){
+	    for(int c = 0; c < board[0].length; c++){
+		if(board[r][c]==1){
+		    ans += "Q  ";
+		}else if(board[r][c]==0){
+		    ans += "_  ";
+		}else{
+		    ans += "   ";
+		}
+	    }
+	    ans += "\n";
+	}
+	System.out.println(ans);
     }
 
     /********Do Not Edit Below This Line**********************************/
@@ -105,11 +114,11 @@ public class QueenBoard{
 	return true;
     }
 
-    public String  toString(){
+    public String toString(){
 	String ans = "";
 	for(int r = 0; r < board.length; r++){
 	    for(int c = 0; c < board[0].length; c++){
-		ans+= board[r][c]+"\t";
+		ans+= board[r][c]+"  ";
 	    }
 	    ans+="\n";
 	}
@@ -125,9 +134,9 @@ public class QueenBoard{
 	  System.out.println(b);
 	  b.removeQueen(3,0);
 	  System.out.println(b);*/
-	//System.out.println(b.solve());
-	System.out.println(b);
+	//System.out.println(b);
 	b.solve();
+	b.printSolution();
     }
     
     
