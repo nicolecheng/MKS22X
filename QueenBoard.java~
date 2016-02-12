@@ -39,15 +39,17 @@ public class QueenBoard{
 	    return false;
 	}
 	board[row][col] = 1;
+	col++;
 	int offset = 1;
-	while(col+offset < board[row].length){
-	    board[row][col+offset]--;
+	while(col < board[row].length){
+	    board[row][col]--;
 	    if(row - offset >= 0){
-		board[row-offset][col+offset]--;
+		board[row-offset][col]--;
 	    }
 	    if(row + offset < board.length){
-		board[row+offset][col+offset]--;
+		board[row+offset][col]--;
 	    }
+	    col++;
 	    offset++;
 	}
 	return true;
@@ -58,15 +60,17 @@ public class QueenBoard{
 	    return false;
 	}
 	board[row][col] = 0;
+	col++;
 	int offset = 1;
-	while(col+offset < board[row].length){
-	    board[row][col+offset]++;
+	while(col < board[row].length){
+	    board[row][col]++;
 	    if(row - offset >= 0){
-		board[row-offset][col+offset]++;
+		board[row-offset][col]++;
 	    }
 	    if(row + offset < board.length){
-		board[row+offset][col+offset]++;
+		board[row+offset][col]++;
 	    }
+	    col++;
 	    offset++;
 	}
 	return true;
@@ -86,7 +90,7 @@ public class QueenBoard{
 
 
 
-    
+    /*
     public static void main(String[]args){
 	QueenBoard b = new QueenBoard(5);
         System.out.println(b);
@@ -96,5 +100,5 @@ public class QueenBoard{
 	b.removeQueen(3,0);
         System.out.println(b);
     }
-    
+    */
 }
