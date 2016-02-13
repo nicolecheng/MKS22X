@@ -16,6 +16,8 @@ public class KnightBoard{
 	
 	if(board[row][col]==1){
 	    return true;
+	}else if(n>board.length*board.length){
+	    return false;
 	}
 	
 	board[row][col]=n;
@@ -68,12 +70,13 @@ public class KnightBoard{
     }
 
     private boolean canMove(int row, int col){
-	if (row >= board.length || col >= board.length || row < 0 || col < 0){// || board[row][col]!=0){
+	if (row >= board.length || col >= board.length ||
+	    row < 0 || col < 0 || board[row][col]!=0){
 	    return false;
 	}else{
 	    //debug(""+board[row][col]);
-	    return (board[row][col]==0);
-	    //return true;
+	    //return (board[row][col]==0);
+	    return true;
 	}
     }
 
