@@ -68,12 +68,12 @@ public class KnightBoard{
     }
 
     private boolean canMove(int row, int col){
-	if (row >= board.length || col >= board.length || board[row][col]!=0){
+	if (row >= board.length || col >= board.length || row < 0 || col < 0){// || board[row][col]!=0){
 	    return false;
 	}else{
-	    debug((String)board[row][col]);
-	    //return (board[row][col]==0);
-	    return true;
+	    //debug(""+board[row][col]);
+	    return (board[row][col]==0);
+	    //return true;
 	}
     }
 
@@ -90,7 +90,7 @@ public class KnightBoard{
 	String ret = "";
 	for (int r = 0; r < board.length; r++){
 	    for(int c = 0; c < board.length; c++){
-		ret+=board[r][c];
+		ret+=board[r][c]+" ";
 	    }
 	    ret+="\n";
 	}
