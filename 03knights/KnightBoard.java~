@@ -1,77 +1,82 @@
 public class KnightBoard{
 
+    private boolean DEBUG = true;
+    
     private int[][]board;
-    //private int num; // which step are we up to?
-
+   
     public KnightBoard(int size){
 	board = new int[size][size];
-	//num = 1; // starting knight
     }
 
     public boolean solve(){
-
 	return solveH(0,0,1);
-
     }
 
     private boolean solveH(int row, int col, int n){
+	
 	if(board[row][col]==1){
 	    return true;
-	}
-	/*if(board[row][col]!=0){
+	}else if(n>board.length*board.length){
 	    return false;
-	    }*/
+	}
+	
 	board[row][col]=n;
-	printSolution();
-	System.out.println();
+	
+	debug(toString());
+	
         if(canMove(row+1,col+2)){	    
 	    if(solveH(row+1,col+2,n+1)){
 		return true;
 	    }
 	}
         if(canMove(row+1,col-2)){	    
-	    if(solveH(row+1,col+2,n+1)){
+	    if(solveH(row+1,col-2,n+1)){
 		return true;
 	    }
 	}
         if(canMove(row+2,col+1)){	    
-	    if(solveH(row+1,col+2,n+1)){
+	    if(solveH(row+2,col+1,n+1)){
 		return true;
 	    }
 	}
         if(canMove(row+2,col-1)){	    
-	    if(solveH(row+1,col+2,n+1)){
+	    if(solveH(row+2,col-1,n+1)){
 		return true;
 	    }
 	}
         if(canMove(row-1,col+2)){	    
-	    if(solveH(row+1,col+2,n+1)){
+	    if(solveH(row-1,col+2,n+1)){
 		return true;
 	    }
 	}
         if(canMove(row-1,col-2)){	    
-	    if(solveH(row+1,col+2,n+1)){
+	    if(solveH(row-1,col-2,n+1)){
 		return true;
 	    }
 	}
         if(canMove(row-2,col+1)){	    
-	    if(solveH(row+1,col+2,n+1)){
+	    if(solveH(row-2,col+1,n+1)){
 		return true;
 	    }
 	}
         if(canMove(row-2,col-1)){	    
-	    if(solveH(row+1,col+2,n+1)){ // CHANGE THESE
+	    if(solveH(row-2,col-1,n+1)){
 		return true;
 	    }
 	}
+	
 	return false;
+	
     }
 
     private boolean canMove(int row, int col){
-	if (row >= board.length || col >= board.length){
+	if (row >= board.length || col >= board.length ||
+	    row < 0 || col < 0 || board[row][col]!=0){
 	    return false;
 	}else{
-	    return (board[row][col]==0);
+	    //debug(""+board[row][col]);
+	    //return (board[row][col]==0);
+	    return true;
 	}
     }
 
@@ -81,6 +86,23 @@ public class KnightBoard{
 		System.out.print(board[r][c]);
 	    }
 	    System.out.println();
+	}
+    }
+
+    public String toString(){
+	String ret = "";
+	for (int r = 0; r < board.length; r++){
+	    for(int c = 0; c < board.length; c++){
+		ret+=board[r][c]+" ";
+	    }
+	    ret+="\n";
+	}
+	return ret;
+    }
+
+    public void debug(String s){
+	if (DEBUG){
+	    System.out.println(s);
 	}
     }
 

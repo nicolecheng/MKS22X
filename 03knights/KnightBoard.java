@@ -13,60 +13,93 @@ public class KnightBoard{
     }
 
     private boolean solveH(int row, int col, int n){
-	
+	if(!canMove(row,col)){return false;}
+	//if(row==0&&col==0&&n==board.length*board.length+1){
 	if(board[row][col]==1){
 	    return true;
-	}else if(n>board.length*board.length){
+	}
+	if(n>board.length*board.length){
 	    return false;
 	}
 	
 	board[row][col]=n;
 	
 	debug(toString());
+
+	if(solveH(row+1,col+2,n+1)){
+	    return true;
+	}
+	if(solveH(row+1,col-2,n+1)){
+	    return true;
+	}
+	if(solveH(row+2,col+1,n+1)){
+	    return true;
+	}
+	if(solveH(row+2,col-1,n+1)){
+	    return true;
+	}
+	if(solveH(row-1,col+2,n+1)){
+	    return true;
+	}
+	if(solveH(row-1,col-2,n+1)){
+	    return true;
+	}
+	if(solveH(row-2,col+1,n+1)){
+	    return true;
+	}
+	if(solveH(row-2,col-1,n+1)){
+	    return true;
+	}
+	goBack(row,col);
 	
-        if(canMove(row+1,col+2)){	    
-	    if(solveH(row+1,col+2,n+1)){
-		return true;
-	    }
-	}
-        if(canMove(row+1,col-2)){	    
-	    if(solveH(row+1,col-2,n+1)){
-		return true;
-	    }
-	}
-        if(canMove(row+2,col+1)){	    
-	    if(solveH(row+2,col+1,n+1)){
-		return true;
-	    }
-	}
-        if(canMove(row+2,col-1)){	    
-	    if(solveH(row+2,col-1,n+1)){
-		return true;
-	    }
-	}
-        if(canMove(row-1,col+2)){	    
-	    if(solveH(row-1,col+2,n+1)){
-		return true;
-	    }
-	}
-        if(canMove(row-1,col-2)){	    
-	    if(solveH(row-1,col-2,n+1)){
-		return true;
-	    }
-	}
-        if(canMove(row-2,col+1)){	    
-	    if(solveH(row-2,col+1,n+1)){
-		return true;
-	    }
-	}
-        if(canMove(row-2,col-1)){	    
-	    if(solveH(row-2,col-1,n+1)){
-		return true;
-	    }
-	}
-	
+	/*
+	  if(canMove(row+1,col+2)){	    
+	  if(solveH(row+1,col+2,n+1)){
+	  return true;
+	  }
+	  }
+	  if(canMove(row+1,col-2)){	    
+	  if(solveH(row+1,col-2,n+1)){
+	  return true;
+	  }
+	  }
+	  if(canMove(row+2,col+1)){	    
+	  if(solveH(row+2,col+1,n+1)){
+	  return true;
+	  }
+	  }
+	  if(canMove(row+2,col-1)){	    
+	  if(solveH(row+2,col-1,n+1)){
+	  return true;
+	  }
+	  }
+	  if(canMove(row-1,col+2)){	    
+	  if(solveH(row-1,col+2,n+1)){
+	  return true;
+	  }
+	  }
+	  if(canMove(row-1,col-2)){	    
+	  if(solveH(row-1,col-2,n+1)){
+	  return true;
+	  }
+	  }
+	  if(canMove(row-2,col+1)){	    
+	  if(solveH(row-2,col+1,n+1)){
+	  return true;
+	  }
+	  }
+	  if(canMove(row-2,col-1)){	    
+	  if(solveH(row-2,col-1,n+1)){
+	  return true;
+	  }
+	  }
+	*/
 	return false;
 	
+    }
+
+    private void goBack(int row, int col){
+	board[row][col]=0;
     }
 
     private boolean canMove(int row, int col){
@@ -107,7 +140,7 @@ public class KnightBoard{
     }
 
     public static void main(String[]args){
-	KnightBoard k = new KnightBoard(6);
+	KnightBoard k = new KnightBoard(3);
 	k.solve();
     }
 
