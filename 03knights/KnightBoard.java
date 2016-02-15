@@ -15,7 +15,7 @@ public class KnightBoard{
     private boolean solveH(int row, int col, int n){
 	if(!canMove(row,col)){return false;}
 	//if(row==0&&col==0&&n==board.length*board.length+1){
-	if(board[row][col]==1){
+	if(n == board.length*board.length){//board[row][col]==1){
 	    return true;
 	}
 	if(n>board.length*board.length){
@@ -50,8 +50,10 @@ public class KnightBoard{
 	if(solveH(row-2,col-1,n+1)){
 	    return true;
 	}
-	goBack(row,col);
-	
+	//goBack(row,col);
+	board[row][col]=0;
+	n--;
+	return false;
 	/*
 	  if(canMove(row+1,col+2)){	    
 	  if(solveH(row+1,col+2,n+1)){
@@ -93,9 +95,9 @@ public class KnightBoard{
 	  return true;
 	  }
 	  }
-	*/
-	return false;
 	
+	return false;
+	*/
     }
 
     private void goBack(int row, int col){
@@ -140,8 +142,9 @@ public class KnightBoard{
     }
 
     public static void main(String[]args){
-	KnightBoard k = new KnightBoard(3);
+	KnightBoard k = new KnightBoard(6);
 	k.solve();
+	System.out.println(k);
     }
 
 }
