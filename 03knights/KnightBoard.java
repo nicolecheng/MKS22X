@@ -1,6 +1,6 @@
 public class KnightBoard{
 
-    private boolean DEBUG = true;
+    private boolean DEBUG = false;
     
     private int[][]board;
    
@@ -13,95 +13,50 @@ public class KnightBoard{
     }
 
     private boolean solveH(int row, int col, int n){
-	if(!canMove(row,col)){return false;}
+	//if(!canMove(row,col)){return false;}
 	//if(row==0&&col==0&&n==board.length*board.length+1){
-	if(n == board.length*board.length){//board[row][col]==1){
-	    return true;
-	}
-	if(n>board.length*board.length){
+	if (board[row][col]!=0){
 	    return false;
 	}
 	
 	board[row][col]=n;
 	
+	if(n == board.length*board.length){//board[row][col]==1){
+	    return true;
+	}
+	//if(n>board.length*board.length){
+	//    return false;
+	//}
+	
 	debug(toString());
 
-	if(solveH(row+1,col+2,n+1)){
+	if(canMove(row+1,col+2) && solveH(row+1,col+2,n+1)){
 	    return true;
 	}
-	if(solveH(row+1,col-2,n+1)){
+	if(canMove(row+1,col-2) && solveH(row+1,col-2,n+1)){
 	    return true;
 	}
-	if(solveH(row+2,col+1,n+1)){
+	if(canMove(row+2,col+1) && solveH(row+2,col+1,n+1)){
 	    return true;
 	}
-	if(solveH(row+2,col-1,n+1)){
+	if(canMove(row+2,col-1) && solveH(row+2,col-1,n+1)){
 	    return true;
 	}
-	if(solveH(row-1,col+2,n+1)){
+	if(canMove(row-1,col+2) && solveH(row-1,col+2,n+1)){
 	    return true;
 	}
-	if(solveH(row-1,col-2,n+1)){
+	if(canMove(row-1,col-2) && solveH(row-1,col-2,n+1)){
 	    return true;
 	}
-	if(solveH(row-2,col+1,n+1)){
+	if(canMove(row-2,col+1) && solveH(row-2,col+1,n+1)){
 	    return true;
 	}
-	if(solveH(row-2,col-1,n+1)){
+	if(canMove(row-2,col-1) && solveH(row-2,col-1,n+1)){
 	    return true;
 	}
-	//goBack(row,col);
 	board[row][col]=0;
 	n--;
 	return false;
-	/*
-	  if(canMove(row+1,col+2)){	    
-	  if(solveH(row+1,col+2,n+1)){
-	  return true;
-	  }
-	  }
-	  if(canMove(row+1,col-2)){	    
-	  if(solveH(row+1,col-2,n+1)){
-	  return true;
-	  }
-	  }
-	  if(canMove(row+2,col+1)){	    
-	  if(solveH(row+2,col+1,n+1)){
-	  return true;
-	  }
-	  }
-	  if(canMove(row+2,col-1)){	    
-	  if(solveH(row+2,col-1,n+1)){
-	  return true;
-	  }
-	  }
-	  if(canMove(row-1,col+2)){	    
-	  if(solveH(row-1,col+2,n+1)){
-	  return true;
-	  }
-	  }
-	  if(canMove(row-1,col-2)){	    
-	  if(solveH(row-1,col-2,n+1)){
-	  return true;
-	  }
-	  }
-	  if(canMove(row-2,col+1)){	    
-	  if(solveH(row-2,col+1,n+1)){
-	  return true;
-	  }
-	  }
-	  if(canMove(row-2,col-1)){	    
-	  if(solveH(row-2,col-1,n+1)){
-	  return true;
-	  }
-	  }
-	
-	return false;
-	*/
-    }
-
-    private void goBack(int row, int col){
-	board[row][col]=0;
     }
 
     private boolean canMove(int row, int col){
