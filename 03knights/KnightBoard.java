@@ -26,14 +26,13 @@ public class KnightBoard{
 
     private boolean solveH(int row, int col, int n){
 	
-	board[row][col]=n;
+	board[row][col] = n; // plant knight
 	
-	if(n == board.length*board[0].length){
+	if(n == board.length*board[0].length){ // we've made it
 	    return true;
 	}
 
-	debug(toString()); // print every single step of tour
-
+	//debug(toString()); // print every single step of tour
 
 	// here are the eight possible moves
 	if(canMove(row+1,col+2) && solveH(row+1,col+2,n+1)){
@@ -81,15 +80,6 @@ public class KnightBoard{
 
     public void printSolution(){
 	System.out.println(toString());
-	/*
-	for (int r = 0; r < board.length; r++){
-	    for(int c = 0; c < board[0].length; c++){
-		System.out.print(board[r][c]+"  ");
-	    }
-	    System.out.println();
-	}
-	System.out.println();
-	*/
     }
 
     // bc i wanted a string return version to be available
