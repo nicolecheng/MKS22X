@@ -1,6 +1,14 @@
+/*
+  Any m × n board with m <= n, a closed knight's tour is always possible unless one or more of these three conditions are met:
+  m and n are both odd
+  m = 1, 2, or 4
+  m = 3 and n = 4, 6, or 8.
+  (Wikipedia)
+*/
+
 public class KnightBoard{
 
-    private boolean DEBUG = false;
+    private boolean DEBUG = false; // buggy buggy bug
     
     private int[][]board;
    
@@ -8,28 +16,26 @@ public class KnightBoard{
 	board = new int[size][size];
     }
 
+    public KnightBoard(int cols, int rows){ // cols and THEN rows? are you sure, mr k?
+	board = new int[rows][cols];
+    }
+
     public boolean solve(){
-	return solveH(0,0,1);
+	return solveH(0,0,1); // starting from spot 0,0 and planting knight #1
     }
 
     private boolean solveH(int row, int col, int n){
-	//if(!canMove(row,col)){return false;}
-	//if(row==0&&col==0&&n==board.length*board.length+1){
-	if (board[row][col]!=0){
-	    return false;
-	}
 	
 	board[row][col]=n;
 	
-	if(n == board.length*board.length){//board[row][col]==1){
+	if(n == board.length*board[0].length){
 	    return true;
 	}
-	//if(n>board.length*board.length){
-	//    return false;
-	//}
-	
-	debug(toString());
 
+	debug(toString()); // print every single step of tour
+
+
+	// here are the eight possible moves
 	if(canMove(row+1,col+2) && solveH(row+1,col+2,n+1)){
 	    return true;
 	}
@@ -54,40 +60,49 @@ public class KnightBoard{
 	if(canMove(row-2,col-1) && solveH(row-2,col-1,n+1)){
 	    return true;
 	}
+
+	// if all fails, set current to 0 & move back a knight
+	// return false and abort current mission
 	board[row][col]=0;
 	n--;
 	return false;
+	
     }
 
     private boolean canMove(int row, int col){
-	if (row >= board.length || col >= board.length ||
+	// destination on board and vacant?
+	if (row >= board.length || col >= board[0].length ||
 	    row < 0 || col < 0 || board[row][col]!=0){
 	    return false;
 	}else{
-	    //debug(""+board[row][col]);
-	    //return (board[row][col]==0);
 	    return true;
 	}
     }
 
     public void printSolution(){
+	System.out.println(toString());
+	/*
 	for (int r = 0; r < board.length; r++){
-	    for(int c = 0; c < board.length; c++){
-		System.out.print(board[r][c]);
+	    for(int c = 0; c < board[0].length; c++){
+		System.out.print(board[r][c]+"  ");
 	    }
 	    System.out.println();
 	}
+	System.out.println();
+	*/
     }
 
+    // bc i wanted a string return version to be available
     public String toString(){
+	debug("DIMENSIONS: "+board.length+" x "+board[0].length);
 	String ret = "";
 	for (int r = 0; r < board.length; r++){
-	    for(int c = 0; c < board.length; c++){
-		ret+=board[r][c]+" ";
+	    for(int c = 0; c < board[0].length; c++){
+		ret+=board[r][c]+"  ";
 	    }
 	    ret+="\n";
 	}
-	return ret;
+	return ret+"\n";
     }
 
     public void debug(String s){
@@ -97,9 +112,21 @@ public class KnightBoard{
     }
 
     public static void main(String[]args){
-	KnightBoard k = new KnightBoard(6);
-	k.solve();
-	System.out.println(k);
+	
+	KnightBoard m = new KnightBoard(6,5);
+	m.solve();
+	m.printSolution();
+
+	/*
+	  KnightBoard b = new KnightBoard(5,6);
+	  b.solve();
+	  b.printSolution();
+
+	  KnightBoard k = new KnightBoard(6);
+	  k.solve();
+	  System.out.println(k);
+	*/
+       
     }
 
 }
