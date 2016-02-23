@@ -10,10 +10,13 @@ public class Bronze{
     int cols;
     int elevation;
     int num;
+    int[num]xcors;
+    int[num]ycors;
+    int[num]stomps;
 
     public Bronze(){
 	importFile();
-	grid = new int[rows][cols];
+	//grid = new int[rows][cols];
     }
 
     public boolean importFile(){
@@ -22,25 +25,32 @@ public class Bronze{
 	    Scanner s = new Scanner(f);
 	    debug("success");
 	    int arg = 0;
+	    int r = 0;
+	    int c = 0;
 	    while(s.hasNext()){
 		String ct = s.next();
 		int current = Integer.parseInt(ct);
 		//debug(ct);
 		if(arg==0){
-		    rows = current-1;
+		    rows = current;
 		}else if (arg==1){
-		    cols = current-1;
+		    cols = current;
+		    grid = new int[rows][cols];
 		}else if(arg==2){
 		    elevation = current;
 		}else if(arg==3){
 		    num = current;
-		}else{
+		}else if(arg<(rows+1)*(cols+1)+3){
 		    //grid = new int[rows][cols];
-		    for(int r = 0; r < rows; r++){
-			for(int c = 0; c < cols; c++){
-			    grid[r][c] = current;
-			}			
+		    grid[r][c] = current;
+		    c++;
+		    if(c==cols){
+			c=0;
+			r++;
 		    }
+		}else{
+		    //inputs
+		    //for(int i <
 		}
 		arg++;
 		//grid = int[
@@ -75,25 +85,30 @@ public class Bronze{
 	}
 	return v*72*72;
     }
+
+    public void printSolution(){
+	String sol = ""+volume()+",6,Cheng,Nicole";
+	System.out.println(sol);
+    }
     
 
-	public void debug(String s){
-	    if(DEBUG){
-		System.out.println(s);
-	    }
+    public void debug(String s){
+	if(DEBUG){
+	    System.out.println(s);
 	}
+    }
     
-	/*
-	  file input
-	  print output
-	*/
+    /*
+      file input
+      print output
+    */
 
-	public static void main(String[]args){
+    public static void main(String[]args){
 
-	    Bronze b = new Bronze();
-	    //b.importFile();
-	    b.printGrid();
-
-	}
+	Bronze b = new Bronze();
+	//b.importFile();
+	b.printGrid();
 
     }
+
+}
