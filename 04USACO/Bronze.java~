@@ -58,42 +58,28 @@ public class Bronze{
 	for(int r = 0; r < rows; r++){
 	    for(int c = 0; c < cols; c++){
 	        System.out.print(grid[r][c]);
-		System.out.print(" ");
 	    }
 	    System.out.println();
 	}
     }
 
-    public int volume(){
-	int v = 0;
-	for(int r = 0; r < rows; r++){
-	    for(int c = 0; c < cols; c++){
-		if(elevation-grid[r][c]<0){
-		    v += (-1 * elevation + grid[r][c]);
-		}
-	    }	    
+    public void debug(String s){
+	if(DEBUG){
+	    System.out.println(s);
 	}
-	return v*72*72;
     }
     
+    /*
+      file input
+      print output
+    */
 
-	public void debug(String s){
-	    if(DEBUG){
-		System.out.println(s);
-	    }
-	}
-    
-	/*
-	  file input
-	  print output
-	*/
+    public static void main(String[]args){
 
-	public static void main(String[]args){
-
-	    Bronze b = new Bronze();
-	    //b.importFile();
-	    b.printGrid();
-
-	}
+	Bronze b = new Bronze();
+	//b.importFile();
+	b.printGrid();
 
     }
+
+}
