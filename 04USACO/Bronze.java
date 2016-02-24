@@ -65,18 +65,17 @@ public class Bronze{
 		    c=0;
 		    r++;
 		}
-	    }else if(in.hasNext()){
-		//inputs commands
-		for(int i = 0; i < num; i++){
-		    xcors[i] = current;
-		    ct = in.next();
-		    ycors[i] = Integer.parseInt(ct);
-		    ct = in.next();
-		    stomps[i] = Integer.parseInt(ct);
+	    }else{
+		xcors[0] = current;
+		for (int i = 0; i < num; i++){
+		    if(i>0){ xcors[i] = Integer.parseInt(in.next());}
+		    ycors[i]=(Integer.parseInt(in.next()));
+		    //System.out.println(Integer.parseInt(in.next()));
+		    stomps[i]=(Integer.parseInt(in.next()));
 		}
 	    }
 	    arg++;
-	}
+	} 
 	debug(argh(xcors)+"\n"+argh(ycors)+"\n"+argh(stomps));
 	return true;
     }
