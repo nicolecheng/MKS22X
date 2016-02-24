@@ -28,8 +28,8 @@ public class Bronze{
 	    while(s.hasNextLine()){
 		scan += s.nextLine() + "\n";
 	    }
-	    System.out.println(scan);
-	    debug("scanner in success");
+	    debug(scan);
+	    //debug("scanner in -- success");
 	    return true;
 	}catch(Exception e){
 	    e.printStackTrace(System.out);
@@ -46,14 +46,11 @@ public class Bronze{
 	while(in.hasNext()){
 	    String ct = in.next();
 	    int current = Integer.parseInt(ct);
-	    //debug(ct);
 	    if(arg==0){
 		rows = current;
 	    }else if (arg==1){
 		cols = current;
 		grid = new int[rows][cols];
-		System.out.print(rows);
-		System.out.println(cols);
 	    }else if(arg==2){
 		elevation = current;
 	    }else if(arg==3){
@@ -62,23 +59,35 @@ public class Bronze{
 		ycors = new int[num];
 		stomps = new int[num];
 	    }else if(arg<(rows)*(cols)+4){
-		//grid = new int[rows][cols];
 		grid[r][c] = current;
 		c++;
 		if(c==cols){
 		    c=0;
 		    r++;
 		}
-	    }else{
-		//inputs
-		//for(int i <
+	    }else if(in.hasNext()){
+		//inputs commands
+		for(int i = 0; i < num; i++){
+		    xcors[i] = current;
+		    ct = in.next();
+		    ycors[i] = Integer.parseInt(ct);
+		    ct = in.next();
+		    stomps[i] = Integer.parseInt(ct);
+		}
 	    }
 	    arg++;
-	    //grid = int[
 	}
-	//while(s.hasNext()){
-		
+	debug(argh(xcors)+"\n"+argh(ycors)+"\n"+argh(stomps));
 	return true;
+    }
+
+	public String argh(int[]ar){ // just returns a 2d array in string form for debugging
+	String str = "[";
+	for (int i = 0; i < ar.length-1; i++){
+	    str+=ar[i]+",";
+	}
+	str+=ar[ar.length-1]+"]";
+	return str;
     }
 
     public void printGrid(){
