@@ -6,6 +6,7 @@ public class Maze{
     private char[][]maze;
     private int startx,starty;
     private boolean animate;
+    private int rows,cols;
 
     /*Constructor loads a maze text file.
       1. The file contains a rectangular ascii maze, made with the following 4 characters:
@@ -24,8 +25,7 @@ public class Maze{
 	try{
 	    File f = new File(filename);
 	    Scanner s = new Scanner(f);
-	    int rows=0;
-	    int cols;
+	    rows=0;
 	    String str="";
 	    while(s.hasNextLine()){
 		rows+=1;
@@ -34,16 +34,25 @@ public class Maze{
 	    }
 	    Scanner sc = new Scanner(str);
 	    cols=sc.next().length();
-	    maze = new int[rows][cols];
-	    for(int i = 0; i < str.length-1; i++){
-		maze[i/rows][i%rows]=str.substring(i, i+1);
-		    }
-	    //last char of str
-	    System.out.println(cols);
-	    System.out.println(str);
+	    maze = new char[rows][cols];
+	    for(int i = 0; i < str.length(); i++){
+		maze[i/cols][i%rows]=str.charAt(i);
+	    }
+	    printMaze();
 	}catch(Exception e){
 	    e.printStackTrace();
 	}
+    }
+
+    public String printMaze(){
+	String ret="";
+	for(int r = 0; r < rows; r++){
+	    for(int c = 0; c < cols; c++){
+		ret+=maze[r][c];
+	    }
+	    ret+="\n";
+	}
+	return ret;
     }
 
 
