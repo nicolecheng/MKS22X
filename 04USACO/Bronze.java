@@ -28,7 +28,7 @@ public class Bronze{
 	    while(s.hasNextLine()){
 		scan += s.nextLine() + "\n";
 	    }
-	    debug(scan);
+	    //debug(scan);
 	    //debug("scanner in -- success");
 	    return true;
 	}catch(Exception e){
@@ -70,17 +70,33 @@ public class Bronze{
 		for (int i = 0; i < num; i++){
 		    if(i>0){ xcors[i] = Integer.parseInt(in.next());}
 		    ycors[i]=(Integer.parseInt(in.next()));
-		    //System.out.println(Integer.parseInt(in.next()));
 		    stomps[i]=(Integer.parseInt(in.next()));
 		}
 	    }
 	    arg++;
 	} 
-	debug(argh(xcors)+"\n"+argh(ycors)+"\n"+argh(stomps));
+	//debug(argh(xcors)+"\n"+argh(ycors)+"\n"+argh(stomps));
 	return true;
     }
 
-	public String argh(int[]ar){ // just returns a 2d array in string form for debugging
+    public boolean lakeMaking(){
+	for (int i = 0; i < num; i++){
+	    if(xcors[i]>grid[0].length-2){
+		return false;
+	    }else{
+		return stompy(xcors[i],ycors[i],stomps[i]);
+	    }
+	}
+	return true;
+    }
+
+    public boolean stompy(int x, int y, int times){
+	
+	return true;
+
+    }
+
+    public String argh(int[]ar){ // just returns a 2d array in string form for debugging
 	String str = "[";
 	for (int i = 0; i < ar.length-1; i++){
 	    str+=ar[i]+",";
@@ -122,11 +138,6 @@ public class Bronze{
 	    System.out.println(s);
 	}
     }
-    
-    /*
-      file input
-      print output
-    */
 
     public static void main(String[]args){
 
