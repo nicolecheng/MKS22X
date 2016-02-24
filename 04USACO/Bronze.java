@@ -5,6 +5,7 @@ public class Bronze{
 
     private boolean DEBUG = true;
 
+    String scan="";
     int[][]grid;
     int rows;
     int cols;
@@ -16,6 +17,7 @@ public class Bronze{
 
     public Bronze(){
 	importFile();
+	loadGrid();
 	//grid = new int[rows][cols];
     }
 
@@ -23,48 +25,60 @@ public class Bronze{
 	File f = new File("makelake.in");
 	try{
 	    Scanner s = new Scanner(f);
-	    debug("success");
-	    int arg = 0;
-	    int r = 0;
-	    int c = 0;
-	    while(s.hasNext()){
-		String ct = s.next();
-		int current = Integer.parseInt(ct);
-		//debug(ct);
-		if(arg==0){
-		    rows = current;
-		}else if (arg==1){
-		    cols = current;
-		    grid = new int[rows][cols];
-		}else if(arg==2){
-		    elevation = current;
-		}else if(arg==3){
-		    num = current;
-		    xcors = new int[num];
-		    ycors = new int[num];
-		    stomps = new int[num];
-		}else if(arg<(rows+1)*(cols+1)+3){
-		    //grid = new int[rows][cols];
-		    grid[r][c] = current;
-		    c++;
-		    if(c==cols){
-			c=0;
-			r++;
-		    }
-		}else{
-		    //inputs
-		    //for(int i <
-		}
-		arg++;
-		//grid = int[
+	    while(s.hasNextLine()){
+		scan += s.nextLine() + "\n";
 	    }
-	    //while(s.hasNext()){
-		
+	    System.out.println(scan);
+	    debug("scanner in success");
 	    return true;
 	}catch(Exception e){
-	    System.out.println("something went wrong!");
+	    e.printStackTrace(System.out);
+	    System.out.println("scanner fail");
 	    return false;
 	}
+    }
+
+    public boolean loadGrid(){
+	Scanner in = new Scanner(scan);
+	int arg = 0;
+	int r = 0;
+	int c = 0;
+	while(in.hasNext()){
+	    String ct = in.next();
+	    int current = Integer.parseInt(ct);
+	    //debug(ct);
+	    if(arg==0){
+		rows = current;
+	    }else if (arg==1){
+		cols = current;
+		grid = new int[rows][cols];
+		System.out.print(rows);
+		System.out.println(cols);
+	    }else if(arg==2){
+		elevation = current;
+	    }else if(arg==3){
+		num = current;
+		xcors = new int[num];
+		ycors = new int[num];
+		stomps = new int[num];
+	    }else if(arg<(rows)*(cols)+4){
+		//grid = new int[rows][cols];
+		grid[r][c] = current;
+		c++;
+		if(c==cols){
+		    c=0;
+		    r++;
+		}
+	    }else{
+		//inputs
+		//for(int i <
+	    }
+	    arg++;
+	    //grid = int[
+	}
+	//while(s.hasNext()){
+		
+	return true;
     }
 
     public void printGrid(){
