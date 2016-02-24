@@ -29,13 +29,15 @@ public class Maze{
 	    String str="";
 	    while(s.hasNextLine()){
 		rows+=1;
-		System.out.println(rows);
+		//System.out.println(rows);
 		str+=s.nextLine()+"\n";
 	    }
 	    Scanner sc = new Scanner(str);
 	    cols=sc.next().length();
 	    maze = new char[rows][cols];
-	    for(int i = 0; i < str.length(); i++){
+	    //System.out.println(""+rows+" "+cols);
+	    for(int i = 0; i < rows*cols; i++){
+		//System.out.println();
 		maze[i/cols][i%rows]=str.charAt(i);
 	    }
 	    printMaze();
@@ -52,6 +54,7 @@ public class Maze{
 	    }
 	    ret+="\n";
 	}
+	System.out.println(ret);
 	return ret;
     }
 
