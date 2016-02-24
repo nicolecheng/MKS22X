@@ -102,17 +102,18 @@ public class Bronze{
     }
 
     public boolean stompy(int times){
-	
+	//debug(""+max(block));
 	return true;
 
     }
 
     public int max(int[]vals){ // return index of max in array
-	int m = vals[0];
+	int m = 0;
 	for (int i = 0; i <vals.length; i++){
-	    if(vals[i]>m){
+	    if(vals[i]>vals[m]){
 		m = i;
 	    }
+	    //debug(""+vals[i]);
 	}
 	return m;
     }
