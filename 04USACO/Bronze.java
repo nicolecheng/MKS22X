@@ -3,7 +3,7 @@ import java.io.*;
 
 public class Bronze{
 
-    private boolean DEBUG = true;
+    private boolean DEBUG = false;
 
     String scan="";
     int[][]grid;
@@ -77,7 +77,7 @@ public class Bronze{
 	    }
 	    arg++;
 	} 
-	//debug(argh(xcors)+"\n"+argh(ycors)+"\n"+argh(stomps));
+	debug(argh(xcors)+"\n"+argh(ycors)+"\n"+argh(stomps));
 	return true;
     }
 
@@ -95,25 +95,47 @@ public class Bronze{
 		//for(int m = 0; m < block.length; m ++){
 		//    System.out.println(block[m]);
 		//}
-		return stompy(stomps[i]);
+		stompy(stomps[i]);
+		loadIn(xcors[i],ycors[i]);
 	    }
 	}
 	return true;
     }
 
     public boolean stompy(int times){
+	//debug(""+times);
 	//debug(""+max(block));
+	int mx = max(block);
+	while(times > 0){
+	    mx = max(block);
+	    for(int i = 0; i < block.length; i++){
+		if(block[i]==mx){
+		    block[i]--;
+		}
+	    }
+	    times--;
+	}
+	//for(int m = 0; m < block.length; m ++){
+	//    System.out.println(block[m]);
+	//}
 	return true;
-
     }
 
-    public int max(int[]vals){ // return index of max in array
-	int m = 0;
-	for (int i = 0; i <vals.length; i++){
-	    if(vals[i]>vals[m]){
-		m = i;
+    public void loadIn(int x, int y){
+	for(int r = 0; r < 3; r++){
+	    for (int c = 0; c < 3; c++){
+		grid[x+r-1][y+c-1]=block[r*3+c];
 	    }
-	    //debug(""+vals[i]);
+	}
+    }
+
+    public int max(int[]vals){ // return max in array
+	int m = vals[0];
+	for (int i = 0; i <vals.length; i++){
+	    if(vals[i]>m){
+		m = vals[i];
+	    }
+	    debug(""+vals[i]);
 	}
 	return m;
     }
@@ -141,8 +163,8 @@ public class Bronze{
 	int v = 0;
 	for(int r = 0; r < rows; r++){
 	    for(int c = 0; c < cols; c++){
-		if(elevation-grid[r][c]<0){
-		    v += (-1 * elevation + grid[r][c]);
+		if(grid[r][c]-elevation<0){
+		    v += (elevation - grid[r][c]);
 		}
 	    }	    
 	}
@@ -165,8 +187,9 @@ public class Bronze{
 
 	Bronze b = new Bronze();
 	//b.importFile();
-	b.printGrid();
+	//b.printGrid();
 	b.lakeMaking();
+	b.printSolution();
 
     }
 
