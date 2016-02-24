@@ -7,6 +7,7 @@ public class Bronze{
 
     String scan="";
     int[][]grid;
+    int[]block;
     int rows;
     int cols;
     int elevation;
@@ -18,6 +19,7 @@ public class Bronze{
     public Bronze(){
 	importFile();
 	loadGrid();
+	block = new int[9]; // 3x3=9 block of cows
 	//grid = new int[rows][cols];
     }
 
@@ -81,19 +83,38 @@ public class Bronze{
 
     public boolean lakeMaking(){
 	for (int i = 0; i < num; i++){
-	    if(xcors[i]>grid[0].length-2){
+	    if(xcors[i]>grid[0].length-2){ // still on the field or nah?
 		return false;
 	    }else{
-		return stompy(xcors[i],ycors[i],stomps[i]);
+
+		for(int r = 0; r < 3; r++){
+		    for(int c = 0; c < 3; c++){
+			block[r*3+c] = grid[xcors[i]+r-1][ycors[i]+c-1];
+		    }
+		}
+		//for(int m = 0; m < block.length; m ++){
+		//    System.out.println(block[m]);
+		//}
+		return stompy(stomps[i]);
 	    }
 	}
 	return true;
     }
 
-    public boolean stompy(int x, int y, int times){
+    public boolean stompy(int times){
 	
 	return true;
 
+    }
+
+    public int max(int[]vals){ // return index of max in array
+	int m = vals[0];
+	for (int i = 0; i <vals.length; i++){
+	    if(vals[i]>m){
+		m = i;
+	    }
+	}
+	return m;
     }
 
     public String argh(int[]ar){ // just returns a 2d array in string form for debugging
@@ -144,6 +165,7 @@ public class Bronze{
 	Bronze b = new Bronze();
 	//b.importFile();
 	b.printGrid();
+	b.lakeMaking();
 
     }
 
