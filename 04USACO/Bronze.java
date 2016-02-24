@@ -9,10 +9,10 @@ public class Bronze{
     int rows;
     int cols;
     int elevation;
-    int num;
-    int[num]xcors;
-    int[num]ycors;
-    int[num]stomps;
+    int num; // num of inputs
+    int[]xcors; // coord for stompystomps
+    int[]ycors;
+    int[]stomps; // stomp by how much?
 
     public Bronze(){
 	importFile();
@@ -40,6 +40,9 @@ public class Bronze{
 		    elevation = current;
 		}else if(arg==3){
 		    num = current;
+		    xcors = new int[num];
+		    ycors = new int[num];
+		    stomps = new int[num];
 		}else if(arg<(rows+1)*(cols+1)+3){
 		    //grid = new int[rows][cols];
 		    grid[r][c] = current;
@@ -59,7 +62,7 @@ public class Bronze{
 		
 	    return true;
 	}catch(Exception e){
-	    System.out.println("invalid file");
+	    System.out.println("something went wrong!");
 	    return false;
 	}
     }
