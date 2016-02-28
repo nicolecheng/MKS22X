@@ -32,11 +32,10 @@ public class Maze{
 	    boolean temp = true;
 	    while(s.hasNextLine()){
 		rows+=1;
-		//debug(rows);
 		str+=s.nextLine();//+"\n";
 		if(temp){cols = str.length();temp=false;} // really bad way of getting the num of cols
 	    }
-	    debug(""+cols);
+	    //debug(""+cols);
 	    maze = new char[rows][cols];
 	    //debug(""+rows+" "+cols);
 	    //debug(""+str.length());
@@ -44,10 +43,14 @@ public class Maze{
 		//System.out.println();
 		//debug(""+maze[i/cols][i%cols]);
 		maze[i/cols][i%cols]=str.charAt(i);
+		if(maze[i/cols][i%cols]=="S".charAt(0)){
+		    startx = i/cols;
+		    starty = i%cols;
+		}
 		//debug(""+i+" "+i/cols+" "+i%cols);
 		//debug(""+maze[i/cols][i%(i/cols*cols)]);
 		}
-	    printMaze();
+	    //printMaze();
 	}catch(Exception e){
 	    e.printStackTrace();
 	}
@@ -102,10 +105,33 @@ public class Maze{
         }
 
         //COMPLETE SOLVE
+
+	if(canMove(x-1,y)&&solve(x-1,y)){
+	    return true;
+	}
+	if(canMove(x+1,y)&&solve(x+1,y)){
+	    return true;
+	}
+	if(canMove(x,y+1)&&solve(x,y+1)){
+	    return true;
+	}
+	if(canMove(x,y-1)&&solve(x,y-1)){
+	    return true;
+	}
+	maze[x][y]=".".charAt(0);
         return false; //so it compiles
     }
 
-
+    private boolean canMove(int x, int y){
+	if(x < rows && x > 0 && y < cols && y > 0 && maze[x][y]==" ".charAt(0)){
+	    maze[x][y]="@".charAt(0);
+	    return true;
+	}else{
+	    maze[x][y]=".".charAt(0);
+	    return false;
+	}
+    }
+	
     //FREE STUFF!!! *you should be aware of this*
 
     public void clearTerminal(){
