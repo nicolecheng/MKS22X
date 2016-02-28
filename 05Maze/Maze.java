@@ -10,7 +10,7 @@ public class Maze{
     private int rows=0;
     private int cols=0;
 
-    private boolean DEBUG = true;
+    private boolean DEBUG = false;
 
     /*Constructor loads a maze text file.
       1. The file contains a rectangular ascii maze, made with the following 4 characters:
@@ -125,7 +125,6 @@ public class Maze{
     private boolean canMove(int x, int y){
 	if(x > rows || x < 0 || y > cols || y < 0 ||
 	   maze[x][y]=='#' || maze[x][y]=='.' || maze[x][y]=='@'){
-	    //debug("INVALID");
 	    return false;
 	}else{
 	    debug(printMaze());
@@ -190,31 +189,11 @@ public class Maze{
 	}
     }
 
-
+    /*
     public static void main(String[]args){
 	Maze m = new Maze("data1.dat",false);//15 rows 25 cols
 	m.solve();
 	m.printMaze();
     }
+    */
 }
-
-/*
-
-#########################
-#S          #   # #     #
-# # ####### # # # ### ###
-# # #   #     # #       #
-# # # # ############# # #
-# #   # #             # #
-# ####### # ### ####### #
-#   #     # # # # #     #
-# # # ##### # # # #######
-# # # # # # # # #       #
-# ### # # # # ### ##### #
-# #     # #     #     # #
-# ### ### # ##### ### # #
-#       #         #   #E#
-#########################
-
-
-*/
