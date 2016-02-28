@@ -141,6 +141,9 @@ public class Maze{
         System.out.println(CLEAR_SCREEN);
     }
 
+    // is there something wrong with this??
+    // p sure that the coordinates are flipped
+
     public String toString(){
         int maxx = maze.length;
         int maxy = maze[0].length;
