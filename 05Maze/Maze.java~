@@ -8,6 +8,8 @@ public class Maze{
     private boolean animate;
     private int rows,cols;
 
+    private boolean DEBUG = true;
+
     /*Constructor loads a maze text file.
       1. The file contains a rectangular ascii maze, made with the following 4 characters:
       '#' - locations that cannot be moved onto
@@ -26,21 +28,32 @@ public class Maze{
 	    File f = new File(filename);
 	    Scanner s = new Scanner(f);
 	    rows=0;
+	    startx=-1;
+	    starty=-1;
 	    String str="";
+	    boolean temp = true;
 	    while(s.hasNextLine()){
 		rows+=1;
-		//System.out.println(rows);
-		str+=s.nextLine()+"\n";
+		str+=s.nextLine();//+"\n";
+		if(temp){cols = str.length();temp=false;} // really bad way of getting the num of cols
 	    }
-	    Scanner sc = new Scanner(str);
-	    cols=sc.next().length();
+	    //debug(""+cols);
 	    maze = new char[rows][cols];
-	    //System.out.println(""+rows+" "+cols);
-	    for(int i = 0; i < rows*cols; i++){
+	    //debug(""+rows+" "+cols);
+	    //debug(""+str.length());
+	    for(int i = 0; i < str.length(); i++){
 		//System.out.println();
-		maze[i/cols][i%rows]=str.charAt(i);
-	    }
-	    printMaze();
+		//debug(""+maze[i/cols][i%cols]);
+		maze[i/cols][i%cols]=str.charAt(i);
+		if(maze[i/cols][i%cols]=='S'){
+		    startx = i/cols;
+		    starty = i%cols;
+		}
+		//debug(""+i+" "+i/cols+" "+i%cols);
+		//debug(""+maze[i/cols][i%(i/cols*cols)]);
+		}
+	    //debug(""+startx+" "+starty);
+	    //printMaze();
 	}catch(Exception e){
 	    e.printStackTrace();
 	}
@@ -94,11 +107,58 @@ public class Maze{
             wait(20);
         }
 
+	if(maze[x][y]=='E'){ // hurrah!
+	    return true;
+	}
+
+	maze[x][y]='@'; // move person here
+	
         //COMPLETE SOLVE
-        return false; //so it compiles
+	debug(""+x+" "+y);
+	/*
+	if(canMove(x-1,y)&&solve(x-1,y)){
+	    return true;
+	}
+	if(canMove(x+1,y)&&solve(x+1,y)){
+	    return true;
+	}
+	if(canMove(x,y+1)&&solve(x,y+1)){
+	    return true;
+	}
+	if(canMove(x,y-1)&&solve(x,y-1)){
+	    return true;
+	}
+	*/
+
+	if(canMove(x,y)&&solve(x-1,y)){
+	    return true;
+	}
+	if(canMove(x,y)&&solve(x+1,y)){
+	    return true;
+	}
+	if(canMove(x,1)&&solve(x,y+1)){
+	    return true;
+	}
+	if(canMove(x,y)&&solve(x,y-1)){
+	    return true;
+	}
+
+	
+	maze[x][y]='.';
+        return false; 
     }
 
-
+    private boolean canMove(int x, int y){
+	if(x > rows || x < 0 || y > cols || y < 0 ||
+	   maze[x][y]=='#' || maze[x][y]=='.'){
+	    //debug("INVALID");
+	    return false;
+	}else{
+	    debug(printMaze());
+	    return true;
+	}
+    }
+	
     //FREE STUFF!!! *you should be aware of this*
 
     public void clearTerminal(){
@@ -147,14 +207,40 @@ public class Maze{
         catch (InterruptedException e) {
         }
     }
-
     
     //END FREE STUFF
 
-
-    public static void main(String[]args){
-	Maze m = new Maze("data1.dat",false);
+    private void debug(String s){
+	if (DEBUG){
+	    System.out.println(s);
+	}
     }
 
 
+    public static void main(String[]args){
+	Maze m = new Maze("data1.dat",false);//15 rows 25 cols
+	m.solve();
+	m.printMaze();
+    }
 }
+
+/*
+
+#########################
+#S          #   # #     #
+# # ####### # # # ### ###
+# # #   #     # #       #
+# # # # ############# # #
+# #   # #             # #
+# ####### # ### ####### #
+#   #     # # # # #     #
+# # # ##### # # # #######
+# # # # # # # # #       #
+# ### # # # # ### ##### #
+# #     # #     #     # #
+# ### ### # ##### ### # #
+#       #         #   #E#
+#########################
+
+
+*/
