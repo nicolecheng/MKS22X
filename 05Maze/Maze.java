@@ -32,8 +32,11 @@ public class Maze{
 	    boolean temp = true;
 	    while(s.hasNextLine()){
 		rows+=1;
-		str+=s.nextLine();//+"\n";
-		if(temp){cols = str.length();temp=false;} // really bad way of getting the num of cols
+		str+=s.nextLine();
+		if(temp){ // really bad way of getting the num of cols
+		    cols = str.length();
+		    temp=false;
+		}
 	    }
 	    maze = new char[rows][cols];
 	    for(int i = 0; i < str.length(); i++){
@@ -56,7 +59,7 @@ public class Maze{
 	    }
 	    ret+="\n";
 	}
-	System.out.println(ret);
+	debug(ret);
 	return ret;
     }
 
@@ -193,7 +196,7 @@ public class Maze{
     public static void main(String[]args){
 	Maze m = new Maze("data1.dat",false);//15 rows 25 cols
 	m.solve();
-	m.printMaze();
+	System.out.print(m.printMaze());
     }
     */
 }
