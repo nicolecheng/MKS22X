@@ -6,6 +6,7 @@ public class Maze{
     private char[][]maze;
     private int startx,starty;
     private boolean animate;
+    private int rows,cols;
 
     /*Constructor loads a maze text file.
       1. The file contains a rectangular ascii maze, made with the following 4 characters:
@@ -20,13 +21,48 @@ public class Maze{
     */
     public Maze(String filename, boolean ani){
         //COMPLETE CONSTRUCTOR
+	animate = ani;
+	try{
+	    File f = new File(filename);
+	    Scanner s = new Scanner(f);
+	    rows=0;
+	    String str="";
+	    while(s.hasNextLine()){
+		rows+=1;
+		//System.out.println(rows);
+		str+=s.nextLine()+"\n";
+	    }
+	    Scanner sc = new Scanner(str);
+	    cols=sc.next().length();
+	    maze = new char[rows][cols];
+	    //System.out.println(""+rows+" "+cols);
+	    for(int i = 0; i < rows*cols; i++){
+		//System.out.println();
+		maze[i/cols][i%rows]=str.charAt(i);
+	    }
+	    printMaze();
+	}catch(Exception e){
+	    e.printStackTrace();
+	}
+    }
+
+    public String printMaze(){
+	String ret="";
+	for(int r = 0; r < rows; r++){
+	    for(int c = 0; c < cols; c++){
+		ret+=maze[r][c];
+	    }
+	    ret+="\n";
+	}
+	System.out.println(ret);
+	return ret;
     }
 
 
     /*Main Solve Function
 
       Things to note:
-       When no S is contained in maze, print an error and return false.
+      When no S is contained in maze, print an error and return false.
     */
     public boolean solve(){
         if(startx < 0){
@@ -45,11 +81,11 @@ public class Maze{
       The S is replaced with '@' but the 'E' is not.
 
       Postcondition:
-        Returns true when the maze is solved,
-        Returns false when the maze has no solution.
+      Returns true when the maze is solved,
+      Returns false when the maze has no solution.
 
-        All visited spots that were not part of the solution are changed to '.'
-        All visited spots that are part of the solution are changed to '@'
+      All visited spots that were not part of the solution are changed to '.'
+      All visited spots that are part of the solution are changed to '@'
 
     */
     private boolean solve(int x, int y){
@@ -115,6 +151,10 @@ public class Maze{
     
     //END FREE STUFF
 
+
+    public static void main(String[]args){
+	Maze m = new Maze("data1.dat",false);
+    }
 
 
 }
