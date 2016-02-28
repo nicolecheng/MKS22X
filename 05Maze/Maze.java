@@ -28,6 +28,8 @@ public class Maze{
 	    File f = new File(filename);
 	    Scanner s = new Scanner(f);
 	    rows=0;
+	    startx=-1;
+	    starty=-1;
 	    String str="";
 	    boolean temp = true;
 	    while(s.hasNextLine()){
@@ -50,6 +52,7 @@ public class Maze{
 		//debug(""+i+" "+i/cols+" "+i%cols);
 		//debug(""+maze[i/cols][i%(i/cols*cols)]);
 		}
+	    //debug(""+startx+" "+starty);
 	    //printMaze();
 	}catch(Exception e){
 	    e.printStackTrace();
@@ -104,6 +107,12 @@ public class Maze{
             wait(20);
         }
 
+	maze[x][y]="@".charAt(0); // move person here
+	
+	if(maze[x][y]=="E".charAt(0)){ // hurrah!
+	    return true;
+	}
+
         //COMPLETE SOLVE
 
 	if(canMove(x-1,y)&&solve(x-1,y)){
@@ -123,12 +132,12 @@ public class Maze{
     }
 
     private boolean canMove(int x, int y){
-	if(x < rows && x > 0 && y < cols && y > 0 && maze[x][y]==" ".charAt(0)){
-	    maze[x][y]="@".charAt(0);
-	    return true;
-	}else{
-	    maze[x][y]=".".charAt(0);
+	if(x > rows || x < 0 || y > cols || y < 0 ||
+	   maze[x][y]==".".charAt(0) || maze[x][y]=="#".charAt(0)){
+	    debug("INVALID");
 	    return false;
+	}else{
+	    return true;
 	}
     }
 	
@@ -192,6 +201,8 @@ public class Maze{
 
     public static void main(String[]args){
 	Maze m = new Maze("data1.dat",false);//15 rows 25 cols
+	//m.solve();
+	m.printMaze();
     }
 }
 
