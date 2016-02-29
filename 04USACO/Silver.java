@@ -38,7 +38,21 @@ public class Silver{
 
     public boolean loadGrid(){
 	Scanner in = new Scanner(scan);
-	
+	String line = "";
+	int line = 0;
+	while(in.hasNextLine()){
+	    line = in.nextLine();
+	    if(line==0){
+		//load vars
+		//rows = ;
+		//cols = ;
+		//grid = new int[rows][cols];
+		//line++;
+	    }else{
+		for(int i = 0; i < line.length(); i++){
+		    //grid[line-1][i]=line.substring(i,i+1);
+		}
+	    }
     }
 
     public void debug(String s){
