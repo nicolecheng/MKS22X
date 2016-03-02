@@ -12,7 +12,7 @@ public class Silver{
     int rows;
     int cols;
     int steps;
-    int[][]grid;
+    char[][]grid;
     int startX, startY, endX, endY;
 
     public Silver(){
@@ -51,41 +51,74 @@ public class Silver{
 			rows = Integer.parseInt(a.next());
 		    }else if(arg==1){
 			cols = Integer.parseInt(a.next());
-			grid = new int[rows][cols];
+			grid = new char[rows][cols];
 		    }else if(arg==2){
 			steps = Integer.parseInt(a.next());
-		    }else if(arg<rows*cols+3){
-			grid[(arg-3)/cols][(arg-3)%cols] = Integer.parseInt(a.next());
-		    }else if(arg==rows*cols+3){
-			startX = Integer.parseInt(a.next());
-		    }else if(arg==rows*cols+4){
-			startY = Integer.parseInt(a.next());
-		    }else if(arg==rows*cols+5){
-			endX = Integer.parseInt(a.next());
-		    }else if(arg==rows*cols+6){
-			endY = Integer.parseInt(a.next());
+		    }
+		    lineNum++;
+		}
+		debug(""+rows+" "+cols+" "+steps);
+	    }else if(lineNum<rows+1){
+		for(int c = 0; c < cols; c++){
+		    if(c==cols-1){
+			if(line.substring(c).equals(".")){
+			    grid[lineNum-1][c] = '.';
+			}else if(line.substring(c).equals("*")){
+			    grid[lineNum-1][c] = '.';
+			}
 		    }else{
-			System.out.println("um this is supposed to be an unreachable statement");
+			if(line.substring(c,c+1).equals(".")){
+			    grid[lineNum-1][c] = '.';
+			}else if(line.substring(c,c+1).equals("*")){
+			    grid[lineNum-1][c] = '.';
+			}
+			//grid[lineNum-1][c] = line.substring(c,c+1);
 		    }
 		}
-		//load vars
-		//rows = ;
-		//cols = ;
-		//grid = new int[rows][cols];
-		//lineNum++;
 	    }else{
-		for(int i = 0; i < line.length(); i++){
-		    //grid[line-1][i]=line.substring(i,i+1);
+		Scanner m = new Scanner(line);
+		arg = 0;
+		if(arg==0){
+		    startX = Integer.parseInt(m.next());
+		}else if(arg==1){
+		    startY = Integer.parseInt(m.next());
+		}else if(arg==2){
+		    endX = Integer.parseInt(m.next());
+		}else if(arg==3){
+		    endY = Integer.parseInt(m.next());
+		}else{
+		    System.out.println("um this is supposed to be an unreachable statement");
 		}
 	    }
 	}
+	//	debug(""+rows+" "+cols+" "+steps+" "+startX+" "+startY+" "+endX+" "+endY);
 	return false;
     }
 
+    public void printGrid(){
+	for(int r = 0; r < rows; r++){
+	    for(int c = 0; c < cols; c++){
+	        System.out.print(grid[r][c]);
+		System.out.print(" ");
+	    }
+	    System.out.println();
+	}
+    }
+
+    
     public void debug(String s){
 	if(DEBUG){
 	    System.out.println(s);
 	}
+    }
+
+    public static void main(String[]args){
+	
+	Silver fox = new Silver();
+	fox.printGrid();
+	System.out.println("printttt");
+
+	
     }
 
 }
