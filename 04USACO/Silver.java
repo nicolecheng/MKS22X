@@ -22,8 +22,10 @@ public class Silver{
 	importFile();
 	loadGrid();
 	grid = new int[rows][cols];
+	hold = new int[rows][cols];
 	setBoard();
-	hold = grid;
+	gridToHold();
+	//printHold();
 	grid[startX][startY]=1;
     }
 
@@ -81,17 +83,7 @@ public class Silver{
 	}
     }
 
-    public void solve(){
-	printGrid();
-	debug("\n");
-	for(int i = 0; i < steps; i++){
-	    move();
-	    grid=hold;
-	    //printGrid();
-	    //debug("\n");
-	}
-    }
-    
+    /*
     public int move(){
 	//	for(int i = 0; i < steps; i++){
 	    for(int r = 0; r < rows; r++){
@@ -128,7 +120,80 @@ public class Silver{
 	debug("\n");
         //grid = hold;
     }
+    */
 
+
+    public void solve(){
+	//printGrid();
+	//debug("\n");
+	for(int i = 0; i < steps; i++){
+	    //holdReset();
+	    move();
+	    holdToGrid();
+	    printHold();
+	    //holdReset();
+	    //printGrid();
+	    debug("\n");
+	    //printHold();
+	}
+    }
+    
+    public int move(){
+	    for(int r = 0; r < rows; r++){
+		for(int c = 0; c < cols; c++){
+		    if(grid[r][c]!=-1){// && (grid[r][c])!='.' && (grid[r][c])!='*'){
+			//debug(""+r+"  "+c);
+			//debug(""+grid[r][c]);
+			hold[r][c] = add(r,c);			
+			//printGrid();
+			//debug("\n");
+			//printHold();
+		    }
+		}
+	    }
+	return grid[endX][endY];
+    }
+
+    public int add(int r, int c){
+	int sum = 0;
+	if(inBounds(r,c-1)){
+	    //debug("1l");
+	    //debug(""+grid[r][c-1]);
+	    sum += (grid[r][c-1]);
+	}
+	if(inBounds(r,c+1)){
+	    //debug(""+grid[r][c+1]);
+	    sum += (grid[r][c+1]);
+	    //debug("1r");
+	}
+	if(inBounds(r-1,c)){
+	    //debug(""+grid[r-1][c]);
+	    sum += (grid[r-1][c]);
+	    //debug("1u");
+	}
+	if(inBounds(r+1,c)){
+	    //debug(""+grid[r+1][c]);
+	    sum += (grid[r+1][c]);
+	    //debug("1d");
+	}
+	//hold[r][c]=0;
+	//printGrid();
+	//debug("\n");
+        //grid = hold;
+	return sum;
+    }
+
+    public void holdReset(){
+	for(int r = 0; r < rows; r++){
+	    for(int c = 0; c < cols; c++){
+		if(hold[r][c]!=-1){
+		    hold[r][c]=0;
+		}
+	    }
+	}
+    }
+
+    
     public boolean inBounds(int r, int c){
 	return (r >= 0 && r < rows && c >= 0 && c < cols && grid[r][c] != -1);
     }
@@ -153,6 +218,21 @@ public class Silver{
 	}
     }
 
+    public void gridToHold(){
+	for(int r = 0; r < rows; r++){
+	    for(int c = 0; c < cols; c++){
+		hold[r][c]=grid[r][c];
+	    }
+	}
+    }
+
+    public void holdToGrid(){
+        for(int r = 0; r < rows; r++){
+	    for(int c = 0; c < cols; c++){
+		hold[r][c]=grid[r][c];
+	    }
+	}
+    }
     
     public void debug(String s){
 	if(DEBUG){
@@ -163,9 +243,10 @@ public class Silver{
     public static void main(String[]args){
 	
 	Silver fox = new Silver();
+	//fox.printHold();
 	fox.solve();
-	fox.printGrid();
-	
+	//fox.printGrid();
+	//System.out.println(fox.add(0,1)); // 1
 
 	
     }
