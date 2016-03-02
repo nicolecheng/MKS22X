@@ -30,7 +30,7 @@ public class Silver{
     }
 
     public boolean importFile(){
-	File f = new File("ctravel3.in");
+	File f = new File("ctravel.in");
 	try{
 	    Scanner s = new Scanner(f);
 	    while(s.hasNextLine()){
@@ -122,7 +122,7 @@ public class Silver{
     }
     */
 
-
+    
     public void solve(){
 	//printGrid();
 	//debug("\n");
@@ -152,7 +152,18 @@ public class Silver{
 		}
 	    }
 	return grid[endX][endY];
-    }
+	}
+
+    /*
+    public void solve(){
+	holdReset();
+	for(int r = 0; r < rows; r++){
+	    for(int c = 0; c < cols; c++){
+		hold[r][c] = add(r,c);
+	    }
+	}
+	holdToGrid();
+	}*/
 
     public int add(int r, int c){
 	int sum = 0;
@@ -229,7 +240,7 @@ public class Silver{
     public void holdToGrid(){
         for(int r = 0; r < rows; r++){
 	    for(int c = 0; c < cols; c++){
-		hold[r][c]=grid[r][c];
+		grid[r][c]=hold[r][c];
 	    }
 	}
     }
