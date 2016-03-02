@@ -7,7 +7,7 @@ import java.io.*;
 
 public class Silver{
 
-    private boolean DEBUG = true;
+    private boolean DEBUG = false;
     
     String scan = "";
     int rows;
@@ -25,26 +25,22 @@ public class Silver{
 	hold = new int[rows][cols];
 	setBoard();
 	gridToHold();
-	//printHold();
 	grid[startX][startY]=1;
     }
 
-    public boolean importFile(){
+    public void importFile(){
 	File f = new File("ctravel.in");
 	try{
 	    Scanner s = new Scanner(f);
 	    while(s.hasNextLine()){
 		scan += s.nextLine() + "\n";
 	    }
-	    return true;
 	}catch(Exception e){
 	    e.printStackTrace(System.out);
-	    System.out.println("scanner fail");
-	    return false;
 	}
     }
 
-    public boolean loadGrid(){
+    public void loadGrid(){
 	String cur = "";
 	int row = 0;
 	Scanner n = new Scanner(scan);
@@ -64,11 +60,8 @@ public class Silver{
 		endX = Integer.parseInt(n.next())-1;
 		endY = Integer.parseInt(n.next())-1;
 	    }
-	    
 	    row++;
-	}	
-	//debug(""+rows+" "+cols+" "+steps+" \n"+startX+" "+startY+" "+endX+" "+endY);
-	return true;
+	}
     }
 
     public void setBoard(){
@@ -83,114 +76,27 @@ public class Silver{
 	}
     }
 
-    /*
-    public int move(){
-	//	for(int i = 0; i < steps; i++){
-	    for(int r = 0; r < rows; r++){
-		for(int c = 0; c < cols; c++){
-		    if(grid[r][c]>0){// && (grid[r][c])!='.' && (grid[r][c])!='*'){
-			//debug(""+r+"  "+c);
-			//debug(""+grid[r][c]);
-			add(r,c);
-			//printGrid();
-			//printHold();
-		    }
-		}
-	    }
-	    //	    grid = hold;
-	    //	    }
-	return grid[endX][endY];
-    }
-
-    public void add(int r, int c){
-	if(inBounds(r,c-1)){
-	    hold[r][c-1] = (grid[r][c-1])+1;
-	}
-	if(inBounds(r,c+1)){
-	    hold[r][c+1] = (grid[r][c+1])+1;
-	}
-	if(inBounds(r-1,c)){
-	    hold[r-1][c] = (grid[r-1][c])+1;
-	}
-	if(inBounds(r+1,c)){
-	    hold[r+1][c] = (grid[r+1][c])+1;
-	}
-	hold[r][c]=0;
-	printGrid();
-	debug("\n");
-        //grid = hold;
-    }
-    */
-
-    
-    public void solve(){
-	//printGrid();
-	//debug("\n");
+    public int solve(){
 	for(int i = 0; i < steps; i++){
-	    //holdReset();
-	    move();
-	    holdToGrid();
-	    printHold();
-	    //holdReset();
-	    //printGrid();
-	    debug("\n");
-	    //printHold();
-	}
-    }
-    
-    public int move(){
+	    holdReset();
 	    for(int r = 0; r < rows; r++){
 		for(int c = 0; c < cols; c++){
-		    if(grid[r][c]!=-1){// && (grid[r][c])!='.' && (grid[r][c])!='*'){
-			//debug(""+r+"  "+c);
-			//debug(""+grid[r][c]);
-			hold[r][c] = add(r,c);			
-			//printGrid();
-			//debug("\n");
-			//printHold();
+		    if(grid[r][c]!=-1){
+			hold[r][c] = add(r,c);
 		    }
 		}
 	    }
+	    holdToGrid();
+	}
 	return grid[endX][endY];
-	}
-
-    /*
-    public void solve(){
-	holdReset();
-	for(int r = 0; r < rows; r++){
-	    for(int c = 0; c < cols; c++){
-		hold[r][c] = add(r,c);
-	    }
-	}
-	holdToGrid();
-	}*/
+    }
 
     public int add(int r, int c){
 	int sum = 0;
-	if(inBounds(r,c-1)){
-	    //debug("1l");
-	    //debug(""+grid[r][c-1]);
-	    sum += (grid[r][c-1]);
-	}
-	if(inBounds(r,c+1)){
-	    //debug(""+grid[r][c+1]);
-	    sum += (grid[r][c+1]);
-	    //debug("1r");
-	}
-	if(inBounds(r-1,c)){
-	    //debug(""+grid[r-1][c]);
-	    sum += (grid[r-1][c]);
-	    //debug("1u");
-	}
-	if(inBounds(r+1,c)){
-	    //debug(""+grid[r+1][c]);
-	    sum += (grid[r+1][c]);
-	    //debug("1d");
-	}
-	//hold[r][c]=0;
-	//printGrid();
-	//debug("\n");
-        //grid = hold;
+	if(inBounds(r,c-1)){sum += (grid[r][c-1]);}
+	if(inBounds(r,c+1)){sum += (grid[r][c+1]);}
+	if(inBounds(r-1,c)){sum += (grid[r-1][c]);}
+	if(inBounds(r+1,c)){sum += (grid[r+1][c]);}
 	return sum;
     }
 
@@ -219,7 +125,7 @@ public class Silver{
 	}
     }
 
-     public void printHold(){
+    public void printHold(){
 	for(int r = 0; r < rows; r++){
 	    for(int c = 0; c < cols; c++){
 	        System.out.print(hold[r][c]);
@@ -251,14 +157,15 @@ public class Silver{
 	}
     }
 
+    public void printSolution(){
+	System.out.println(grid[endX][endY]+",6,Cheng,Nicole");
+    }
+
     public static void main(String[]args){
 	
 	Silver fox = new Silver();
-	//fox.printHold();
 	fox.solve();
-	//fox.printGrid();
-	//System.out.println(fox.add(0,1)); // 1
-
+	fox.printSolution();
 	
     }
 
