@@ -13,6 +13,7 @@ public class Silver{
     int cols;
     int steps;
     int[][]grid;
+    int startX, startY, endX, endY;
 
     public Silver(){
 	importFile();
@@ -39,20 +40,46 @@ public class Silver{
     public boolean loadGrid(){
 	Scanner in = new Scanner(scan);
 	String line = "";
-	int line = 0;
+	int lineNum = 0;
+	int arg = 0;
 	while(in.hasNextLine()){
 	    line = in.nextLine();
-	    if(line==0){
+	    if(lineNum==0){
+		Scanner a = new Scanner(line);
+		while(a.hasNext()){
+		    if(arg==0){
+			rows = Integer.parseInt(a.next());
+		    }else if(arg==1){
+			cols = Integer.parseInt(a.next());
+			grid = new int[rows][cols];
+		    }else if(arg==2){
+			steps = Integer.parseInt(a.next());
+		    }else if(arg<rows*cols+3){
+			grid[(arg-3)/cols][(arg-3)%cols] = Integer.parseInt(a.next());
+		    }else if(arg==rows*cols+3){
+			startX = Integer.parseInt(a.next());
+		    }else if(arg==rows*cols+4){
+			startY = Integer.parseInt(a.next());
+		    }else if(arg==rows*cols+5){
+			endX = Integer.parseInt(a.next());
+		    }else if(arg==rows*cols+6){
+			endY = Integer.parseInt(a.next());
+		    }else{
+			System.out.println("um this is supposed to be an unreachable statement");
+		    }
+		}
 		//load vars
 		//rows = ;
 		//cols = ;
 		//grid = new int[rows][cols];
-		//line++;
+		//lineNum++;
 	    }else{
 		for(int i = 0; i < line.length(); i++){
 		    //grid[line-1][i]=line.substring(i,i+1);
 		}
 	    }
+	}
+	return false;
     }
 
     public void debug(String s){
