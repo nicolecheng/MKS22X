@@ -13,11 +13,14 @@ public class Silver{
     int cols;
     int steps;
     char[][]grid;
+    char[][]hold;
     int startX, startY, endX, endY;
 
     public Silver(){
 	importFile();
 	loadGrid();
+	hold = grid;
+	grid[startX][startY]=0;
     }
 
     public boolean importFile(){
@@ -27,8 +30,6 @@ public class Silver{
 	    while(s.hasNextLine()){
 		scan += s.nextLine() + "\n";
 	    }
-	    //debug(scan);
-	    //debug("scanner in -- success");
 	    return true;
 	}catch(Exception e){
 	    e.printStackTrace(System.out);
@@ -62,6 +63,39 @@ public class Silver{
 	}	
 	debug(""+rows+" "+cols+" "+steps+" \n"+startX+" "+startY+" "+endX+" "+endY);
 	return true;
+    }
+
+    public void solve(){
+
+
+    }
+
+    public void move(){
+	for(int r = 0; r < rows; r++){
+	    for(int c = 0; c < cols; c++){
+		if((grid[r][c])!='.' && (grid[r][c])!='*'){
+		    add(r,c);
+		}
+	    }
+	}
+
+    }
+
+    public boolean add(int r, int c){
+	if(inBounds(r,c-1)){
+	    hold[r][c-1] = 
+	}
+	if(inBounds(r,c+1)){
+	}
+	if(inBounds(r-1,c)){
+	}
+	if(inBounds(r+1,c)){
+	}
+	return true;
+    }
+
+    public boolean inBounds(int r, int c){
+	return (r > 0 && r < rows && c > 0 && c < cols && grid[r][c] != '*');
     }
 
     public void printGrid(){
