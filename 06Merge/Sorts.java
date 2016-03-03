@@ -117,16 +117,16 @@ public class Sorts{
     }
 
     public static int[] mergeSort(int[]data){
-	int[]ret = new ret[data.length];
-	int[]hold = new hold[data.length];
+	int[]ret = new int[data.length];
+	int[]hold = new int[data.length];
 	int len = 1;
-	int uno,dos;
+	int[] uno,dos;
 	while(len<data.length/2+data.length%2){
 	    for(int i = 0; i < data.length; i++){
 		int[]one = new int[len];
 		int[]two = new int[len];
-		one = merge(data[i],data[i+len]);
-		two = merge(data[data.length-i],data[data.length-i-len]);
+		one = makeAr(data,i,len+i);
+		two = makeAr(data,data.length-i,data.length-i-len);
 		len*=2;
 		if(i==data.length-1){
 		    uno=one;
@@ -136,6 +136,15 @@ public class Sorts{
 	    merge(uno,dos);
 	}
 	return ret;
+    }
+
+    public static int[] makeAr(int[]ary,int start, int end){
+	int[]a=new int[end-start];
+	while (start<end){
+	    a[start]=ary[start];
+	    start++;
+	}
+	return a;
     }
 
     /*
