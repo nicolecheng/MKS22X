@@ -1,7 +1,7 @@
 // Nicole Cheng
 // apcs pd7
-// hw16
-// 2014-11-15
+// Big-O
+// 2016-01-04
 
 public class Sorts{
     public static void printArray(int[]data){
@@ -41,41 +41,202 @@ public class Sorts{
 			data[i] = data[i-1];
 		    }
 		    data[insert] = hold;
-		    index++;		
+		    index++;	
+		    printArray(data);	
 		}
 	    }
 	}
     }
 
+
+    public static void selectionSort(int[]data){
+	if (data.length > 1){
+            int index = 0;
+	    while (index < data.length){
+		int min = data[index];
+		int minInd = index;
+		for (int i = index; i < data.length; i++){
+		    if (data[i] < min){
+			min = data[i];
+			minInd = i;
+		    }
+		}
+		data[minInd] = data[index];
+		data[index] = min;
+		index++;
+		printArray(data);	
+	    }
+	}
+    }
+
+    public static void bubbleSort(int[]data){
+	int sorted = data.length; // from which index is it sorted?
+	int hold = 0;
+	while (sorted > 0){
+	    for (int i = 0; i < sorted-1; i++){
+		if (data[i] > data[i+1]){
+		    hold = data[i+1];
+		    data[i+1] = data[i];
+		    data[i] = hold;
+		}
+	    }
+	    sorted --;
+	    printArray(data);
+	}
+    }
+
+    public static int[] merge(int[]aryA, int[]aryB){
+	int len = aryA.length+aryB.length;
+	int[]list = new int[len];
+	int a = 0;
+	int b = 0;
+        while(a+b<len-2){
+	    if(a==aryA.length){
+		for(int r = b; r < aryB.length; r++){
+		    list[a+b] = aryB[b];
+		    b++;
+		}
+	    }else if(b==aryB.length){
+		for(int r = a; r < aryA.length; r++){
+		    list[a+b] = aryA[a];
+		    a++;
+		    }
+	    }else if(lessThan(aryA[a],aryB[b])){
+		list[a+b]=aryA[a];
+		a++;
+	    }else{
+		list[a+b]=aryB[b];
+		b++;
+	    }		
+	}
+	return list;
+    }
+
+    public static boolean lessThan(int a, int b){
+	return (a < b);
+    }
+
+    public static int[] mergeSort(int[]data){
+	int[]ret = new ret[data.length];
+	int[]hold = new hold[data.length];
+	int len = 1;
+	int uno,dos;
+	while(len<data.length/2+data.length%2){
+	    for(int i = 0; i < data.length; i++){
+		int[]one = new int[len];
+		int[]two = new int[len];
+		one = merge(data[i],data[i+len]);
+		two = merge(data[data.length-i],data[data.length-i-len]);
+		len*=2;
+		if(i==data.length-1){
+		    uno=one;
+		    dos=two;
+		}
+	    }
+	    merge(uno,dos);
+	}
+	return ret;
+    }
+
+    /*
+      Preconditions:
+      data.length >= 2
+      the elements of data are in ascending order (sorted)
+      startA <= endA < startB <= endB
+      startA >= 0
+      endB < data.length
+    */
+    
+    //    void merge(int[]data, int startA, endA, startB, endB)
+
+    public void printList(int[]j){
+	System.out.print("{");
+	for(int i = 0; i < j.length-1; i++){
+	    System.out.print(j[i]+",");
+	}
+	System.out.print(j[j.length-1]+"}");
+    }
+    /*
+    public void printList(){
+	System.out.print("{");
+	for(int i = 0; i < data.length-1; i++){
+	    System.out.print(data[i]+",");
+	}
+	System.out.print(data[data.length-1]+"}");
+	}*/
+    
     public static void main(String[]args){
+
+	int[]a = {1,7,10,14};
+	int[]b = {-2,3,4,21,32,47};
+	Sorts m = new Sorts(a);
+	m.printList(a);
+	System.out.println();
+	m.printList(b);
+	System.out.println();
+	m.printList(m.merge(a,b));
+	
+    }
+    
+
+
+    public static int[] fillRandom(int[] ary){
+	for (int i = 0; i < ary.length; i++){
+	    ary[i] = (int)(Math.random() * 10000 / (Math.random() * 100));
+	}
+        return ary;
+    }
+
+    public static void swap(int[]a1, int i1, int i2){
+	int hold = a1[i2];
+	a1[i2] = a1[i1];
+	a1[i1] = hold;
+    }
+/*
+    public static void main(String[]args){
+	System.out.println("Selection Sort:");
 	int[] arrayName = { 8, 6, 7, 5, 3, 0, 9};
 	Sorts.printArray( arrayName);
-	Sorts.insertionSort( arrayName);
+	Sorts.selectionSort( arrayName);
 	Sorts.printArray( arrayName);
+	System.out.println();
+	System.out.println("Insertion Sort:");
+	int[] arrayN = { 8, 6, 7, 5, 3, 0, 9};
+	Sorts.printArray( arrayN);
+	Sorts.insertionSort( arrayN);
+	Sorts.printArray( arrayN);
+	System.out.println();
+	System.out.println("Bubble Sort:");
+	int[] arryN = { 8, 6, 7, 5, 3, 0, 9};
+	Sorts.printArray( arryN);
+	Sorts.bubbleSort( arryN);
+	Sorts.printArray( arryN);
+*/	/*	
+		int[] e = {};
+		Sorts.printArray( e);
+		Sorts.selection( e);
+		Sorts.printArray( e);
 	
-	int[] e = {};
-	Sorts.printArray( e);
-	Sorts.insertionSort( e);
-	Sorts.printArray( e);
-	
-	int[] ae = { 8, 8, 8, 8, 8};
-	Sorts.printArray( ae);
-	Sorts.insertionSort( ae);
-	Sorts.printArray( ae);
+		int[] ae = { 8, 8, 8, 8, 8};
+		Sorts.printArray( ae);
+		Sorts.selection( ae);
+		Sorts.printArray( ae);
 
-	int[] a = { 9, -9, 6, 3, 17};
-	Sorts.printArray( a);
-	Sorts.insertionSort( a);
-	Sorts.printArray( a);
+		int[] a = { 9, -9, 6, 3, 17};
+		Sorts.printArray( a);
+		Sorts.selection( a);
+		Sorts.printArray( a);
 
-	int[] ar = { 0};
-	Sorts.printArray( ar);
-	Sorts.insertionSort( ar);
-	Sorts.printArray( ar);
+		int[] ar = { 0};
+		Sorts.printArray( ar);
+		Sorts.selection( ar);
+		Sorts.printArray( ar);
 
-	int[] array = { 15, 14, 13, 12, 11, 10};
-	Sorts.printArray( array);
-	Sorts.insertionSort( array);
-	Sorts.printArray( array);
+		int[] array = { 15, 14, 13, 12, 11, 10};
+		Sorts.printArray( array);
+		Sorts.selection( array);
+		Sorts.printArray( array);
+
     }
+*/
 }
