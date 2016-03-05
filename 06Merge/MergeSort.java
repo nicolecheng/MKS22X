@@ -1,9 +1,36 @@
 public class MergeSort{
-
+    
     int[]data;
     
     public MergeSort(int[]data){
 	this.data = data;
+    }
+
+    public int[] solve(){//int[]data){
+        int[]hold=new int[data.length];
+	int count=1;
+	int start=0;
+	for(int i = 0; i < data.length; i++){
+	    int[]a=new int[count];
+	    int[]b=new int[count];
+	    int[]c=new int[count*2];
+	    for(int m = 0; m < count; m++){
+		a[m]=data[m+start];
+		b[m]=data[m+start+count];
+	    }
+	    c=merge(a,b);
+	    for(int n = 0; n < a.length+b.length; n++){
+		hold[n+start]=c[n];
+	    }
+	    //data=hold;
+	    start+=count*2;
+	    if(start==data.length){
+		start=0;
+		count*=2;
+	    }
+	    //count++;
+	}
+	return data;
     }
 
     public int[] merge(int[]aryA, int[]aryB){
@@ -11,7 +38,27 @@ public class MergeSort{
 	int[]list = new int[len];
 	int a = 0;
 	int b = 0;
-        while(a+b<len-2){
+	if(len==1){
+	    if(aryA.length==1){
+		list[0]=aryA[0];
+		return list;
+	    }else{
+		list[0]=aryB[0];
+		return list;
+	    }
+	}else if(len==2){
+	    if(aryA.length==1){
+		if(lessThan(aryA[0],aryB[0])){
+		    list[0]=aryA[0];
+		    list[1]=aryB[0];
+		    return list;
+		}else{
+		    list[0]=aryB[0];
+		    list[1]=aryA[0];
+		}
+	    }
+	}
+	while(a+b<len-2){
 	    if(a==aryA.length){
 		for(int r = b; r < aryB.length; r++){
 		    list[a+b] = aryB[b];
@@ -21,7 +68,7 @@ public class MergeSort{
 		for(int r = a; r < aryA.length; r++){
 		    list[a+b] = aryA[a];
 		    a++;
-		    }
+		}
 	    }else if(lessThan(aryA[a],aryB[b])){
 		list[a+b]=aryA[a];
 		a++;
@@ -33,9 +80,11 @@ public class MergeSort{
 	return list;
     }
 
+
     public boolean lessThan(int a, int b){
 	return (a < b);
     }
+
 
     /*
       Preconditions:
@@ -71,9 +120,9 @@ public class MergeSort{
 	MergeSort m = new MergeSort(a);
 	m.printList(a);
 	System.out.println();
-	m.printList(b);
+	//m.printList(b);
 	System.out.println();
-	m.printList(m.merge(a,b));
+	m.printList(m.solve());//merge(a,b));
 	
     }
     
