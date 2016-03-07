@@ -1,9 +1,10 @@
 // Nicole Cheng
-// apcs pd7
-// Big-O
-// 2016-01-04
+// apcs pd6
+// Sorts Revamped
+// 2016-03-06
 
 public class Sorts{
+    
     public static void printArray(int[]data){
 	//print the array like:  [ 1, 2, 3, 4]
 	String ret = "[ ";
@@ -15,6 +16,8 @@ public class Sorts{
 	}
 	System.out.println(ret + "]");
     }
+
+    // ********************************************************************************************************
     
     public static void insertionSort(int[]data){
 	//your code here to make data re-order its elements
@@ -48,7 +51,8 @@ public class Sorts{
 	}
     }
 
-
+    // ********************************************************************************************************
+    
     public static void selectionSort(int[]data){
 	if (data.length > 1){
             int index = 0;
@@ -69,6 +73,8 @@ public class Sorts{
 	}
     }
 
+    // ********************************************************************************************************
+
     public static void bubbleSort(int[]data){
 	int sorted = data.length; // from which index is it sorted?
 	int hold = 0;
@@ -85,109 +91,73 @@ public class Sorts{
 	}
     }
 
-    public static int[] merge(int[]aryA, int[]aryB){
+    // ********************************************************************************************************
+
+     public static int[] mergesort(int[]data){
+	
+	if(data.length<2){ // already sorted!
+	    return data;
+	}
+	
+	int[]a=new int[data.length/2];
+	int[]b=new int[data.length-a.length];
+	
+	for(int i = 0; i < a.length; i++){
+	    a[i]=data[i];
+	}
+	for(int i = 0; i <b.length; i++){
+	    b[i]=data[i+a.length];
+	}
+
+	// keep breaking down each side
+	mergesort(a);
+	mergesort(b);
+
+	// actually merge them together
+	merge(a,b,data);
+	
+	return data;
+	
+    }
+
+
+    public static void merge(int[]aryA, int[]aryB, int[]list){
+	
 	int len = aryA.length+aryB.length;
-	int[]list = new int[len];
 	int a = 0;
 	int b = 0;
-        while(a+b<len-2){
-	    if(a==aryA.length){
-		for(int r = b; r < aryB.length; r++){
-		    list[a+b] = aryB[b];
-		    b++;
-		}
-	    }else if(b==aryB.length){
-		for(int r = a; r < aryA.length; r++){
-		    list[a+b] = aryA[a];
-		    a++;
-		    }
-	    }else if(lessThan(aryA[a],aryB[b])){
-		list[a+b]=aryA[a];
+	int count = 0;
+
+	// while there are still things to compare...
+	while(a<aryA.length && b<aryB.length){
+	    if(lessThan(aryA[a],aryB[b])){
+		list[count]=aryA[a];
 		a++;
+		count++;
 	    }else{
-		list[a+b]=aryB[b];
+		list[count]=aryB[b];
 		b++;
-	    }		
-	}
-	return list;
-    }
-
-    public static boolean lessThan(int a, int b){
-	return (a < b);
-    }
-
-    public static int[] mergeSort(int[]data){
-	int[]ret = new int[data.length];
-	int[]hold = new int[data.length];
-	int len = 1;
-	int[] uno,dos;
-	while(len<data.length/2+data.length%2){
-	    for(int i = 0; i < data.length; i++){
-		int[]one = new int[len];
-		int[]two = new int[len];
-		one = makeAr(data,i,len+i);
-		two = makeAr(data,data.length-i,data.length-i-len);
-		len*=2;
-		if(i==data.length-1){
-		    uno=one;
-		    dos=two;
-		}
+		count++;
 	    }
-	    merge(uno,dos);
 	}
-	return ret;
-    }
 
-    public static int[] makeAr(int[]ary,int start, int end){
-	int[]a=new int[end-start];
-	while (start<end){
-	    a[start]=ary[start];
-	    start++;
+	// copy over the rest of the lists 
+	for(int i = a; i < aryA.length; i++){
+	    list[count]=aryA[i];
+	    count++;
 	}
-	return a;
-    }
-
-    /*
-      Preconditions:
-      data.length >= 2
-      the elements of data are in ascending order (sorted)
-      startA <= endA < startB <= endB
-      startA >= 0
-      endB < data.length
-    */
-    
-    //    void merge(int[]data, int startA, endA, startB, endB)
-
-    public void printList(int[]j){
-	System.out.print("{");
-	for(int i = 0; i < j.length-1; i++){
-	    System.out.print(j[i]+",");
+	for(int i = b; i < aryB.length; i++){
+	    list[count]=aryB[i];
+	    count++;
 	}
-	System.out.print(j[j.length-1]+"}");
-    }
-    /*
-    public void printList(){
-	System.out.print("{");
-	for(int i = 0; i < data.length-1; i++){
-	    System.out.print(data[i]+",");
-	}
-	System.out.print(data[data.length-1]+"}");
-	}*/
-    
-    public static void main(String[]args){
-
-	int[]a = {1,7,10,14};
-	int[]b = {-2,3,4,21,32,47};
-	Sorts m = new Sorts(a);
-	m.printList(a);
-	System.out.println();
-	m.printList(b);
-	System.out.println();
-	m.printList(m.merge(a,b));
 	
     }
     
-
+    public static boolean lessThan(int a, int b){
+	return (a < b);
+    }
+    
+    // ********************************************************************************************************
 
     public static int[] fillRandom(int[] ary){
 	for (int i = 0; i < ary.length; i++){
@@ -201,51 +171,15 @@ public class Sorts{
 	a1[i2] = a1[i1];
 	a1[i1] = hold;
     }
-/*
+
+    // ********************************************************************************************************
+    
     public static void main(String[]args){
-	System.out.println("Selection Sort:");
-	int[] arrayName = { 8, 6, 7, 5, 3, 0, 9};
-	Sorts.printArray( arrayName);
-	Sorts.selectionSort( arrayName);
-	Sorts.printArray( arrayName);
-	System.out.println();
-	System.out.println("Insertion Sort:");
-	int[] arrayN = { 8, 6, 7, 5, 3, 0, 9};
-	Sorts.printArray( arrayN);
-	Sorts.insertionSort( arrayN);
-	Sorts.printArray( arrayN);
-	System.out.println();
-	System.out.println("Bubble Sort:");
-	int[] arryN = { 8, 6, 7, 5, 3, 0, 9};
-	Sorts.printArray( arryN);
-	Sorts.bubbleSort( arryN);
-	Sorts.printArray( arryN);
-*/	/*	
-		int[] e = {};
-		Sorts.printArray( e);
-		Sorts.selection( e);
-		Sorts.printArray( e);
-	
-		int[] ae = { 8, 8, 8, 8, 8};
-		Sorts.printArray( ae);
-		Sorts.selection( ae);
-		Sorts.printArray( ae);
 
-		int[] a = { 9, -9, 6, 3, 17};
-		Sorts.printArray( a);
-		Sorts.selection( a);
-		Sorts.printArray( a);
-
-		int[] ar = { 0};
-		Sorts.printArray( ar);
-		Sorts.selection( ar);
-		Sorts.printArray( ar);
-
-		int[] array = { 15, 14, 13, 12, 11, 10};
-		Sorts.printArray( array);
-		Sorts.selection( array);
-		Sorts.printArray( array);
-
+        int[]a = {1,-7,10,14,6,8,8,3};
+	int[]ret = mergesort(a);
+	// printArray(ret);
+		
     }
-*/
+
 }
