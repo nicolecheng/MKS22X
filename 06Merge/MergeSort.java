@@ -1,71 +1,65 @@
 public class MergeSort{
     
     public static int[] mergesort(int[]data){
-	if(data.length<2){return data;}
+	
+	if(data.length<2){ // already sorted!
+	    return data;
+	}
+	
 	int[]a=new int[data.length/2];
 	int[]b=new int[data.length-a.length];
-	for(int i = 0; i < data.length; i++){
-	    if(i<a.length){
-		a[i]=data[i];
-	    }else{
-		b[i-a.length]=data[i];
-	    }
+	
+	for(int i = 0; i < a.length; i++){
+	    a[i]=data[i];
 	}
-	a=mergesort(a);
-	b=mergesort(b);
-	data=merge(a,b);
+	for(int i = 0; i <b.length; i++){
+	    b[i]=data[i+a.length];
+	}
+
+	// keep breaking down each side
+	mergesort(a);
+	mergesort(b);
+
+	// actually merge them together
+	merge(a,b,data);
+	
 	return data;
+	
     }
 
 
-    public static int[] merge(int[]aryA, int[]aryB){
+    public static void merge(int[]aryA, int[]aryB, int[]list){
+	
 	int len = aryA.length+aryB.length;
-	int[]list = new int[len];
 	int a = 0;
 	int b = 0;
-	if(len==1){
-	    if(aryA.length==1){
-		list[0]=aryA[0];
-		return list;
-	    }else{
-		list[0]=aryB[0];
-		return list;
-	    }
-	}else if(len==2){
-	    if(aryA.length==1){
-		if(lessThan(aryA[0],aryB[0])){
-		    list[0]=aryA[0];
-		    list[1]=aryB[0];
-		    return list;
-		}else{
-		    list[0]=aryB[0];
-		    list[1]=aryA[0];
-		}
-	    }
-	}
-	while(a+b<len-2){
-	    if(a==aryA.length){
-		for(int r = b; r < aryB.length; r++){
-		    list[a+b] = aryB[b];
-		    b++;
-		}
-	    }else if(b==aryB.length){
-		for(int r = a; r < aryA.length; r++){
-		    list[a+b] = aryA[a];
-		    a++;
-		}
-	    }else if(lessThan(aryA[a],aryB[b])){
-		list[a+b]=aryA[a];
+	int count = 0;
+
+	// while there are still things to compare...
+	while(a<aryA.length && b<aryB.length){
+	    if(lessThan(aryA[a],aryB[b])){
+		list[count]=aryA[a];
 		a++;
+		count++;
 	    }else{
-		list[a+b]=aryB[b];
+		list[count]=aryB[b];
 		b++;
-	    }		
+		count++;
+	    }
 	}
-	return list;
+
+	// copy over the rest of the lists 
+	for(int i = a; i < aryA.length; i++){
+	    list[count]=aryA[i];
+	    count++;
+	}
+	for(int i = b; i < aryB.length; i++){
+	    list[count]=aryB[i];
+	    count++;
+	}
+	
     }
-
-
+    
     public static boolean lessThan(int a, int b){
 	return (a < b);
     }
@@ -80,18 +74,12 @@ public class MergeSort{
 	}
 	System.out.print("}");
     }
-
+    
     public static void main(String[]args){
 
-	int[]a = {1,7,10,14};
-	int[]b = {-2,3,4,21,32,47};
-	//MergeSort m = new MergeSort(a);
-	//m.printList(a);
-	//System.out.println();
-	//m.printList(b);
-	//System.out.println();
-	MergeSort.printList(merge(a,b));
-	int[]ret = MergeSort.mergesort(b);
+	int[]a = {1,-7,10,14,6,8,8,3};
+	int[]b = {-2,3,54,21,9,0,32,47};
+	int[]ret = MergeSort.mergesort(a);
 	MergeSort.printList(ret);
     }
     
