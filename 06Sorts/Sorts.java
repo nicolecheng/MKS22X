@@ -121,7 +121,7 @@ public class Sorts{
     }
 
 
-    public static void merge(int[]aryA, int[]aryB, int[]list){
+    private static void merge(int[]aryA, int[]aryB, int[]list){
 	
 	int len = aryA.length+aryB.length;
 	int a = 0;
@@ -153,7 +153,7 @@ public class Sorts{
 	
     }
     
-    public static boolean lessThan(int a, int b){
+    private static boolean lessThan(int a, int b){
 	return (a < b);
     }
     
