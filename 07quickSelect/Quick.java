@@ -2,15 +2,18 @@ import java.util.*;
 
 public class Quick{
 
-    private static boolean DEBUG = true;
+    private static boolean DEBUG = false;
 
     private static int partition(int[]data, int left, int right){
 	
 	int ind = (int)(Math.random()*(right-left))+left;
 	int val = data[ind];
+
+	/*
 	debug("index = "+ind+", value = "+val);
 	debug("bounds = "+left+":"+right);
 	debug(retArray(data));
+	*/
 
 	// swippity swappity (init)
 	data[ind]=data[right];
@@ -41,8 +44,11 @@ public class Quick{
 	    ind = tempright+1;
 	}
 
+	/*
 	debug(retArray(data));	
 	debug("final index = "+ind);
+	*/
+
 	return ind;
 	
     }
@@ -56,7 +62,22 @@ public class Quick{
 
 	
     public static int quickselect(int[]data, int k){
-	return 5;
+
+	int left = 0;
+	int right = data.length-1;
+	int index = partition(data,left,right);
+	while(index!=k){
+	    if(data[index]<k){
+		index = partition(data,index,right);
+	        // debug(retArray(data)+"\n"+index+" "+right+"\n");
+	    }else{
+		index = partition(data,left,index);
+		// debug(retArray(data)+"\n"+left+" "+index+"\n");
+	    }
+	}
+
+	debug(data[index]);
+	return data[index];
     }
     //return the kth smallest value.
     // when k = 0 return the smallest.
@@ -89,8 +110,10 @@ public class Quick{
     }
 
     public static void main (String[]args){
-	int[]a={7,2,1,4,5,8,12,0,-6,3,7};
-	Quick.partition(a,5,10);
+	int[]a={7,2,1,4,5,8,12,0,-6,3,7}; // -6,0,1,2,3,4,5,7,7,8,12
+	Quick.quickselect(a,3); // 2
+	Quick.quickselect(a,6); // 5
+	Quick.quickselect(a,1); // 0
     }
 
 }
