@@ -2,7 +2,7 @@ import java.util.*;
 
 public class Quick{
 
-    private static boolean DEBUG = true;
+    private static boolean DEBUG = false;
 
     private static int partition(int[]data, int left, int right){
 	
@@ -10,9 +10,9 @@ public class Quick{
 	int val = data[ind];
 	
 	/*
-	debug("index = "+ind+", value = "+val);
-	debug("bounds = "+left+":"+right);
-	debug(retArray(data));
+	  debug("index = "+ind+", value = "+val);
+	  debug("bounds = "+left+":"+right);
+	  debug(retArray(data));
 	*/
 
 	// swippity swappity (init)
@@ -25,10 +25,8 @@ public class Quick{
 	
 	while(templeft!=tempright){
 	    if(data[templeft]<val){
-		//debug(templeft+"\t"+data[templeft]);
 		templeft++;
 	    }else{ // switch vals at bounds
-		//debug(templeft+"\t"+data[templeft]);
 		hold = data[templeft];
 		data[templeft]=data[tempright];
 		data[tempright]=hold;
@@ -39,14 +37,10 @@ public class Quick{
 	if(data[tempright]>=val){
 	    data[right] = data[tempright];
 	    data[tempright] = val;
-	    //debug(retArray(data));	
-	    //debug("final index = "+ind);
 	    ind = tempright;
 	}else{
 	    data[right] = data[tempright+1];
 	    data[tempright+1] = val;
-	    //debug(retArray(data));	
-	    //debug("final index = "+ind);
 	    ind = tempright+1;
 	}
 
@@ -69,10 +63,8 @@ public class Quick{
 	while(index!=k){
 	    if(index<k){
 		index=partition(data,index,right);
-	        // debug(retArray(data)+"\n"+index+" "+right+"\n");
 	    }else{
 		index=partition(data,left,index);
-		// debug(retArray(data)+"\n"+left+" "+index+"\n");
 	    }
 	}
 	debug(data[index]);
@@ -82,6 +74,24 @@ public class Quick{
     // when k = 0 return the smallest.
     // 0 <= k < data.length
 
+
+    public static void quickSort(int[]data){
+	quickSort(data,0,data.length-1);
+    }
+    
+    private static void quickSort(int[]data,int left,int right){
+	int ind;
+	if(left<right){
+	    ind = partition(data,left,right);
+	    quickSort(data,left,ind);
+	    quickSort(data,ind+1,right);
+	}
+    }
+    private static int[] quickSort2(int[]data){
+        quickSort(data,0,data.length-1);
+	return data;
+    }
+    
     private static void debug(String s){
 	if(DEBUG)
 	    System.out.println(s);
@@ -108,12 +118,28 @@ public class Quick{
 	return s;
     }
 
+    public static String name(){
+	return "6,Cheng,Nicole";
+    }
+        
     public static void main (String[]args){
+	
 	int[]a={7,7,4,2,3,0,1,-6,12,8,5}; // -6,0,1,2,3,4,5,7,7,8,12
+	int[]b={9,0,-30,74,1}; // -30,0,1,9,74
+	int[]c={200,789,59,84,227,431,10001,927}; // 59,84,200,227,431,789,927,10001
+	
+	/*
 	quickselect(a,3); // 2
 	quickselect(a,6); // 5
 	quickselect(a,1); // 0
-	//partition(a,3,9);
+	*/
+
+	/*
+	debug(retArray(quickSort2(a)));
+	debug(retArray(quickSort2(b)));
+	debug(retArray(quickSort2(c)));
+	*/
+	    
     }
 
 }
