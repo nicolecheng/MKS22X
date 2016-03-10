@@ -129,16 +129,36 @@ public class Quick{
 	int[]c={200,789,59,84,227,431,10001,927}; // 59,84,200,227,431,789,927,10001
 	
 	/*
-	quickselect(a,3); // 2
-	quickselect(a,6); // 5
-	quickselect(a,1); // 0
+	  quickselect(a,3); // 2
+	  quickselect(a,6); // 5
+	  quickselect(a,1); // 0
 	*/
 
 	/*
-	debug(retArray(quickSort2(a)));
-	debug(retArray(quickSort2(b)));
-	debug(retArray(quickSort2(c)));
+	  debug(retArray(quickSort2(a)));
+	  debug(retArray(quickSort2(b)));
+	  debug(retArray(quickSort2(c)));
 	*/
+
+	
+	// 4mil elements
+	int[]A; // 1, 2, or 3
+	int[]B; // Integer.MIN_VALUE -> Integer.MAX_VALUE
+	 
+
+	for(int i=0;i<4000000;i++){
+	    A[i]=(int)(Math.random()*3)+1;
+	    if(Math.random()>0.5){
+		B[i]=(int)(Math.random()*Integer.MAX_VALUE);
+	    }else{
+		B[i]=(int)(Math.random()*Integer.MIN_VALUE);
+	    }
+	}
+
+	long startTime = System.currentTimeMillis();
+        quickSort(a);
+	long endTime = System.currentTimeMillis();
+	System.out.println("quickSort took " + (end - start) + " milliseconds");
 	    
     }
 
