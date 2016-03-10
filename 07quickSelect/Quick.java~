@@ -2,13 +2,13 @@ import java.util.*;
 
 public class Quick{
 
-    private static boolean DEBUG = true;
+    private static boolean DEBUG = false;
 
     private static int partition(int[]data, int left, int right){
 	
 	int ind = (int)(Math.random()*(right-left))+left;
 	int val = data[ind];
-	
+
 	/*
 	debug("index = "+ind+", value = "+val);
 	debug("bounds = "+left+":"+right);
@@ -25,10 +25,8 @@ public class Quick{
 	
 	while(templeft!=tempright){
 	    if(data[templeft]<val){
-		//debug(templeft+"\t"+data[templeft]);
 		templeft++;
 	    }else{ // switch vals at bounds
-		//debug(templeft+"\t"+data[templeft]);
 		hold = data[templeft];
 		data[templeft]=data[tempright];
 		data[tempright]=hold;
@@ -36,19 +34,20 @@ public class Quick{
 	    }
 	}
 
-	if(data[tempright]>=val){
-	    data[right] = data[tempright];
-	    data[tempright] = val;
-	    //debug(retArray(data));	
-	    //debug("final index = "+ind);
+	if(tempright>=val){
+	    data[right]=data[tempright];
+	    data[tempright]=val;
 	    ind = tempright;
 	}else{
-	    data[right] = data[tempright+1];
-	    data[tempright+1] = val;
-	    //debug(retArray(data));	
-	    //debug("final index = "+ind);
+	    data[right]=data[tempright+1];
+	    data[tempright+1]=val;
 	    ind = tempright+1;
 	}
+
+	/*
+	debug(retArray(data));	
+	debug("final index = "+ind);
+	*/
 
 	return ind;
 	
@@ -63,18 +62,20 @@ public class Quick{
 
 	
     public static int quickselect(int[]data, int k){
+
 	int left = 0;
 	int right = data.length-1;
 	int index = partition(data,left,right);
 	while(index!=k){
-	    if(index<k){
-		index=partition(data,index,right);
+	    if(data[index]<k){
+		index = partition(data,index,right);
 	        // debug(retArray(data)+"\n"+index+" "+right+"\n");
 	    }else{
-		index=partition(data,left,index);
+		index = partition(data,left,index);
 		// debug(retArray(data)+"\n"+left+" "+index+"\n");
 	    }
 	}
+
 	debug(data[index]);
 	return data[index];
     }
@@ -109,11 +110,10 @@ public class Quick{
     }
 
     public static void main (String[]args){
-	int[]a={7,7,4,2,3,0,1,-6,12,8,5}; // -6,0,1,2,3,4,5,7,7,8,12
-	quickselect(a,3); // 2
-	quickselect(a,6); // 5
-	quickselect(a,1); // 0
-	//partition(a,3,9);
+	int[]a={7,2,1,4,5,8,12,0,-6,3,7}; // -6,0,1,2,3,4,5,7,7,8,12
+	Quick.quickselect(a,3); // 2
+	Quick.quickselect(a,6); // 5
+	Quick.quickselect(a,1); // 0
     }
 
 }
