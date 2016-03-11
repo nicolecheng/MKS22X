@@ -2,9 +2,102 @@ import java.util.*;
 
 public class Quick{
 
-    private static boolean DEBUG = false;
+    private static boolean DEBUG = true;
 
-    private static int partition(int[]data, int left, int right){
+    private static int[] partition(int[]data, int left, int right){
+	
+	int[]ret=new int[2];
+	int ind = (int)(Math.random()*(right-left))+left;
+	int val = data[ind];
+	
+	/*
+	  debug("index = "+ind+", value = "+val);
+	  debug("bounds = "+left+":"+right);
+	  debug(retArray(data));
+	*/
+
+	// swippity swappity (init)
+	data[ind]=data[right];
+	data[right]=val;
+
+	int duplicates = 1;
+
+	int templeft = left;
+	int tempright = right-1;
+	int hold;
+	
+	while(templeft!=tempright){
+	    if(data[templeft]==val){
+		duplicates++;
+	    }else if(data[templeft]<val){
+		templeft++;
+	    }else{ // switch vals at bounds
+		hold = data[templeft];
+		data[templeft]=data[tempright];
+		data[tempright]=hold;
+		tempright--;
+	    }
+	}
+
+	if(data[tempright]>=val){
+	    data[right] = data[tempright];
+	    data[tempright] = val;
+	    ind = tempright;
+	    for(int i = duplicates-1; i > 0; i--){
+		data[ind-1]=val;
+	    }
+	    ret[0]=ind-duplicates+1;
+	    ret[1]=ind;
+	}else{
+	    data[right] = data[tempright+1];
+	    data[tempright+1] = val;
+	    ind = tempright+1;
+	    for(int i = 1; i < duplicates; i++){
+		data[ind+i]=val;
+	    }
+	    ret[0]=ind;
+	    ret[1]=ind+duplicates-1;
+	}
+
+	return ret;
+	//return ind-(duplicates/2); // middle index of duplicates (if any)
+
+    }
+
+    /*
+    public static int quickselect(int[]data, int k){
+	int left = 0;
+	int right = data.length-1;
+	int index = partition(data,left,right);
+	while(index!=k){
+	    if(index<k){
+		index=partition(data,index,right);
+	    }else{
+		index=partition(data,left,index);
+	    }
+	}
+	debug(data[index]);
+	return data[index];
+    }
+
+    private static void QuickSort(int[]data,int left,int right){
+	int ind;
+	if(left<right){
+	    ind = partition(data,left,right);
+	    QuickSort(data,left,ind);
+	    QuickSort(data,ind+1,right);
+	}
+    }
+
+    private static int[] QuickSort2(int[]data){ //returns an int array
+        QuickSort(data,0,data.length-1);
+	debug(retArray(data));
+	return data;
+	}*/
+
+    //*****************************************************************************************************************
+
+    private static int partitionOld(int[]data, int left, int right){
 	
 	int ind = (int)(Math.random()*(right-left))+left;
 	int val = data[ind];
@@ -54,17 +147,16 @@ public class Quick{
     // this allows your quickselect method to decide where to go next.
 
     // Quick Select will now give the kth smallest value, so the k corresponds to the index of the array! Save you one subtraction!
-
 	
-    public static int quickselect(int[]data, int k){
+    public static int quickselectOld(int[]data, int k){
 	int left = 0;
 	int right = data.length-1;
-	int index = partition(data,left,right);
+	int index = partitionOld(data,left,right);
 	while(index!=k){
 	    if(index<k){
-		index=partition(data,index,right);
+		index=partitionOld(data,index,right);
 	    }else{
-		index=partition(data,left,index);
+		index=partitionOld(data,left,index);
 	    }
 	}
 	debug(data[index]);
@@ -75,20 +167,22 @@ public class Quick{
     // 0 <= k < data.length
 
 
-    public static void quickSort(int[]data){
-	quickSort(data,0,data.length-1);
+    public static void QuickSortOld(int[]data){
+	QuickSortOld(data,0,data.length-1);
     }
     
-    private static void quickSort(int[]data,int left,int right){
+    private static void QuickSortOld(int[]data,int left,int right){
 	int ind;
 	if(left<right){
-	    ind = partition(data,left,right);
-	    quickSort(data,left,ind);
-	    quickSort(data,ind+1,right);
+	    ind = partitionOld(data,left,right);
+	    QuickSortOld(data,left,ind);
+	    QuickSortOld(data,ind+1,right);
 	}
     }
-    private static int[] quickSort2(int[]data){
-        quickSort(data,0,data.length-1);
+
+    private static int[] QuickSortOld2(int[]data){ //returns an int array
+        QuickSortOld(data,0,data.length-1);
+	debug(retArray(data));
 	return data;
     }
     
@@ -128,6 +222,8 @@ public class Quick{
 	int[]b={9,0,-30,74,1}; // -30,0,1,9,74
 	int[]c={200,789,59,84,227,431,10001,927}; // 59,84,200,227,431,789,927,10001
 	
+	printArray(partition(a,0,10));
+
 	/*
 	  quickselect(a,3); // 2
 	  quickselect(a,6); // 5
@@ -140,26 +236,32 @@ public class Quick{
 	  debug(retArray(quickSort2(c)));
 	*/
 
-	
+	/*
 	// 4mil elements
 	int[]A; // 1, 2, or 3
 	int[]B; // Integer.MIN_VALUE -> Integer.MAX_VALUE
 	 
 
 	for(int i=0;i<4000000;i++){
-	    A[i]=(int)(Math.random()*3)+1;
-	    if(Math.random()>0.5){
-		B[i]=(int)(Math.random()*Integer.MAX_VALUE);
-	    }else{
-		B[i]=(int)(Math.random()*Integer.MIN_VALUE);
-	    }
+	A[i]=(int)(Math.random()*3)+1;
+	if(Math.random()>0.5){
+	B[i]=(int)(Math.random()*Integer.MAX_VALUE);
+	}else{
+	B[i]=(int)(Math.random()*Integer.MIN_VALUE);
 	}
-
+	}
+	*/
+	/*
+	int[]ab=new int[1000000];
+	for(int i = 0; i < 1000000;i++){
+	    ab[i]=0;
+	}
+	
 	long startTime = System.currentTimeMillis();
-        quickSort(a);
+        QuickSort2(a);
 	long endTime = System.currentTimeMillis();
-	System.out.println("quickSort took " + (end - start) + " milliseconds");
-	    
+	System.out.println("quickSort took " + (endTime - startTime) + " milliseconds");
+	*/ 
     }
 
 }
