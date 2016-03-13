@@ -9,13 +9,13 @@ public class Quick{
 	int[]ret=new int[2];
 	int ind = (int)(Math.random()*(right-left))+left;
 	int val = data[ind];
-	
-	
+
+	/*
 	debug("index = "+ind+", value = "+val);
 	debug("bounds = "+left+":"+right);
 	debug(retArray(data));
+	*/
 	
-
 	// swippity swappity (init)
 	swap(data,ind,right);
 
@@ -40,7 +40,7 @@ public class Quick{
 	    }
 	}
 
-	if(data[tempright]>=val){
+	if(data[tempright]>val){
 	    ind = tempright;
 	    for(int i = 0; i < duplicates; i++){
 		swap(data,right-i,ind-i);
@@ -60,33 +60,40 @@ public class Quick{
 
     }
 
-    /*
-    public static int quickselect(int[]data, int k){
-	int left = 0;
-	int right = data.length-1;
-	int index = partition(data,left,right);
-	while(index!=k){
-	    if(index<k){
-		index=partition(data,index,right);
+    public static int quickselect(int[] data, int k){
+	return quickSelect(data,0,data.length-1,k);
+    }
+    
+    public static int quickSelect(int[] data, int left,int right,int k){
+	
+	if(right == left){
+	    return data[right];
+	}else{	
+	    int[]hold = partition(data, left, right);
+	
+	    if(hold[1] == k){
+		return data[k];
+	    }else if(hold[1] > k){
+		return quickSelect(data,left,hold[0],k);
 	    }else{
-		index=partition(data,left,index);
+		return quickSelect(data,hold[1]+1,right,k);
 	    }
 	}
-	debug(data[index]);
-	return data[index];
+	
     }
-
-    private static void QuickSort(int[]data,int left,int right){
+    
+    /*
+    private static void quickSort(int[]data,int left,int right){
 	int ind;
 	if(left<right){
 	    ind = partition(data,left,right);
-	    QuickSort(data,left,ind);
-	    QuickSort(data,ind+1,right);
+	    quickSort(data,left,ind);
+	    quickSort(data,ind+1,right);
 	}
     }
 
-    private static int[] QuickSort2(int[]data){ //returns an int array
-        QuickSort(data,0,data.length-1);
+    private static int[] quickSort2(int[]data){ //returns an int array
+        quickSort(data,0,data.length-1);
 	debug(retArray(data));
 	return data;
 	}*/
@@ -163,21 +170,21 @@ public class Quick{
     // 0 <= k < data.length
 
 
-    public static void QuickSortOld(int[]data){
-	QuickSortOld(data,0,data.length-1);
+    public static void quickSortOld(int[]data){
+	quickSortOld(data,0,data.length-1);
     }
     
-    private static void QuickSortOld(int[]data,int left,int right){
+    private static void quickSortOld(int[]data,int left,int right){
 	int ind;
 	if(left<right){
 	    ind = partitionOld(data,left,right);
-	    QuickSortOld(data,left,ind);
-	    QuickSortOld(data,ind+1,right);
+	    quickSortOld(data,left,ind);
+	    quickSortOld(data,ind+1,right);
 	}
     }
 
-    private static int[] QuickSortOld2(int[]data){ //returns an int array
-        QuickSortOld(data,0,data.length-1);
+    private static int[] quickSortOld2(int[]data){ //returns an int array
+        quickSortOld(data,0,data.length-1);
 	debug(retArray(data));
 	return data;
     }
@@ -226,8 +233,9 @@ public class Quick{
 	//int[]b={9,0,-30,74,1}; // -30,0,1,9,74
 	//int[]c={200,789,59,84,227,431,10001,927}; // 59,84,200,227,431,789,927,10001
 	//partition(a,0,10);
-	printArray(partition(a,0,12));
-        printArray(a);
+	//printArray(partition(a,3,12));
+        debug(quickselect(a,11));
+	printArray(a);
 
 	/*
 	  quickselect(a,3); // 2
