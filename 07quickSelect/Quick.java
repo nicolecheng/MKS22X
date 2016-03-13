@@ -70,7 +70,6 @@ public class Quick{
 	    return data[right];
 	}else{	
 	    int[]hold = partition(data, left, right);
-	
 	    if(hold[1] == k){
 		return data[k];
 	    }else if(hold[1] > k){
@@ -78,17 +77,16 @@ public class Quick{
 	    }else{
 		return quickSelect(data,hold[1]+1,right,k);
 	    }
-	}
-	
+	}	
     }
     
-    /*
+    
     private static void quickSort(int[]data,int left,int right){
-	int ind;
+	int[]ind;
 	if(left<right){
 	    ind = partition(data,left,right);
-	    quickSort(data,left,ind);
-	    quickSort(data,ind+1,right);
+	    quickSort(data,left,ind[0]);
+	    quickSort(data,ind[1]+1,right);
 	}
     }
 
@@ -96,7 +94,7 @@ public class Quick{
         quickSort(data,0,data.length-1);
 	debug(retArray(data));
 	return data;
-	}*/
+	}
 
     //*****************************************************************************************************************
 
@@ -232,22 +230,8 @@ public class Quick{
 	int[]a={7,7,4,2,3,0,7,1,-6,12,8,7,5}; // -6,0,1,2,3,4,5,7,7,7,7,8,12
 	//int[]b={9,0,-30,74,1}; // -30,0,1,9,74
 	//int[]c={200,789,59,84,227,431,10001,927}; // 59,84,200,227,431,789,927,10001
-	//partition(a,0,10);
-	//printArray(partition(a,3,12));
-        debug(quickselect(a,11));
-	printArray(a);
 
-	/*
-	  quickselect(a,3); // 2
-	  quickselect(a,6); // 5
-	  quickselect(a,1); // 0
-	*/
-
-	/*
-	  debug(retArray(quickSort2(a)));
-	  debug(retArray(quickSort2(b)));
-	  debug(retArray(quickSort2(c)));
-	*/
+        quickSort2(a);
 
 	/*
 	// 4mil elements
