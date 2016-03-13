@@ -7,7 +7,7 @@ public class Quick{
     private static int[] partition(int[]data, int left, int right){
 	
 	int[]ret=new int[2];
-	int ind = 0;//(int)(Math.random()*(right-left))+left;
+	int ind = (int)(Math.random()*(right-left))+left;
 	int val = data[ind];
 	
 	
@@ -17,51 +17,46 @@ public class Quick{
 	
 
 	// swippity swappity (init)
-	data[ind]=data[right];
-	data[right]=val;
+	swap(data,ind,right);
 
 	int duplicates = 1;
 
 	int templeft = left;
 	int tempright = right-1;
-	int hold;
 	
 	while(templeft!=tempright){
 	    if(data[templeft]==val){
+		swap(data,templeft,right-duplicates);
+		if(right-duplicates>tempright){
+		    swap(data,templeft,tempright);
+		}
 		duplicates++;
-		templeft++;
+		tempright--;
 	    }else if(data[templeft]<val){
 		templeft++;
 	    }else{ // switch vals at bounds
-		hold = data[templeft];
-		data[templeft]=data[tempright];
-		data[tempright]=hold;
+	        swap(data,templeft,tempright);
 		tempright--;
 	    }
 	}
 
 	if(data[tempright]>=val){
-	    data[right] = data[tempright];
-	    data[tempright] = val;
 	    ind = tempright;
-	    for(int i = duplicates-1; i > 0; i--){
-		data[ind-1]=val;
+	    for(int i = 0; i < duplicates; i++){
+		swap(data,right-i,ind-i);
 	    }
 	    ret[0]=ind-duplicates+1;
 	    ret[1]=ind;
 	}else{
-	    data[right] = data[tempright+1];
-	    data[tempright+1] = val;
 	    ind = tempright+1;
-	    for(int i = 1; i < duplicates; i++){
-		data[ind+i]=val;
+	    for(int i = 0; i < duplicates; i++){
+		swap(data,ind+i,right-i);
 	    }
 	    ret[0]=ind;
 	    ret[1]=ind+duplicates-1;
 	}
 
 	return ret;
-	//return ind-(duplicates/2); // middle index of duplicates (if any)
 
     }
 
@@ -186,6 +181,14 @@ public class Quick{
 	debug(retArray(data));
 	return data;
     }
+
+    //*****************************************************************************************************************
+
+    private static void swap(int[] data, int x, int y){
+	int n = data[x];
+	data[x] = data[y];
+	data[y] = n;
+    }
     
     private static void debug(String s){
 	if(DEBUG)
@@ -222,9 +225,9 @@ public class Quick{
 	int[]a={7,7,4,2,3,0,7,1,-6,12,8,7,5}; // -6,0,1,2,3,4,5,7,7,7,7,8,12
 	//int[]b={9,0,-30,74,1}; // -30,0,1,9,74
 	//int[]c={200,789,59,84,227,431,10001,927}; // 59,84,200,227,431,789,927,10001
-	partition(a,0,10);
-	//	printArray(partition(a,0,10));
-	//	printArray(a);
+	//partition(a,0,10);
+	printArray(partition(a,0,12));
+        printArray(a);
 
 	/*
 	  quickselect(a,3); // 2
