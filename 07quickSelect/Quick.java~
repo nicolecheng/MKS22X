@@ -7,14 +7,14 @@ public class Quick{
     private static int[] partition(int[]data, int left, int right){
 	
 	int[]ret=new int[2];
-	int ind = 0;//(int)(Math.random()*(right-left))+left;
+	int ind = (int)(Math.random()*(right-left))+left;
 	int val = data[ind];
 	
-	
-	debug("index = "+ind+", value = "+val);
-	debug("bounds = "+left+":"+right);
-	debug(retArray(data));
-	
+	/*
+	  debug("index = "+ind+", value = "+val);
+	  debug("bounds = "+left+":"+right);
+	  debug(retArray(data));
+	*/
 
 	// swippity swappity (init)
 	data[ind]=data[right];
@@ -29,7 +29,6 @@ public class Quick{
 	while(templeft!=tempright){
 	    if(data[templeft]==val){
 		duplicates++;
-		templeft++;
 	    }else if(data[templeft]<val){
 		templeft++;
 	    }else{ // switch vals at bounds
@@ -201,7 +200,7 @@ public class Quick{
 	for(int i = 0; i < data.length-1; i++){
 	    System.out.print(data[i]+",");
 	}
-	System.out.print(data[data.length-1]+"]\n");
+	System.out.print(data[data.length-1]+"]");
     }
 
     public static String retArray(int[]data){
@@ -219,12 +218,11 @@ public class Quick{
         
     public static void main (String[]args){
 	
-	int[]a={7,7,4,2,3,0,7,1,-6,12,8,7,5}; // -6,0,1,2,3,4,5,7,7,7,7,8,12
-	//int[]b={9,0,-30,74,1}; // -30,0,1,9,74
-	//int[]c={200,789,59,84,227,431,10001,927}; // 59,84,200,227,431,789,927,10001
-	partition(a,0,10);
-	//	printArray(partition(a,0,10));
-	//	printArray(a);
+	int[]a={7,7,4,2,3,0,1,-6,12,8,5}; // -6,0,1,2,3,4,5,7,7,8,12
+	int[]b={9,0,-30,74,1}; // -30,0,1,9,74
+	int[]c={200,789,59,84,227,431,10001,927}; // 59,84,200,227,431,789,927,10001
+	
+	printArray(partition(a,0,10));
 
 	/*
 	  quickselect(a,3); // 2
