@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Quick{
 
-    private static boolean DEBUG = true;
+    private static boolean DEBUG = false;
     
     private static int[] partition(int[]data, int left, int right){
 
@@ -259,8 +259,15 @@ public class Quick{
 	Arrays.sort(c);
 	System.out.println("Done: Sorted="+Arrays.equals(d,c));
 	*/
-	
-	
+	       
+	/*
+	int[]ab=new int[1000000];
+	for(int i = 0; i < 1000000;i++){
+	    ab[i]=0;
+	}
+	*/
+
+	/*
 	// 4mil elements
 	int[]a = new int[4000000]; // 1, 2, or 3
 	int[]b = new int[4000000]; // Integer.MIN_VALUE -> Integer.MAX_VALUE
@@ -274,19 +281,37 @@ public class Quick{
 		b[i]=(int)(Math.random()*Integer.MIN_VALUE);
 	    }
 	}
-       
-	
-	int[]ab=new int[1000000];
-	for(int i = 0; i < 1000000;i++){
-	    ab[i]=0;
-	}
+
 	
 	long startTime = System.currentTimeMillis();
 	// debug(retArray(partition(ab,0,999999)));
-        quickSort(ab);
+        Arrays.sort(a);
 	long endTime = System.currentTimeMillis();
-	System.out.println("quickSort took " + (endTime - startTime) + " milliseconds");
-	
+	System.out.println("Arrays.sort took " + (endTime - startTime) + " milliseconds");
+	startTime = System.currentTimeMillis();
+        //quickSortOld(a);
+	endTime = System.currentTimeMillis();
+	System.out.println("quickSortOld took " + (endTime - startTime) + " milliseconds");	
+	startTime = System.currentTimeMillis();
+        quickSort(a);
+	endTime = System.currentTimeMillis();
+	System.out.println("quickSort took " + (endTime - startTime) + " milliseconds");	
+
+	System.out.println();
+
+    	startTime = System.currentTimeMillis();
+        Arrays.sort(b);
+	endTime = System.currentTimeMillis();
+	System.out.println("Arrays.sort took " + (endTime - startTime) + " milliseconds");	
+	startTime = System.currentTimeMillis();
+        quickSortOld(b);
+	endTime = System.currentTimeMillis();
+	System.out.println("quickSortOld took " + (endTime - startTime) + " milliseconds");	
+	startTime = System.currentTimeMillis();
+        quickSort(b);
+	endTime = System.currentTimeMillis();
+	System.out.println("quickSort took " + (endTime - startTime) + " milliseconds");	
+	*/
     }
 
 }
