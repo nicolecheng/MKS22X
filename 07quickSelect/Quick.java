@@ -66,7 +66,7 @@ public class Quick{
 	return quickSelect(data,0,data.length-1,k);
     }
     
-    public static int quickSelect(int[] data, int left,int right,int k){
+    private static int quickSelect(int[] data, int left,int right,int k){
 	if(right == left){
 	    return data[right];
 	}else{	
@@ -80,7 +80,7 @@ public class Quick{
 	    }
 	}	
     }
-    /*
+    
     private static void quickSort(int[]data,int left,int right){
 	int[]ind;
 	if(left<right){
@@ -92,18 +92,6 @@ public class Quick{
     
     private static void quickSort(int[]data){
 	quickSort(data, 0, data.length-1);
-	}*/
-
-        public static void quickSort(int[] data){
-	quickSort(data,0,data.length-1);
-    }
-
-    public static void quickSort(int[] data, int left, int right){
-	if(right-left>0){
-	    int[] pos=partition(data,left,right);
-	    quickSort(data,left,pos[0]-1);
-	    quickSort(data,pos[1]+1,right);
-	}
     }
 
     //*****************************************************************************************************************
@@ -214,7 +202,7 @@ public class Quick{
 	    System.out.println(m);
     }
 
-    public static void printArray(int[]data){
+    private static void printArray(int[]data){
 	System.out.print("[");
 	for(int i = 0; i < data.length-1; i++){
 	    System.out.print(data[i]+",");
@@ -222,7 +210,7 @@ public class Quick{
 	System.out.print(data[data.length-1]+"]\n");
     }
 
-    public static String retArray(int[]data){
+    private static String retArray(int[]data){
 	String s = "[";
 	for(int i = 0; i < data.length-1; i++){
 	    s += data[i]+",";
