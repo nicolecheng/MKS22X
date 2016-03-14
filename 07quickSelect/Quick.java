@@ -1,73 +1,65 @@
+// special shoutout to those precious souls who helped me on this
+
 import java.util.*;
 
 public class Quick{
 
-    private static boolean DEBUG = false;
+    private static boolean DEBUG = true;
     
     private static int[] partition(int[]data, int left, int right){
 
+	if(left==right){
+	    int[]ret = {left,right};
+	    return ret;
+	}
+
 	int[]ret=new int[2];
-	int ind = (int)(Math.random()*(right-left))+left;
+	int ind = (int)(Math.random()*(right-left+1))+left;
 	int val = data[ind];
 
 	/*	
-	debug("index = "+ind+", value = "+val);
-	debug("bounds = "+left+":"+right);
-	debug(retArray(data));
+		debug("index = "+ind+", value = "+val);
+		debug("bounds = "+left+":"+right);
+		debug(retArray(data));
 	*/
-	
-	// swippity swappity (init)
-	swap(data,ind,right);
 
-	//int duplicates = 0;
+	int[]hold = new int[data.length];
+
+	for(int i = 0; i < data.length; i++){
+	    hold[i]=data[i];
+	}
 
 	int templeft = left;
-	int tempright = right-1;
-	while(templeft!=tempright){
-	    if(data[templeft]==val){
-		//duplicates++;
+	int tempright = right;
+
+	for(int i = templeft; i <= right; i++){
+	     if(data[i]<val){
+		hold[templeft]=data[i];
 		templeft++;
-	    }else if(data[templeft]<val){
-		templeft++;
-	    }else{ // switch vals at bounds
-	        swap(data,templeft,tempright);
+	    }else if(data[i]>val){
+		hold[tempright]=data[i];
 		tempright--;
 	    }
 	}
+
+	// copy over duplicates
+	for(int i = templeft; i <= tempright; i++){
+	    hold[i] = val;
+	}
+
+	// over to data
+	for(int i = 0; i < data.length; i++){
+	    data[i] = hold[i];
+	}
 	
-	int hold;
-
-	if(val >= data[tempright]){
-	    hold = tempright+1;
-	    swap(data,right,tempright+1);
-	}else{
-	    hold = tempright;
-	    swap(data,right,tempright);
-	}
-
-	int bound = hold;
-
-	
-	while(bound > 0 && data[hold] == data[bound]){
-	    bound--;
-	}
-		
-	for(int i = 0; i <= bound; i++){
-	    if(data[i]==data[hold]){
-		swap(data, i, bound);
-		bound--;
-	    }
-	}
-
-	ret[0]=bound+1;
-	ret[1]=hold;;
+	ret[0]=templeft;
+	ret[1]=tempright;
 	
 	//debug(retArray(ret));
 	//debug(retArray(data));
 	return ret;
 	
     }
-    
     
 
     public static int quickselect(int[] data, int k){
@@ -88,7 +80,7 @@ public class Quick{
 	    }
 	}	
     }
-    
+    /*
     private static void quickSort(int[]data,int left,int right){
 	int[]ind;
 	if(left<right){
@@ -100,6 +92,18 @@ public class Quick{
     
     private static void quickSort(int[]data){
 	quickSort(data, 0, data.length-1);
+	}*/
+
+        public static void quickSort(int[] data){
+	quickSort(data,0,data.length-1);
+    }
+
+    public static void quickSort(int[] data, int left, int right){
+	if(right-left>0){
+	    int[] pos=partition(data,left,right);
+	    quickSort(data,left,pos[0]-1);
+	    quickSort(data,pos[1]+1,right);
+	}
     }
 
     //*****************************************************************************************************************
@@ -233,13 +237,29 @@ public class Quick{
         
     public static void main (String[]args){
 	
-	int[]A={7,7,4,2,3,0,7,1,-6,12,8,7,5}; // -6,0,1,2,3,4,5,7,7,7,7,8,12
+	//int[]A={7,7,4,2,3,0,7,1,-6,12,8,7,5}; // -6,0,1,2,3,4,5,7,7,7,7,8,12
 	//int[]B={9,0,-30,74,1}; // -30,0,1,9,74
 	//int[]C={200,789,59,84,227,431,10001,927}; // 59,84,200,227,431,789,927,10001
 	
-	// debug(retArray(partition(A,0,12)));
-        // quickSort(A);
-	// debug(retArray(A));
+	//debug(retArray(partition(A,0,12)));
+        //quickSort(A);
+	//debug(retArray(A));
+
+	/*
+	//LIKE THIS:
+	int[] d = new int [4000000];
+	int[] c = new int [d.length];
+
+	for(int i = 0; i < d.length; i++){
+	    d[i]= (int)(Math.random()*Integer.MAX_VALUE);
+	    c[i]= d[i];
+	}
+	
+	quickSortOld(d); //or even your old quicksort!!!
+	Arrays.sort(c);
+	System.out.println("Done: Sorted="+Arrays.equals(d,c));
+	*/
+	
 	
 	// 4mil elements
 	int[]a = new int[4000000]; // 1, 2, or 3
