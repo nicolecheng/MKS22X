@@ -2,31 +2,30 @@ import java.util.*;
 
 public class Quick{
 
-    private static boolean DEBUG = true;
+    private static boolean DEBUG = false;
     
     private static int[] partition(int[]data, int left, int right){
-	
+
 	int[]ret=new int[2];
 	int ind = (int)(Math.random()*(right-left))+left;
 	int val = data[ind];
 
-	
-	//debug("index = "+ind+", value = "+val);
-	//debug("bounds = "+left+":"+right);
-	//debug(retArray(data));
-	
+	/*	
+	debug("index = "+ind+", value = "+val);
+	debug("bounds = "+left+":"+right);
+	debug(retArray(data));
+	*/
 	
 	// swippity swappity (init)
 	swap(data,ind,right);
 
-	int duplicates = 0;
+	//int duplicates = 0;
 
 	int templeft = left;
 	int tempright = right-1;
-	
 	while(templeft!=tempright){
 	    if(data[templeft]==val){
-		duplicates++;
+		//duplicates++;
 		templeft++;
 	    }else if(data[templeft]<val){
 		templeft++;
@@ -35,42 +34,47 @@ public class Quick{
 		tempright--;
 	    }
 	}
+	
+	int hold;
 
-	if(data[tempright]>val){
-	    ind = tempright-duplicates-1;
-	    ret[0]=ind;
-	    ret[1]=ind+duplicates;
-	    swap(data,right,ind);
-	    for(int i = ind-1; i > 0; i--){
-		if(data[i]==val && duplicates > 0){
-		    swap(data,i,ind+duplicates);
-		    duplicates--;
-		}
-	    }
+	if(val >= data[tempright]){
+	    hold = tempright+1;
+	    swap(data,right,tempright+1);
 	}else{
-	    ind = tempright+1;
-	    ret[0]=ind-duplicates;
-	    ret[1]=ind;
-	    swap(data,right,ind);
-	    for(int i = ind-1; i > 0; i--){
-		if(data[i]==val && duplicates > 0){
-		    swap(data,i,ind-duplicates);
-		    duplicates--;
-		}
+	    hold = tempright;
+	    swap(data,right,tempright);
+	}
+
+	int bound = hold;
+
+	
+	while(bound > 0 && data[hold] == data[bound]){
+	    bound--;
+	}
+		
+	for(int i = 0; i <= bound; i++){
+	    if(data[i]==data[hold]){
+		swap(data, i, bound);
+		bound--;
 	    }
 	}
 
+	ret[0]=bound+1;
+	ret[1]=hold;;
+	
+	//debug(retArray(ret));
+	//debug(retArray(data));
 	return ret;
-
+	
     }
-    	
+    
+    
 
     public static int quickselect(int[] data, int k){
 	return quickSelect(data,0,data.length-1,k);
     }
     
     public static int quickSelect(int[] data, int left,int right,int k){
-	
 	if(right == left){
 	    return data[right];
 	}else{	
@@ -230,11 +234,12 @@ public class Quick{
     public static void main (String[]args){
 	
 	int[]A={7,7,4,2,3,0,7,1,-6,12,8,7,5}; // -6,0,1,2,3,4,5,7,7,7,7,8,12
-	//int[]b={9,0,-30,74,1}; // -30,0,1,9,74
-	//int[]c={200,789,59,84,227,431,10001,927}; // 59,84,200,227,431,789,927,10001
-
-        //quickSort2(A);
-
+	//int[]B={9,0,-30,74,1}; // -30,0,1,9,74
+	//int[]C={200,789,59,84,227,431,10001,927}; // 59,84,200,227,431,789,927,10001
+	
+	// debug(retArray(partition(A,0,12)));
+        // quickSort(A);
+	// debug(retArray(A));
 	
 	// 4mil elements
 	int[]a = new int[4000000]; // 1, 2, or 3
@@ -257,6 +262,7 @@ public class Quick{
 	}
 	
 	long startTime = System.currentTimeMillis();
+	// debug(retArray(partition(ab,0,999999)));
         quickSort(ab);
 	long endTime = System.currentTimeMillis();
 	System.out.println("quickSort took " + (endTime - startTime) + " milliseconds");
