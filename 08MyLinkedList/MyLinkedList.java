@@ -36,7 +36,23 @@ public class MyLinkedList{
     }
 
     public int remove(int index){
-	return -1;
+	// throw exception if index not in bounds
+	int num;
+	LNode hold;
+	LNode current = start;
+	for(int i = 0; i < index; i++){
+	    current = current.getNext();
+	}
+	num = current.getValue();
+	//debug(size);
+	for(int i = index; i < size-1; i++){
+	    hold = current.getNext();
+	    current.setValue(hold.getValue());
+	    current = current.getNext();
+	}
+	size--;
+	//debug(size);
+	return num;
     }
 
  public boolean add(int index, int value){
@@ -105,10 +121,12 @@ public class MyLinkedList{
 	if(size>0){
 	    s+=current.getValue()+",";
 	}
-        while(current.getNext() != null){
+	int n = 1;
+        while(current.getNext() != null && n < size){
 	    current = current.getNext();
 	    s += current.getValue();
-	    if(current.getNext()!=null){
+	    n++;
+	    if(current.getNext()!=null && n < size){
 		s+= ",";
 	    }
 	}
@@ -163,6 +181,7 @@ public class MyLinkedList{
     }
     
     public static void main(String[]args){
+	/*
 	MyLinkedList m = new MyLinkedList();
 	m.add(8); // [8]
 	m.add(3); // [8,3]
@@ -175,7 +194,10 @@ public class MyLinkedList{
 	m.add(6,10); // [2,1,3,5,-1,7,10]
 	// debug(m.indexOf(3)); // 2
 	// debug(m.indexOf(4)); // -1
+	m.remove(4); // [2,1,3,5,7,10]
+	m.remove(5);// [2,1,3,5,7]
 	System.out.println(m);
+	*/
     }
     
 }
