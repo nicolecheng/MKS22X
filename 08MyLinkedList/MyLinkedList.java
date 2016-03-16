@@ -1,55 +1,56 @@
 public class MyLinkedList{
-
+    
     LNode start;
     int size;
-    /*
     
     public MyLinkedList(){
 	size = 0;
-	start = new LNode();
-	LNode current = start;
     }
-
-    public int size(){
-	int ret = 0;
-	while(current.getNext() != null){
-	    ret++;
-	    current = current.getNext();
-	}
-	return ret;
-    }
-
-
+    
     public boolean add(int value){
 	if(size==0){
-	    set(0,value);
+	    start = new LNode(value);
 	}else{
-	    while(current.next()!=null){
+	    LNode next = new LNode(value);
+	    LNode current = start;
+	    while(current.getNext()!=null){
 		current = current.getNext();
 	    }
-		current.setNext(value);
+		current.setNext(next);
 	}
 	size++;
 	return true;
     }
-
+    /*
     public boolean add(int index, int value){
 	size++;
 	return true;
     }
 
-
+    */
+    
     public String toString(){
+	LNode current = start;
 	String s="[";
-	for(int i = 0; i < size-1; i++){
-	    s+=start.get(i)+",";
-	}
 	if(size>0){
-	    s+=start.get(size-1);
+	    s+=current.getValue()+",";
+	}
+        while(current.getNext() != null){
+	    current = current.getNext();
+	    s += current.getValue();
+	    if(current.getNext()!=null){
+		s+= ",";
+	    }
 	}
 	return s + "]";
     }
-    */
+    
+
+
+    public boolean set(int index, int newValue){
+	return true;
+    }
+    
     private class LNode{
 
 	LNode next;
@@ -59,14 +60,28 @@ public class MyLinkedList{
 	    this.value = value;
 	}
 
-	public boolean getNext(){
-	    
+	public LNode getNext(){
+	    return next;
 	}
 
+	public boolean setNext(LNode next){
+	    this.next = next;
+	    return true;
+	}
+
+	public int getValue(){
+	    return value;
+	}
+
+	
+	
     }
 
     public static void main(String[]args){
-	LNode n = new LNode();
+	MyLinkedList m = new MyLinkedList();
+	m.add(8);
+	m.add(3);
+	System.out.println(m);
     }
     
 }
