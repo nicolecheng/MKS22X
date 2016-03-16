@@ -10,12 +10,16 @@ public class MyLinkedList{
     }
 
     public int get(int index){
-	// throw exception if index >= size
-	LNode current = start;
-        for(int i = 0; i < index; i++){
-	    current = current.getNext();
+	try{ // catch exception if index > = size
+	    LNode current = start;
+	    for(int i = 0; i < index; i++){
+		current = current.getNext();
+	    }
+	    return current.getValue();
+	}catch(Exception e){
+	    System.out.println("index out of bounds in get(index)");
 	}
-	return current.getValue();
+	return -1;
     }
 
     public boolean set(int index, int newValue){
@@ -36,24 +40,28 @@ public class MyLinkedList{
     }
 
     public int remove(int index){
-	// throw exception if index not in bounds
-	int num;
-	LNode hold;
-	LNode current = start;
-	for(int i = 0; i < index; i++){
-	    current = current.getNext();
+	try{ // catch exception if index >= size
+	    int num;
+	    LNode hold;
+	    LNode current = start;
+	    for(int i = 0; i < index; i++){
+		current = current.getNext();
+	    }
+	    num = current.getValue();
+	    for(int i = index; i < size-1; i++){
+		hold = current.getNext();
+		current.setValue(hold.getValue());
+		current = current.getNext();
+	    }
+	    size--;
+	    return num;
+	}catch(Exception e){
+	    System.out.println("index out of bounds in remove(index)");
 	}
-	num = current.getValue();
-	for(int i = index; i < size-1; i++){
-	    hold = current.getNext();
-	    current.setValue(hold.getValue());
-	    current = current.getNext();
-	}
-	size--;
-	return num;
+	return -1;
     }
 
- public boolean add(int index, int value){
+    public boolean add(int index, int value){
 	if(index > size){
 	    return false;
 	}else if(index==size){
@@ -116,17 +124,13 @@ public class MyLinkedList{
     public String toString(){
 	LNode current = start;
 	String s="[";
-	if(size>0){
-	    s+=current.getValue()+",";
-	}
+	if(size>0){s+=current.getValue()+",";}
 	int n = 1;
         while(current != null && current.getNext() != null && n < size){
 	    current = current.getNext();
 	    s += current.getValue();
 	    n++;
-	    if(current.getNext()!=null && n < size){
-		s+= ",";
-	    }
+	    if(current.getNext()!=null && n < size){s+= ",";}
 	}
 	return s + "]";
     }
@@ -180,22 +184,26 @@ public class MyLinkedList{
     
     public static void main(String[]args){
 	
-	/*
-	MyLinkedList m = new MyLinkedList();
-	m.add(8); // [8]
-	m.add(3); // [8,3]
-	m.add(5); // [8,3,5]
-	m.set(0,1); // [1,3,5]
-	m.add(7); // [1,3,5,7]
-	m.add(3,-1); // [1,3,5,-1,7]
-	m.add(0,2); // [2,1,3,5,-1,7]
-	// debug(m.get(3)); // 5
-	m.add(6,10); // [2,1,3,5,-1,7,10]
-	// debug(m.indexOf(3)); // 2
-	// debug(m.indexOf(4)); // -1
-	m.remove(4); // [2,1,3,5,7,10]
-	m.remove(5);// [2,1,3,5,7]
-	System.out.println(m);
+	
+	  MyLinkedList m = new MyLinkedList();
+	  m.add(8); // [8]
+	  m.add(3); // [8,3]
+	  //m.remove(3); // catch exception
+	  System.out.println(m);
+
+	  /*
+	  m.add(5); // [8,3,5]
+	  m.set(0,1); // [1,3,5]
+	  m.add(7); // [1,3,5,7]
+	  m.add(3,-1); // [1,3,5,-1,7]
+	  m.add(0,2); // [2,1,3,5,-1,7]
+	  // debug(m.get(3)); // 5
+	  m.add(6,10); // [2,1,3,5,-1,7,10]
+	  // debug(m.indexOf(3)); // 2
+	  // debug(m.indexOf(4)); // -1
+	  m.remove(4); // [2,1,3,5,7,10]
+	  m.remove(5);// [2,1,3,5,7]
+	  System.out.println(m);
 	*/
 
     }
