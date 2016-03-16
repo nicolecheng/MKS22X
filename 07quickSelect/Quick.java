@@ -23,7 +23,7 @@ public class Quick{
 		debug(retArray(data));
 	*/
 
-	int[]hold = new int[data.length];
+	int[]hold = new int[data.length];  // COPYING EVERYTHING?
 
 	for(int i = 0; i < data.length; i++){
 	    hold[i]=data[i];
