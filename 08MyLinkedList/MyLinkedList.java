@@ -1,6 +1,6 @@
 public class MyLinkedList{
 
-    private static boolean DEBUG = true;
+    private static boolean DEBUG = false;
     
     LNode start;
     int size;
@@ -44,14 +44,12 @@ public class MyLinkedList{
 	    current = current.getNext();
 	}
 	num = current.getValue();
-	//debug(size);
 	for(int i = index; i < size-1; i++){
 	    hold = current.getNext();
 	    current.setValue(hold.getValue());
 	    current = current.getNext();
 	}
 	size--;
-	//debug(size);
 	return num;
     }
 
