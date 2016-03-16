@@ -93,7 +93,7 @@ public class MyLinkedList{
 	    while(current.getNext()!=null){
 		current = current.getNext();
 	    }
-		current.setNext(next);
+	    current.setNext(next);
 	}
 	size++;
 	return true;
@@ -120,7 +120,7 @@ public class MyLinkedList{
 	    s+=current.getValue()+",";
 	}
 	int n = 1;
-        while(current.getNext() != null && n < size){
+        while(current != null && current.getNext() != null && n < size){
 	    current = current.getNext();
 	    s += current.getValue();
 	    n++;
@@ -179,6 +179,7 @@ public class MyLinkedList{
     }
     
     public static void main(String[]args){
+	
 	/*
 	MyLinkedList m = new MyLinkedList();
 	m.add(8); // [8]
@@ -196,6 +197,7 @@ public class MyLinkedList{
 	m.remove(5);// [2,1,3,5,7]
 	System.out.println(m);
 	*/
+
     }
     
 }
