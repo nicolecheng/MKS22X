@@ -39,7 +39,7 @@ public class MyLinkedList{
 	return size;
     }
 
-    public int remove(int index){
+    public int remove(int index){ // O(i) bc you don't need to shift it -- just repoint
 	try{ // catch exception if index >= size
 	    int num;
 	    LNode hold;
@@ -61,7 +61,7 @@ public class MyLinkedList{
 	return -1;
     }
 
-    public boolean add(int index, int value){
+    public boolean add(int index, int value){ // modifying from the front -> O(1)
 	if(index > size){
 	    return false;
 	}else if(index==size){
@@ -182,7 +182,7 @@ public class MyLinkedList{
 	    System.out.println(n);
 	}
     }
-    
+    /*
     public static void main(String[]args){
 	
 	
@@ -208,5 +208,5 @@ public class MyLinkedList{
 	
 
     }
-    
+    */
 }
