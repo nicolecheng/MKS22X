@@ -9,7 +9,7 @@ public class MyLinkedList{
 	size = 0;
     }
 
-    public int get(int index){
+    public int get(int index){ // O(index)
 	try{ // catch exception if index > = size
 	    LNode current = start;
 	    for(int i = 0; i < index; i++){
@@ -22,7 +22,7 @@ public class MyLinkedList{
 	return -1;
     }
 
-    public boolean set(int index, int newValue){
+    public boolean set(int index, int newValue){ // O(index)
 	if(index >= size){
 	    return false;
 	}else{
@@ -35,7 +35,7 @@ public class MyLinkedList{
 	return true;
     }
 
-    public int size(){
+    public int size(){ // O(1), provided there's a size variable
 	return size;
     }
 
@@ -67,6 +67,7 @@ public class MyLinkedList{
 	}else if(index==size){
 	    add(value);
 	}else{
+	    // create new node, pointing to start
 	    LNode current = start;
 	    LNode next;
 	    int hold;
@@ -92,7 +93,7 @@ public class MyLinkedList{
 	return true;
     }
 
-    public boolean add(int value){
+    public boolean add(int value){ // Make this O(1) by keeping track of the last node
 	if(size==0){
 	    start = new LNode(value);
 	}else{
@@ -107,7 +108,7 @@ public class MyLinkedList{
 	return true;
     }
 
-    public int indexOf(int value){
+    public int indexOf(int value){ // O(n)
 	int ind = 0;
 	LNode current = start;
 	while(current!=null && current.getNext()!=null){
@@ -126,7 +127,7 @@ public class MyLinkedList{
 	String s="[";
 	if(size>0){s+=current.getValue()+",";}
 	int n = 1;
-        while(current != null && current.getNext() != null && n < size){
+	while(n < size && current.getNext() != null){
 	    current = current.getNext();
 	    s += current.getValue();
 	    n++;
@@ -185,26 +186,26 @@ public class MyLinkedList{
     public static void main(String[]args){
 	
 	
-	  MyLinkedList m = new MyLinkedList();
-	  m.add(8); // [8]
-	  m.add(3); // [8,3]
-	  //m.remove(3); // catch exception
-	  System.out.println(m);
+	MyLinkedList m = new MyLinkedList();
+	m.add(8); // [8]
+	m.add(3); // [8,3]
 
-	  /*
-	  m.add(5); // [8,3,5]
-	  m.set(0,1); // [1,3,5]
-	  m.add(7); // [1,3,5,7]
-	  m.add(3,-1); // [1,3,5,-1,7]
-	  m.add(0,2); // [2,1,3,5,-1,7]
-	  // debug(m.get(3)); // 5
-	  m.add(6,10); // [2,1,3,5,-1,7,10]
-	  // debug(m.indexOf(3)); // 2
-	  // debug(m.indexOf(4)); // -1
-	  m.remove(4); // [2,1,3,5,7,10]
-	  m.remove(5);// [2,1,3,5,7]
-	  System.out.println(m);
-	*/
+	//m.remove(3); // catch exception
+	//System.out.println(m);
+	
+	m.add(5); // [8,3,5]
+	m.set(0,1); // [1,3,5]
+	m.add(7); // [1,3,5,7]
+	m.add(3,-1); // [1,3,5,-1,7]
+	m.add(0,2); // [2,1,3,5,-1,7]
+	// debug(m.get(3)); // 5
+	m.add(6,10); // [2,1,3,5,-1,7,10]
+	// debug(m.indexOf(3)); // 2
+	// debug(m.indexOf(4)); // -1
+	m.remove(4); // [2,1,3,5,7,10]
+	m.remove(5);// [2,1,3,5,7]
+	System.out.println(m);
+	
 
     }
     
