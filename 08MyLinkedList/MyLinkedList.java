@@ -3,6 +3,7 @@ public class MyLinkedList{
     private static boolean DEBUG = false;
     
     LNode start;
+    LNode end;
     int size;
     
     public MyLinkedList(){
@@ -41,18 +42,13 @@ public class MyLinkedList{
 
     public int remove(int index){ // O(i) bc you don't need to shift it -- just repoint
 	try{ // catch exception if index >= size
-	    int num;
-	    LNode hold;
 	    LNode current = start;
-	    for(int i = 0; i < index; i++){
+	    for(int i = 0; i < index-1; i++){
 		current = current.getNext();
 	    }
-	    num = current.getValue();
-	    for(int i = index; i < size-1; i++){
-		hold = current.getNext();
-		current.setValue(hold.getValue());
-		current = current.getNext();
-	    }
+	    int num = current.getNext().getValue();
+	    LNode hold = current.getNext().getNext();
+	    current.setNext(hold);
 	    size--;
 	    return num;
 	}catch(Exception e){
@@ -61,50 +57,43 @@ public class MyLinkedList{
 	return -1;
     }
 
-    public boolean add(int index, int value){ // modifying from the front -> O(1)
+    // modifying from the front -> O(1); modifying from the back -> O(size)
+    public boolean add(int index, int value){ 
 	if(index > size){
 	    return false;
 	}else if(index==size){
 	    add(value);
-	}else{
-	    // create new node, pointing to start
+	}else if(index==0){
 	    LNode current = start;
-	    LNode next;
-	    int hold;
-	    int hold2;
-	    for(int i = 0; i < index; i++){
+	    LNode hold = new LNode(value);
+	    start = hold;
+	    start.setNext(current);
+	    size++;
+	}else{ // create new node, pointing to start
+	    LNode current = start;
+	    for(int i = 0; i < index-1; i++){
 		current = current.getNext();
-		next = current.getNext();
 	    }
-	    hold = current.getValue();
-	    current.setValue(value);
-	    for(int i = index; i < size; i++){
-	        if(current.getNext()!=null){
-		    next = current.getNext();
-		    hold2 = next.getValue();
-		    current.setNext(hold);
-		    current = current.getNext();
-		    hold = hold2;
-		}else{
-		    add(hold);
-		}
-	    }
+	    LNode next = new LNode(value);
+	    LNode hold = current.getNext();
+	    current.setNext(next);
+	    next.setNext(hold);
 	}
+	size++;
 	return true;
     }
 
     public boolean add(int value){ // Make this O(1) by keeping track of the last node
 	if(size==0){
 	    start = new LNode(value);
+	    end = start;
 	}else{
 	    LNode next = new LNode(value);
-	    LNode current = start;
-	    while(current.getNext()!=null){
-		current = current.getNext();
-	    }
-	    current.setNext(next);
+	    end.setNext(next);
+	    end = end.getNext();
 	}
 	size++;
+	debug(size+"  "+end.getValue());
 	return true;
     }
 
@@ -182,22 +171,26 @@ public class MyLinkedList{
 	    System.out.println(n);
 	}
     }
-    /*
+    
     public static void main(String[]args){
 	
 	
 	MyLinkedList m = new MyLinkedList();
 	m.add(8); // [8]
 	m.add(3); // [8,3]
-
-	//m.remove(3); // catch exception
-	//System.out.println(m);
-	
 	m.add(5); // [8,3,5]
+	System.out.println(m);
 	m.set(0,1); // [1,3,5]
+	System.out.println(m);
 	m.add(7); // [1,3,5,7]
+	System.out.println(m);
 	m.add(3,-1); // [1,3,5,-1,7]
+	System.out.println(m);
 	m.add(0,2); // [2,1,3,5,-1,7]
+	System.out.println(m);
+	m.remove(1); // [2,3,5,-1,7]
+	System.out.println(m);
+	/*
 	// debug(m.get(3)); // 5
 	m.add(6,10); // [2,1,3,5,-1,7,10]
 	// debug(m.indexOf(3)); // 2
@@ -205,8 +198,8 @@ public class MyLinkedList{
 	m.remove(4); // [2,1,3,5,7,10]
 	m.remove(5);// [2,1,3,5,7]
 	System.out.println(m);
-	
+	*/
 
     }
-    */
+    
 }
