@@ -43,14 +43,24 @@ public class MyLinkedList{
     public int remove(int index){ // O(i) bc you don't need to shift it -- just repoint
 	try{ // catch exception if index >= size
 	    LNode current = start;
-	    for(int i = 0; i < index-1; i++){
+	    if(index==0){
+		int num = start.getValue();
 		current = current.getNext();
+		start = current;
+		size--;
+		return num;
+	    }else{
+		for(int i = 0; i < index-1; i++){
+		    current = current.getNext();
+		}
+		int num = current.getNext().getValue();
+		if(index<size-1){
+		    LNode hold = current.getNext().getNext();
+		    current.setNext(hold);
+		}
+		size--;
+		return num;
 	    }
-	    int num = current.getNext().getValue();
-	    LNode hold = current.getNext().getNext();
-	    current.setNext(hold);
-	    size--;
-	    return num;
 	}catch(Exception e){
 	    System.out.println("index out of bounds in remove(index)");
 	}
@@ -58,7 +68,8 @@ public class MyLinkedList{
     }
 
     // modifying from the front -> O(1); modifying from the back -> O(size)
-    public boolean add(int index, int value){ 
+    public boolean add(int index, int value){
+	
 	if(index > size){
 	    return false;
 	}else if(index==size){
@@ -78,8 +89,8 @@ public class MyLinkedList{
 	    LNode hold = current.getNext();
 	    current.setNext(next);
 	    next.setNext(hold);
+	    size++;
 	}
-	size++;
 	return true;
     }
 
@@ -93,7 +104,6 @@ public class MyLinkedList{
 	    end = end.getNext();
 	}
 	size++;
-	debug(size+"  "+end.getValue());
 	return true;
     }
 
@@ -171,6 +181,8 @@ public class MyLinkedList{
 	    System.out.println(n);
 	}
     }
+
+    /*
     
     public static void main(String[]args){
 	
@@ -179,27 +191,19 @@ public class MyLinkedList{
 	m.add(8); // [8]
 	m.add(3); // [8,3]
 	m.add(5); // [8,3,5]
-	System.out.println(m);
 	m.set(0,1); // [1,3,5]
-	System.out.println(m);
 	m.add(7); // [1,3,5,7]
-	System.out.println(m);
 	m.add(3,-1); // [1,3,5,-1,7]
-	System.out.println(m);
 	m.add(0,2); // [2,1,3,5,-1,7]
 	System.out.println(m);
 	m.remove(1); // [2,3,5,-1,7]
+	m.add(5,10); // [2,3,5,-1,7,10]
+	m.remove(4); // [2,3,5,-1,10]
+	m.remove(4);// [2,3,5,-1]
 	System.out.println(m);
-	/*
-	// debug(m.get(3)); // 5
-	m.add(6,10); // [2,1,3,5,-1,7,10]
-	// debug(m.indexOf(3)); // 2
-	// debug(m.indexOf(4)); // -1
-	m.remove(4); // [2,1,3,5,7,10]
-	m.remove(5);// [2,1,3,5,7]
-	System.out.println(m);
-	*/
-
+	
     }
+
+    */
     
 }
