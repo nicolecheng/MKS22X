@@ -1,18 +1,18 @@
-public class MyLinkedList{
+public class MyLinkedList<T>{
 
     private static boolean DEBUG = false;
     
-    LNode start;
-    LNode end;
+    LNode<T> start;
+    LNode<T> end;
     int size;
     
     public MyLinkedList(){
 	size = 0;
     }
 
-    public int get(int index){ // O(index)
+    public T get(int index){ // O(index)
 	try{ // catch exception if index > = size
-	    LNode current = start;
+	    LNode<T> current = start;
 	    for(int i = 0; i < index; i++){
 		current = current.getNext();
 	    }
@@ -20,14 +20,14 @@ public class MyLinkedList{
 	}catch(Exception e){
 	    System.out.println("index out of bounds in get(index)");
 	}
-	return -1;
+	return start;
     }
 
-    public boolean set(int index, int newValue){ // O(index)
+    public boolean set(int index, T newValue){ // O(index)
 	if(index >= size){
 	    return false;
 	}else{
-	    LNode current = start;
+	    LNode<T> current = start;
 	    for(int i = 0; i < index; i++){
 		current = current.getNext();
 	    }
@@ -40,11 +40,11 @@ public class MyLinkedList{
 	return size;
     }
 
-    public int remove(int index){ // O(i) bc you don't need to shift it -- just repoint
+    public T remove(int index){ // O(i) bc you don't need to shift it -- just repoint
 	try{ // catch exception if index >= size
-	    LNode current = start;
+	    LNode<T> current = start;
 	    if(index==0){
-		int num = start.getValue();
+		T num = start.getValue();
 		current = current.getNext();
 		start = current;
 		size--;
@@ -53,7 +53,7 @@ public class MyLinkedList{
 		for(int i = 0; i < index-1; i++){
 		    current = current.getNext();
 		}
-		int num = current.getNext().getValue();
+		T num = current.getNext().getValue();
 		if(index<size-1){
 		    LNode hold = current.getNext().getNext();
 		    current.setNext(hold);
@@ -64,7 +64,7 @@ public class MyLinkedList{
 	}catch(Exception e){
 	    System.out.println("index out of bounds in remove(index)");
 	}
-	return -1;
+	return start;
     }
 
     // modifying from the front -> O(1); modifying from the back -> O(size)
@@ -75,18 +75,18 @@ public class MyLinkedList{
 	}else if(index==size){
 	    add(value);
 	}else if(index==0){
-	    LNode current = start;
-	    LNode hold = new LNode(value);
+	    LNode<T> current = start;
+	    LNode<T> hold = new LNode(value);
 	    start = hold;
 	    start.setNext(current);
 	    size++;
 	}else{ // create new node, pointing to start
-	    LNode current = start;
+	    LNode<T> current = start;
 	    for(int i = 0; i < index-1; i++){
 		current = current.getNext();
 	    }
-	    LNode next = new LNode(value);
-	    LNode hold = current.getNext();
+	    LNode<T> next = new LNode(value);
+	    LNode<T> hold = current.getNext();
 	    current.setNext(next);
 	    next.setNext(hold);
 	    size++;
@@ -94,12 +94,12 @@ public class MyLinkedList{
 	return true;
     }
 
-    public boolean add(int value){ // Make this O(1) by keeping track of the last node
+    public boolean add(T value){ // Make this O(1) by keeping track of the last node
 	if(size==0){
-	    start = new LNode(value);
+	    start = new LNode<T>(value);
 	    end = start;
 	}else{
-	    LNode next = new LNode(value);
+	    LNode<T> next = new LNode<T>(value);
 	    end.setNext(next);
 	    end = end.getNext();
 	}
@@ -107,6 +107,8 @@ public class MyLinkedList{
 	return true;
     }
 
+    /*
+    //you can use .equals()
     public int indexOf(int value){ // O(n)
 	int ind = 0;
 	LNode current = start;
@@ -119,8 +121,11 @@ public class MyLinkedList{
 	    }
 	}
 	return -1;
-    }       
+    }     
+    */  
     
+    // ***************************************************************************************************
+
     public String toString(){
 	LNode current = start;
 	String s="[";
@@ -128,7 +133,7 @@ public class MyLinkedList{
 	int n = 1;
 	while(n < size && current.getNext() != null){
 	    current = current.getNext();
-	    s += current.getValue();
+	    s += current.getValue().toString();
 	    n++;
 	    if(current.getNext()!=null && n < size){s+= ",";}
 	}
@@ -136,12 +141,12 @@ public class MyLinkedList{
     }
     
     
-    private class LNode{
+    private class LNode<T>{
 
 	LNode next;
-	int value;
+	T value;
 
-	public LNode(int value){
+	public LNode(T value){
 	    this.value = value;
 	}
 

@@ -9,21 +9,39 @@ public class Driver{
 	long start,end;
 
 	// add(int val)
-	start = System.currentTimeMillis();
+	//start = System.currentTimeMillis();
         //code to test here on ArrayList n
-	for(int i = 0; i < 100000; i++){
+	for(int i = 0; i < 1000000; i++){
 	    n.add(i);
+	    m.add(i);
 	}
+
+	start = System.currentTimeMillis();
+	for(int i = 0; i < 10000; i ++){
+	    m.add(0, i);
+	}
+	end = System.currentTimeMillis();
+	System.out.println("add(0,i) Time: " + (end-start)/1000.0 + " seconds for MyLinkedList");
+
+	start = System.currentTimeMillis();
+	for(int i = 0; i < 10000; i ++){
+	    n.add(0, i);
+	}
+	end = System.currentTimeMillis();
+	System.out.println("add(0,i) Time: " + (end-start)/1000.0 + " seconds for ArrayList");
+	
+/*
 	end = System.currentTimeMillis();
 	System.out.println("add(i) Time: " + (end-start)/1000.0 + " seconds for ArrayList");
 	start = System.currentTimeMillis();
         //same code to test here on linked list m
-	for(int i = 0; i < 100000; i++){
+	for(int i = 0; i < 1000000; i++){
 	    m.add(i);
 	}
 	end = System.currentTimeMillis();
 	System.out.println("add(i) Time: " + (end-start)/1000.0 + " seconds for MyLinkedList");
-
+	*/
+	/*
 	// get(int ind)
 	start = System.currentTimeMillis();
         //code to test here on ArrayList n
@@ -122,7 +140,8 @@ public class Driver{
         m.size();
 	end = System.currentTimeMillis();
 	System.out.println("size() Time: " + (end-start)/1000.0 + " seconds for MyLinkedList");
+	*/
+	}
 
-    }
     
 }
