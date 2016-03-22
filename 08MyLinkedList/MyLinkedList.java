@@ -11,8 +11,8 @@ public class MyLinkedList<T>{
     }
 
     public T get(int index){ // O(index)
+	LNode<T> current = start;
 	try{ // catch exception if index > = size
-	    LNode<T> current = start;
 	    for(int i = 0; i < index; i++){
 		current = current.getNext();
 	    }
@@ -20,7 +20,7 @@ public class MyLinkedList<T>{
 	}catch(Exception e){
 	    System.out.println("index out of bounds in get(index)");
 	}
-	return start;
+	return current.getValue();
     }
 
     public boolean set(int index, T newValue){ // O(index)
@@ -41,10 +41,11 @@ public class MyLinkedList<T>{
     }
 
     public T remove(int index){ // O(i) bc you don't need to shift it -- just repoint
+	T num = start.getValue();
 	try{ // catch exception if index >= size
 	    LNode<T> current = start;
 	    if(index==0){
-		T num = start.getValue();
+		num = start.getValue();
 		current = current.getNext();
 		start = current;
 		size--;
@@ -53,7 +54,7 @@ public class MyLinkedList<T>{
 		for(int i = 0; i < index-1; i++){
 		    current = current.getNext();
 		}
-		T num = current.getNext().getValue();
+		num = current.getNext().getValue();
 		if(index<size-1){
 		    LNode hold = current.getNext().getNext();
 		    current.setNext(hold);
@@ -64,11 +65,11 @@ public class MyLinkedList<T>{
 	}catch(Exception e){
 	    System.out.println("index out of bounds in remove(index)");
 	}
-	return start;
+	return num;
     }
 
     // modifying from the front -> O(1); modifying from the back -> O(size)
-    public boolean add(int index, int value){
+    public boolean add(int index, T value){
 	
 	if(index > size){
 	    return false;
@@ -125,11 +126,11 @@ public class MyLinkedList<T>{
     */  
     
     // ***************************************************************************************************
-
+    /*
     public String toString(){
-	LNode current = start;
+	LNode<T> current = start;
 	String s="[";
-	if(size>0){s+=current.getValue()+",";}
+	if(size>0){s+=current.getValue().toString()+",";}
 	int n = 1;
 	while(n < size && current.getNext() != null){
 	    current = current.getNext();
@@ -139,36 +140,36 @@ public class MyLinkedList<T>{
 	}
 	return s + "]";
     }
-    
+    */
     
     private class LNode<T>{
 
-	LNode next;
+	LNode<T> next;
 	T value;
 
 	public LNode(T value){
 	    this.value = value;
 	}
 
-	public LNode getNext(){
+	public LNode<T> getNext(){
 	    return next;
 	}
 
-	public boolean setNext(LNode next){
+	public boolean setNext(LNode<T> next){
 	    this.next = next;
 	    return true;
 	}
 
-	public boolean setNext(int val){
+	public boolean setNext(T val){
 	    next.setValue(val);
 	    return true;
 	}
 
-	public int getValue(){
+	public T getValue(){
 	    return value;
 	}
 
-	public boolean setValue(int value){
+	public boolean setValue(T value){
 	    this.value = value;
 	    return true;
 	}
@@ -180,13 +181,13 @@ public class MyLinkedList<T>{
 	    System.out.println(s);
 	}
     }
-    
-    private static void debug(int n){
+    /*
+    private static void debug(T n){
 	if(DEBUG){
 	    System.out.println(n);
 	}
     }
-
+    */
     /*
     
     public static void main(String[]args){
