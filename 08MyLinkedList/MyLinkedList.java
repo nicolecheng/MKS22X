@@ -126,21 +126,20 @@ public class MyLinkedList<T>{
     */  
     
     // ***************************************************************************************************
-    /*
+    
     public String toString(){
-	LNode<T> current = start;
-	String s="[";
-	if(size>0){s+=current.getValue().toString()+",";}
-	int n = 1;
-	while(n < size && current.getNext() != null){
-	    current = current.getNext();
-	    s += current.getValue().toString();
-	    n++;
-	    if(current.getNext()!=null && n < size){s+= ",";}
+	String ans = "[";
+	LNode<T> p = start;
+	while(p != null){
+	    ans += p.getValue();
+	    if(p.getNext()!= null){
+		ans+=", ";
+	    }
+	    p = p.getNext();
 	}
-	return s + "]";
+	return ans+"]";
     }
-    */
+    
     
     private class LNode<T>{
 
@@ -181,13 +180,7 @@ public class MyLinkedList<T>{
 	    System.out.println(s);
 	}
     }
-    /*
-    private static void debug(T n){
-	if(DEBUG){
-	    System.out.println(n);
-	}
-    }
-    */
+    
     /*
     
     public static void main(String[]args){
@@ -207,6 +200,30 @@ public class MyLinkedList<T>{
 	m.remove(4); // [2,3,5,-1,10]
 	m.remove(4);// [2,3,5,-1]
 	System.out.println(m);
+	
+    }
+
+    */
+
+    /*
+
+    public static void main(String[]args){
+
+	MyLinkedList<Integer> i = new MyLinkedList<Integer>(); //calling a constructor USES diamond notation
+	i.add(new Integer(3)); // [3]
+	i.add(new Integer(-2)); // [3,-2]
+	i.add(new Integer(7)); // [3,-2,7]
+       	i.set(2,new Integer(15)); // [3,-2,15]
+	i.remove(1); // [3,15]
+	System.out.println(i);
+
+	MyLinkedList<String> s = new MyLinkedList<String>();
+	s.add("Hello");
+	s.add("world");
+	s.add("Hope");
+	s.add("you're");
+	s.add("listening");
+	System.out.println(s);
 	
     }
 
