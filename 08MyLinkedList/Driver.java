@@ -1,147 +1,131 @@
 import java.util.*;
 
 public class Driver{
-    
     public static void main(String[]args){
-	MyLinkedList m = new MyLinkedList();
-	ArrayList<Integer> n = new ArrayList<Integer>();
-	
-	long start,end;
+        MyLinkedList<String> m = new MyLinkedList<String>();
+        ArrayList<String>    n = new ArrayList<String>();
 
-	// add(int val)
-	//start = System.currentTimeMillis();
-        //code to test here on ArrayList n
-	for(int i = 0; i < 1000000; i++){
-	    n.add(i);
-	    m.add(i);
-	}
+        for(int i = 0; i < 10; i++){
+            n.add(""+i);
+            m.add(""+i);
+        }
 
-	start = System.currentTimeMillis();
-	for(int i = 0; i < 10000; i ++){
-	    m.add(0, i);
-	}
-	end = System.currentTimeMillis();
-	System.out.println("add(0,i) Time: " + (end-start)/1000.0 + " seconds for MyLinkedList");
+        try{
+            m.add(-1,"oops");
+            System.out.println("\n\nAdd -1 #####################################");
+        }catch(IndexOutOfBoundsException e){
+	    
+        }
+        try{
+            m.add(12,"oops");
+            System.out.println("\n\n add 12 #####################################");
+        }catch(IndexOutOfBoundsException e){
+	    
+        }
+        try{
+            m.remove(12);
+            System.out.println("\n\n remove 12 #####################################");
+        }catch(IndexOutOfBoundsException e){
+	    
+        }
 
-	start = System.currentTimeMillis();
-	for(int i = 0; i < 10000; i ++){
-	    n.add(0, i);
-	}
-	end = System.currentTimeMillis();
-	System.out.println("add(0,i) Time: " + (end-start)/1000.0 + " seconds for ArrayList");
-	
-/*
-	end = System.currentTimeMillis();
-	System.out.println("add(i) Time: " + (end-start)/1000.0 + " seconds for ArrayList");
-	start = System.currentTimeMillis();
-        //same code to test here on linked list m
-	for(int i = 0; i < 1000000; i++){
-	    m.add(i);
-	}
-	end = System.currentTimeMillis();
-	System.out.println("add(i) Time: " + (end-start)/1000.0 + " seconds for MyLinkedList");
-	*/
-	/*
-	// get(int ind)
-	start = System.currentTimeMillis();
-        //code to test here on ArrayList n
-	for(int i = 0; i < 100000; i++){
-	    n.get(i);
-	}
-	end = System.currentTimeMillis();
-	System.out.println("get(i) Time: " + (end-start)/1000.0 + " seconds for ArrayList");
-	start = System.currentTimeMillis();
-        //same code to test here on linked list m
-	for(int i = 0; i < 100000; i++){
-	    m.get(i);
-	}
-	end = System.currentTimeMillis();
-	System.out.println("get(i) Time: " + (end-start)/1000.0 + " seconds for MyLinkedList");
+        try{
+            m.set(12,"Fwazzat?!?");
+            System.out.println("\n\n set 12 #####################################");
+        }catch(IndexOutOfBoundsException e){
+	    
+        }
 
-	// set(int ind, int newVal)
-	start = System.currentTimeMillis();
-        //code to test here on ArrayList n
-	int k = 100000;
-	for(int i = 0; i < 100000; i++){
-	    n.set(i,k);
-	    k++;
-	}
-	end = System.currentTimeMillis();
-	System.out.println("set(i,v) Time: " + (end-start)/1000.0 + " seconds for ArrayList");
-	start = System.currentTimeMillis();
-        //same code to test here on linked list m
-	k = 100000;
-	for(int i = 0; i < 100000; i++){
-	    m.set(i,k);
-	    k++;
-	}
-	end = System.currentTimeMillis();
-	System.out.println("set(i,v) Time: " + (end-start)/1000.0 + " seconds for MyLinkedList");
 
-	// remove(int ind)
-	start = System.currentTimeMillis();
-        //code to test here on ArrayList n
-	for(int i = 0; i < 50000; i++){
-	    n.remove(i);
-	}
-	end = System.currentTimeMillis();
-	System.out.println("remove(i) Time: " + (end-start)/1000.0 + " seconds for ArrayList");
-	start = System.currentTimeMillis();
-        //same code to test here on linked list m
-	for(int i = 0; i < 50000; i++){
-	    m.remove(i);
-	}
-	end = System.currentTimeMillis();
-	System.out.println("remove(i) Time: " + (end-start)/1000.0 + " seconds for MyLinkedList");
 
-	// add(int ind, int val)
-	start = System.currentTimeMillis();
-        //code to test here on ArrayList n
-	for(int i = 0; i < 100000; i++){
-	    k = (int)Math.random()*1000;
-	    n.add(i,k);
-	}
-	end = System.currentTimeMillis();
-	System.out.println("add(i,v) Time: " + (end-start)/1000.0 + " seconds for ArrayList");
-	start = System.currentTimeMillis();
-        //same code to test here on linked list m
-	for(int i = 0; i < 100000; i++){
-	    k = (int)Math.random()*1000;
-	    m.add(i,k);
-	}
-	end = System.currentTimeMillis();
-	System.out.println("add(i,v) Time: " + (end-start)/1000.0 + " seconds for MyLinkedList");
 
-	// indexOf(int val)
-	start = System.currentTimeMillis();
-        //code to test here on ArrayList n
-	for(int i = 0; i < 100000; i++){
-	    n.indexOf(i);
-	}
-	end = System.currentTimeMillis();
-	System.out.println("indexOf(v) Time: " + (end-start)/1000.0 + " seconds for ArrayList");
-	start = System.currentTimeMillis();
-        //same code to test here on linked list m
-	for(int i = 0; i < 100000; i++){
-	    m.indexOf(i);
-	}
-	end = System.currentTimeMillis();
-	System.out.println("indexOf(v) Time: " + (end-start)/1000.0 + " seconds for MyLinkedList");
 
-	// size()
-	start = System.currentTimeMillis();
-        //code to test here on ArrayList n
-	n.size();
-	end = System.currentTimeMillis();
-	System.out.println("size() Time: " + (end-start)/1000.0 + " seconds for ArrayList");
+        //replace toString(true) with a debug to string that shows the head/tail
+        System.out.println(m.toString(true));
+        System.out.println(n);
 
-	start = System.currentTimeMillis();
-        //same code to test here on linked list m
-        m.size();
-	end = System.currentTimeMillis();
-	System.out.println("size() Time: " + (end-start)/1000.0 + " seconds for MyLinkedList");
-	*/
-	}
+        //test removing from head/tail/middle
+        m.remove(0);
+        n.remove(0);
+        System.out.println(m.toString(true));
 
-    
+        m.remove(2);
+        n.remove(2);
+        System.out.println(m.toString(true));
+
+        m.remove(m.size()-1);
+        n.remove(n.size()-1);
+        System.out.println(m.toString(true));
+        System.out.println(n);
+
+        //test adding to end/start
+        m.add(0,"START");
+        n.add(0,"START");
+        m.add(m.size(),"PENULTIMATE");
+        n.add(n.size(),"PENULTIMATE");
+        System.out.println(m.toString(true));
+        System.out.println(n);
+
+        //test add
+        m.add("Z-END!");
+        n.add("Z-END!");
+        System.out.println(m.toString(true));
+        System.out.println(n);
+
+        //test remove random items:
+        Random rand = new Random(0);
+        for(int i = 0; i < 6000; i++){
+            int op = rand.nextInt(4);
+
+            if(op == 0 || n.size()==0){//ensure never empty
+                n.add(""+i);
+                m.add(""+i);
+            }else if(op == 1 ){
+                int x = rand.nextInt(n.size());
+                n.add(x,""+i);
+                m.add(x,""+i);
+            }else{
+                int x = rand.nextInt(n.size());
+                if(!n.remove(x).equals(m.remove(x))){
+                    System.out.println("Non matching elements removed\n");
+                    System.exit(1);
+                }
+            }
+        }
+        System.out.println(m.toString(true));
+        System.out.println(n);
+
+        /*test speed of add in front and at end.
+	  long start,end;
+	  System.out.println("Add 100k to front");
+
+	  start = System.currentTimeMillis();
+	  for(int i = 0; i < 100000; i++)
+	  n.add(0,""+i);
+	  end = System.currentTimeMillis();
+	  System.out.println( "ArrayList "+(end-start)/1000.0 );
+
+	  start = System.currentTimeMillis();
+	  for(int i = 0; i < 100000; i++)
+	  m.add(0,""+i);
+	  end = System.currentTimeMillis();
+	  System.out.println( "LinkedList "+(end-start)/1000.0 );
+
+
+	  System.out.println("Add 1m to end");
+
+	  start = System.currentTimeMillis();
+	  for(int i = 0; i < 1000000; i++)
+	  n.add(""+i);
+	  end = System.currentTimeMillis();
+	  System.out.println( "ArrayList "+(end-start)/1000.0 );
+
+	  start = System.currentTimeMillis();
+	  for(int i = 0; i < 1000000; i++)
+	  m.add(""+i);
+	  end = System.currentTimeMillis();
+	  System.out.println( "LinkedList "+(end-start)/1000.0 );
+
+        */
+    }
 }

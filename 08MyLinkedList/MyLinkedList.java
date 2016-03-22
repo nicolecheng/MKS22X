@@ -25,6 +25,7 @@ public class MyLinkedList<T>{
 
     public boolean set(int index, T newValue){ // O(index)
 	if(index >= size){
+	    System.out.println("set(i,T) index out of bounds");
 	    return false;
 	}else{
 	    LNode<T> current = start;
@@ -58,6 +59,8 @@ public class MyLinkedList<T>{
 		if(index<size-1){
 		    LNode hold = current.getNext().getNext();
 		    current.setNext(hold);
+		}else{
+		    end = current;
 		}
 		size--;
 		return num;
@@ -72,6 +75,7 @@ public class MyLinkedList<T>{
     public boolean add(int index, T value){
 	
 	if(index > size){
+	    System.out.println("add(i,T) index out of bounds");
 	    return false;
 	}else if(index==size){
 	    add(value);
@@ -125,9 +129,20 @@ public class MyLinkedList<T>{
     }     
     */  
     
-    // ***************************************************************************************************
-    
     public String toString(){
+	String ans = "[";
+	LNode<T> p = start;
+	while(p != null){
+	    ans += p.getValue();
+	    if(p.getNext()!= null){
+		ans+=", ";
+	    }
+	    p = p.getNext();
+	}
+	return ans+"]";
+    }
+
+    public String toString(boolean b){
 	String ans = "[";
 	LNode<T> p = start;
 	while(p != null){
