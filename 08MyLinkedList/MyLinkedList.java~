@@ -57,7 +57,7 @@ public class MyLinkedList<T>{
 		}
 		num = current.getNext().getValue();
 		if(index<size-1){
-		    LNode hold = current.getNext().getNext();
+		    LNode<T> hold = current.getNext().getNext();
 		    current.setNext(hold);
 		}else{
 		    end = current;
@@ -81,7 +81,7 @@ public class MyLinkedList<T>{
 	    add(value);
 	}else if(index==0){
 	    LNode<T> current = start;
-	    LNode<T> hold = new LNode(value);
+	    LNode<T> hold = new LNode<T>(value);
 	    start = hold;
 	    start.setNext(current);
 	    size++;
@@ -90,7 +90,7 @@ public class MyLinkedList<T>{
 	    for(int i = 0; i < index-1; i++){
 		current = current.getNext();
 	    }
-	    LNode<T> next = new LNode(value);
+	    LNode<T> next = new LNode<T>(value);
 	    LNode<T> hold = current.getNext();
 	    current.setNext(next);
 	    next.setNext(hold);

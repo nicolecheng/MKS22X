@@ -1,9 +1,11 @@
-public class MyLinkedList<T>{
+import java.util.*;
+
+public class MyLinkedList<T> implements Iterable<T>{
 
     private static boolean DEBUG = false;
     
-    LNode<T> start;
-    LNode<T> end;
+    LNode start;
+    LNode end;
     int size;
     
     public MyLinkedList(){
@@ -11,7 +13,7 @@ public class MyLinkedList<T>{
     }
 
     public T get(int index){ // O(index)
-	LNode<T> current = start;
+	LNode current = start;
 	try{ // catch exception if index > = size
 	    for(int i = 0; i < index; i++){
 		current = current.getNext();
@@ -28,7 +30,7 @@ public class MyLinkedList<T>{
 	    System.out.println("set(i,T) index out of bounds");
 	    return false;
 	}else{
-	    LNode<T> current = start;
+	    LNode current = start;
 	    for(int i = 0; i < index; i++){
 		current = current.getNext();
 	    }
@@ -44,7 +46,7 @@ public class MyLinkedList<T>{
     public T remove(int index){ // O(i) bc you don't need to shift it -- just repoint
 	T num = start.getValue();
 	try{ // catch exception if index >= size
-	    LNode<T> current = start;
+	    LNode current = start;
 	    if(index==0){
 		num = start.getValue();
 		current = current.getNext();
@@ -57,7 +59,7 @@ public class MyLinkedList<T>{
 		}
 		num = current.getNext().getValue();
 		if(index<size-1){
-		    LNode<T> hold = current.getNext().getNext();
+		    LNode hold = current.getNext().getNext();
 		    current.setNext(hold);
 		}else{
 		    end = current;
@@ -80,18 +82,18 @@ public class MyLinkedList<T>{
 	}else if(index==size){
 	    add(value);
 	}else if(index==0){
-	    LNode<T> current = start;
-	    LNode<T> hold = new LNode<T>(value);
+	    LNode current = start;
+	    LNode hold = new LNode(value);
 	    start = hold;
 	    start.setNext(current);
 	    size++;
 	}else{ // create new node, pointing to start
-	    LNode<T> current = start;
+	    LNode current = start;
 	    for(int i = 0; i < index-1; i++){
 		current = current.getNext();
 	    }
-	    LNode<T> next = new LNode<T>(value);
-	    LNode<T> hold = current.getNext();
+	    LNode next = new LNode(value);
+	    LNode hold = current.getNext();
 	    current.setNext(next);
 	    next.setNext(hold);
 	    size++;
@@ -101,10 +103,10 @@ public class MyLinkedList<T>{
 
     public boolean add(T value){ // Make this O(1) by keeping track of the last node
 	if(size==0){
-	    start = new LNode<T>(value);
+	    start = new LNode(value);
 	    end = start;
 	}else{
-	    LNode<T> next = new LNode<T>(value);
+	    LNode next = new LNode(value);
 	    end.setNext(next);
 	    end = end.getNext();
 	}
@@ -115,23 +117,23 @@ public class MyLinkedList<T>{
     /*
     //you can use .equals()
     public int indexOf(int value){ // O(n)
-	int ind = 0;
-	LNode current = start;
-	while(current!=null && current.getNext()!=null){
-	    if(current.getValue()==value){
-		return ind;
-	    }else{
-		current = current.getNext();
-		ind++;
-	    }
-	}
-	return -1;
+    int ind = 0;
+    LNode current = start;
+    while(current!=null && current.getNext()!=null){
+    if(current.getValue()==value){
+    return ind;
+    }else{
+    current = current.getNext();
+    ind++;
+    }
+    }
+    return -1;
     }     
     */  
     
     public String toString(){
 	String ans = "[";
-	LNode<T> p = start;
+	LNode p = start;
 	while(p != null){
 	    ans += p.getValue();
 	    if(p.getNext()!= null){
@@ -144,7 +146,7 @@ public class MyLinkedList<T>{
 
     public String toString(boolean b){
 	String ans = "[";
-	LNode<T> p = start;
+	LNode p = start;
 	while(p != null){
 	    ans += p.getValue();
 	    if(p.getNext()!= null){
@@ -156,20 +158,20 @@ public class MyLinkedList<T>{
     }
     
     
-    private class LNode<T>{
+    private class LNode{
 
-	LNode<T> next;
+	LNode next;
 	T value;
 
 	public LNode(T value){
 	    this.value = value;
 	}
 
-	public LNode<T> getNext(){
+	public LNode getNext(){
 	    return next;
 	}
 
-	public boolean setNext(LNode<T> next){
+	public boolean setNext(LNode next){
 	    this.next = next;
 	    return true;
 	}
@@ -195,52 +197,77 @@ public class MyLinkedList<T>{
 	    System.out.println(s);
 	}
     }
+
+    public Iterator<T> iterator(){
+	return new It(this);
+    }
+
+    public class It implements Iterator<T>{
+	LNode current;
+	public It(MyLinkedList<T> L){
+	    current = L.start;
+	}
+	public boolean hasNext(){
+	    return (current.getNext() != null);
+	}
+	public T next(){
+	    if(hasNext()){
+		current = current.getNext();
+		return current.getValue();
+	    }else{
+		throw new NoSuchElementException();
+	    }
+	}
+	public void remove(){
+	    throw new UnsupportedOperationException();
+	}
+    }
     
     /*
     
-    public static void main(String[]args){
+      public static void main(String[]args){
 	
 	
-	MyLinkedList m = new MyLinkedList();
-	m.add(8); // [8]
-	m.add(3); // [8,3]
-	m.add(5); // [8,3,5]
-	m.set(0,1); // [1,3,5]
-	m.add(7); // [1,3,5,7]
-	m.add(3,-1); // [1,3,5,-1,7]
-	m.add(0,2); // [2,1,3,5,-1,7]
-	System.out.println(m);
-	m.remove(1); // [2,3,5,-1,7]
-	m.add(5,10); // [2,3,5,-1,7,10]
-	m.remove(4); // [2,3,5,-1,10]
-	m.remove(4);// [2,3,5,-1]
-	System.out.println(m);
+      MyLinkedList m = new MyLinkedList();
+      m.add(8); // [8]
+      m.add(3); // [8,3]
+      m.add(5); // [8,3,5]
+      m.set(0,1); // [1,3,5]
+      m.add(7); // [1,3,5,7]
+      m.add(3,-1); // [1,3,5,-1,7]
+      m.add(0,2); // [2,1,3,5,-1,7]
+      System.out.println(m);
+      m.remove(1); // [2,3,5,-1,7]
+      m.add(5,10); // [2,3,5,-1,7,10]
+      m.remove(4); // [2,3,5,-1,10]
+      m.remove(4);// [2,3,5,-1]
+      System.out.println(m);
 	
-    }
+      }
 
     */
 
     /*
 
-    public static void main(String[]args){
+      public static void main(String[]args){
 
-	MyLinkedList<Integer> i = new MyLinkedList<Integer>(); //calling a constructor USES diamond notation
-	i.add(new Integer(3)); // [3]
-	i.add(new Integer(-2)); // [3,-2]
-	i.add(new Integer(7)); // [3,-2,7]
-       	i.set(2,new Integer(15)); // [3,-2,15]
-	i.remove(1); // [3,15]
-	System.out.println(i);
+      MyLinkedList<Integer> i = new MyLinkedList<Integer>(); //calling a constructor USES diamond notation
+      i.add(new Integer(3)); // [3]
+      i.add(new Integer(-2)); // [3,-2]
+      i.add(new Integer(7)); // [3,-2,7]
+      i.set(2,new Integer(15)); // [3,-2,15]
+      i.remove(1); // [3,15]
+      System.out.println(i);
 
-	MyLinkedList<String> s = new MyLinkedList<String>();
-	s.add("Hello");
-	s.add("world");
-	s.add("Hope");
-	s.add("you're");
-	s.add("listening");
-	System.out.println(s);
+      MyLinkedList<String> s = new MyLinkedList<String>();
+      s.add("Hello");
+      s.add("world");
+      s.add("Hope");
+      s.add("you're");
+      s.add("listening");
+      System.out.println(s);
 	
-    }
+      }
 
     */
     
