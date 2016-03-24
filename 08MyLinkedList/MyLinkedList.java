@@ -268,7 +268,7 @@ public class MyLinkedList<T> implements Iterable<T>{
       }
 
     */
-    
+    /*
     public static void main(String[]args){
 
 	MyLinkedList<Integer> m = new MyLinkedList<Integer>();
@@ -291,11 +291,11 @@ public class MyLinkedList<T> implements Iterable<T>{
 	}
 
 	System.out.println();
-	/*
+
 	System.out.println(i.hasNext());
 	System.out.println(i.next());
 	System.out.println(i.next());
-	*/
-    }
 
+    }
+    */
 }
