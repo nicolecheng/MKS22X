@@ -13,14 +13,13 @@ public class MyLinkedList<T> implements Iterable<T>{
     }
 
     public T get(int index){ // O(index)
+	if(index < 0 || index >= size){
+	    throw new IndexOutOfBoundsException("Index: "+index+"\tSize: "+size);
+	}
 	LNode current = start;
-	try{ // catch exception if index > = size
-	    for(int i = 0; i < index; i++){
-		current = current.getNext();
-	    }
-	    return current.getValue();
-	}catch(Exception e){
-	    System.out.println("index out of bounds in get(index)");
+	// catch exception if index > = size
+	for(int i = 0; i < index; i++){
+	    current = current.getNext();
 	}
 	return current.getValue();
     }
@@ -44,33 +43,31 @@ public class MyLinkedList<T> implements Iterable<T>{
     }
 
     public T remove(int index){ // O(i) bc you don't need to shift it -- just repoint
-	T num = start.getValue();
-	try{ // catch exception if index >= size
-	    LNode current = start;
-	    if(index==0){
-		num = start.getValue();
-		current = current.getNext();
-		start = current;
-		size--;
-		return num;
-	    }else{
-		for(int i = 0; i < index-1; i++){
-		    current = current.getNext();
-		}
-		num = current.getNext().getValue();
-		if(index<size-1){
-		    LNode hold = current.getNext().getNext();
-		    current.setNext(hold);
-		}else{
-		    end = current;
-		}
-		size--;
-		return num;
-	    }
-	}catch(Exception e){
-	    System.out.println("index out of bounds in remove(index)");
+	if(index < 0 || index >= size){
+	    throw new IndexOutOfBoundsException("Index: "+index+"\tSize: "+size);
 	}
-	return num;
+	T num = start.getValue();
+	LNode current = start;
+	if(index==0){
+	    num = start.getValue();
+	    current = current.getNext();
+	    start = current;
+	    size--;
+	    return num;
+	}else{
+	    for(int i = 0; i < index-1; i++){
+		current = current.getNext();
+	    }
+	    num = current.getNext().getValue();
+	    if(index<size-1){
+		LNode hold = current.getNext().getNext();
+		current.setNext(hold);
+	    }else{
+		end = current;
+	    }
+	    size--;
+	    return num;
+	}
     }
 
     // modifying from the front -> O(1); modifying from the back -> O(size)
@@ -212,8 +209,9 @@ public class MyLinkedList<T> implements Iterable<T>{
 	}
 	public T next(){
 	    if(hasNext()){
+		T ret = current.getValue();
 		current = current.getNext();
-		return current.getValue();
+		return ret;
 	    }else{
 		throw new NoSuchElementException();
 	    }
@@ -271,4 +269,33 @@ public class MyLinkedList<T> implements Iterable<T>{
 
     */
     
+    public static void main(String[]args){
+
+	MyLinkedList<Integer> m = new MyLinkedList<Integer>();
+	for(int i = 0; i < 20; i++){
+	    m.add(i);
+	}
+	System.out.println(m);
+	for(int i:m){
+	    System.out.print(i+" ");
+	}
+	System.out.println();
+
+
+	// double iterators!
+	Iterator<Integer> i = m.iterator();
+	Iterator<Integer> i2 = m.iterator();
+	i2.next();
+	while(i2.hasNext()){
+	    System.out.println(i.next()+" "+i2.next());
+	}
+
+	System.out.println();
+	/*
+	System.out.println(i.hasNext());
+	System.out.println(i.next());
+	System.out.println(i.next());
+	*/
+    }
+
 }
