@@ -111,22 +111,22 @@ public class MyLinkedList<T> implements Iterable<T>{
 	return true;
     }
 
+    
     /*
-    //you can use .equals()
-    public int indexOf(int value){ // O(n)
-    int ind = 0;
-    LNode current = start;
-    while(current!=null && current.getNext()!=null){
-    if(current.getValue()==value){
-    return ind;
-    }else{
-    current = current.getNext();
-    ind++;
-    }
-    }
-    return -1;
+    public int indexOf(T value){ // O(n)
+	int ind = 0;
+	LNode current = start;
+	while(current!=null && current.getNext()!=null){
+	    if(current.getValue().equals(value)){
+		return ind;
+	    }else{
+		current = current.getNext();
+		ind++;
+	    }
+	}
+	return -1;
     }     
-    */  
+    */
     
     public String toString(){
 	String ans = "[";
