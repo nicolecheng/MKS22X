@@ -1,0 +1,25 @@
+public class ParenDemo extends MyStack<T>{
+
+    public static boolean isMatching(String s){
+	MyStack<String> m = new MyStack<String>();
+	for(int i = 0; i < s.length(); i++){
+	    if(i < s.length()-1){
+		m.push(i);
+	    }
+	}
+
+    }
+
+
+
+    public static void main(String[]args){
+
+	String input = "";
+
+	if (args.length > 0)
+	    input = args[0];
+
+	System.out.println(isMatching(input));
+
+    }
+}
