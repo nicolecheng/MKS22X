@@ -1,0 +1,6 @@
+public class MyStack<T> extends MyLinkedList<T>{
+    
+    private Object MyLinkedList<T>();
+
+
+}
