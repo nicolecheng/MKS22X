@@ -9,10 +9,10 @@ public class ParenDemo<T> extends MyStack<T>{
 	    }else{
 		t = s.substring(i);
 	    }
-	    if(t.equals("{")||t.equals("(")||t.equals("[")||t.equals("<")){
+	    if(opening(t)){
 		m.push(t);
 	    }else{
-	        if(m.isEmpty()){
+	        if(m.isEmpty() && (opening(t) || closing(t))){
 		    return false;
 	        }else if(t.equals("}")){
 		    if(!m.peek().equals("{")){
@@ -44,16 +44,39 @@ public class ParenDemo<T> extends MyStack<T>{
 	return true;
     }
 
+    public static boolean opening(String s){
+	return (s.equals("<") ||
+		s.equals("[") ||
+		s.equals("{") ||
+		s.equals("("));
+    }
+
+    public static boolean closing(String s){
+	return (s.equals(">") ||
+		s.equals("]") ||
+		s.equals("}") ||
+		s.equals(")"));
+    }
+
     /*
     public static void main(String[]args){
-
 	String input = "";
-
 	if (args.length > 0)
 	    input = args[0];
-
 	System.out.println(isMatching(input));
-
     }
     */
+
+    public static void main(String[]args){
+	String input = "()()(([[]]))";
+	if(args.length > 0){
+	    input = args[0];
+	    System.out.println( isMatching(input)); 
+	}else{
+	    System.out.println("Usage:"); 
+	    System.out.println("java ParenDemo \"text\""); 
+	}
+ 
+    }
+
 }
