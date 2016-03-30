@@ -44,8 +44,7 @@ public class ParenDemo<T> extends MyStack<T>{
 	return true;
     }
 
-
-
+    /*
     public static void main(String[]args){
 
 	String input = "";
@@ -56,4 +55,5 @@ public class ParenDemo<T> extends MyStack<T>{
 	System.out.println(isMatching(input));
 
     }
+    */
 }
