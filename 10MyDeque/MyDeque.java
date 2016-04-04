@@ -71,4 +71,34 @@ public class MyDeque<T>{
     }        
 
     
+    // 3. T removeFirst(), 4. T removeLast()  
+    // -NoSuchElementException is thrown when there are no elements.
+
+    public void removeFirst(){
+	if(size==0){
+	    throw new NoSuchElementException();
+	}else{
+	    if(start==size-1){
+		start = 0;
+	    }else{
+		start++;
+	    }
+	    size--;
+	}
+    }
+
+    public void removeLast(){
+	if(size==0){
+	    throw new NoSuchElementException();
+	}else{
+	    if(end==0){
+		end = size-1;
+	    }else{
+		end--;
+	    }
+	    size--;
+	}
+    }
+
+    
 }
