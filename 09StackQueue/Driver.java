@@ -81,11 +81,11 @@ public class Driver{
         for(int i = 0; i < 6000; i++){
             int op = rand.nextInt(4);
 
-            if(op == 0 || n.size()==0){//ensure never empty
+            if(op == 0 ){//ensure never empty
                 n.push(""+i);
                 m.push(""+i);
-            }else if(op == 1 ){
-                int x = rand.nextInt(n.size());
+            }else if(op == 1 || n.size()==0){
+                int x = rand.nextInt(n.size()+1);
                 n.push(x,""+i);
                 m.push(x,""+i);
             }else{
