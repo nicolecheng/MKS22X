@@ -101,4 +101,22 @@ public class MyDeque<T>{
     }
 
     
+    // 5. T getFirst(), 6. T getLast()
+    // -NoSuchElementException is thrown when there are no elements. 
+
+    public T getFirst(){
+	if(size==0){
+	    throw new NoSuchElementException();
+	}
+	return data[start];
+    }
+
+    public T getLast(){
+	if(size==0){
+	    throw new NoSuchElementException();
+	}
+	return data[end];
+    }
+
+    
 }
