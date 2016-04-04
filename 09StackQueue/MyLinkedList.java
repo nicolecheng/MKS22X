@@ -196,4 +196,25 @@ public class MyLinkedList<T> implements Iterable<T>{
 	return -1;
     }
 
+    /*
+    public void test(int ind){ // testing doubly linked features
+	LNode node = getNth(ind);
+	System.out.println(node.getPrev().getValue()); // prints val of prev node
+    }
+
+    public static void main(String[]args){
+	MyLinkedList<Integer> m = new MyLinkedList<Integer>();
+	m.add(8);
+	m.add(3);
+	m.add(9);
+	m.add(2);
+	m.add(-1);
+	m.add(5);
+	// 8,3,9,2,-1,5
+	m.test(3); // 9
+	m.test(2); // 3
+	m.test(1); // 8
+    }
+    */
+
 }
