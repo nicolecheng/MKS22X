@@ -6,6 +6,16 @@ public class MyDeque<T>{
     int start,end; // start and end indices
     int size;
 
+    public void debug(){
+	System.out.println("size: "+size);
+	System.out.println("start: "+start);
+	System.out.println("end: "+end);
+	System.out.println("first: "+getFirst());
+	System.out.println("last: "+getLast());
+	System.out.println("isFull: "+(size==data.length));
+	System.out.println(toString());
+    }
+	
     @SuppressWarnings("unchecked")	    
     public MyDeque(){
 	data = (T[]) new Object[10];
@@ -34,31 +44,19 @@ public class MyDeque<T>{
 	size *= 2;
     }
 
-    private boolean isFull(){
-	if(start == end){
-	    return false;
-	}else if(end > start){
-	    if(start > 0 || end < size){
-		return true;
-	    }else{
-		return false;
-	    }
-	}else{
-	    return (start-end > 1);
-	}
-    }
-
     
     // 1. void addFirst(T value),  2. void addLast(T value)
     // -When the array is full, re-size, then add. 
     // -No exceptions are required since you will re-size.
 
     public void addFirst(T value){
-	if(isFull()){
+	if(size==data.length){
 	    grow();
 	}
 	if(start==0){
-	    start = size-1;
+	    if(size>0){
+		start = data.length-1;
+	    }
 	}else{
 	    start--;
 	}
@@ -67,10 +65,10 @@ public class MyDeque<T>{
     }
 
     public void addLast(T value){
-	if(isFull()){
+	if(size==data.length){
 	    grow();
 	}
-	if(end==size-1){
+	if(end==data.length-1 || data[end] == null){
 	    end = 0;
 	}else{
 	    end++;
@@ -127,23 +125,57 @@ public class MyDeque<T>{
 	return data[end];
     }
 
-    public String toString(){
-	String s = "";
-	int m = 0;
-	for(int i = 0; i < size; i++){
-	    if(start+i<size){
+   public String toString(){
+        String s="[";
+        for(int i = 0; i < size; i++){
+	    if(start+i<data.length){
 		s += data[start+i];
-		m++;
 	    }else{
-		s += data[i-m];
+		s += data[i-(data.length-start)];
+	    }
+	    if(i < size-1){
+		s += ",";
 	    }
 	}
-	return s;
+	return s+"]";
     }
-    
+
+    public String toString1(){
+	String s = "[";
+	for(int i = 0; i < data.length; i++){
+	    s += data[i];
+	    if(i < data.length-1){
+		s += ",";
+	    }
+	}
+	return s + "]";
+    }
+
+    /*
     public static void main(String[]args){
 	MyDeque<Integer> m = new MyDeque<Integer>();
-	//System.out.println(m);
+	m.addLast(9);
+	//m.debug();
+	m.addFirst(1); // [1,9]
+	System.out.println(m);
+	
+	//m.debug();
+	m.addFirst(10);
+	System.out.println(m);
+	//m.debug();
+	
+	m.addFirst(0);
+	System.out.println(m); // [0,10,1,9]
+	m.addFirst(3);
+	System.out.println(m); // [3,0,10,1,9]
+	m.addLast(2);
+	m.addFirst(4); // [4,3,0,10,1,9,2]
+	System.out.println(m);
+	m.removeLast();
+	m.removeLast(); // [4,3,0,10,1]
+	System.out.println(m);
+	m.removeFirst(); // [3,0,10,1]
+	System.out.println(m);
     }
-    
+    */
 }
