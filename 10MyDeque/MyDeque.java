@@ -1,11 +1,14 @@
+import java.util.*;
+
 public class MyDeque<T>{
 
     T[]data;
     int start,end; // start and end indices
     int size;
-    
-    public Deque{
-	data = new T[10];
+
+    @SuppressWarnings("unchecked")	    
+    public MyDeque(){
+	data = (T[]) new Object[10];
 	start = 0;
 	end = 0;
 	size = 0;
@@ -13,11 +16,17 @@ public class MyDeque<T>{
     
 
     // 0b. You need a private method to grow the array and copy over the values.
-    
+    @SuppressWarnings("unchecked")	    
     private void grow(){
-	T[]hold = new T[size*2];
+	T[]hold = (T[]) new Object[size*2];
+	int m = 0;
 	for(int i = 0; i < size; i++){
-	    hold[i] = data[start+i];
+	    if(start+i<size){
+		hold[i] = data[start+i];
+		m++;
+	    }else{
+		hold[i] = data[i-m];
+	    }
 	}
 	data = hold;
 	start = 0;
@@ -118,5 +127,23 @@ public class MyDeque<T>{
 	return data[end];
     }
 
+    public String toString(){
+	String s = "";
+	int m = 0;
+	for(int i = 0; i < size; i++){
+	    if(start+i<size){
+		s += data[start+i];
+		m++;
+	    }else{
+		s += data[i-m];
+	    }
+	}
+	return s;
+    }
+    
+    public static void main(String[]args){
+	MyDeque<Integer> m = new MyDeque<Integer>();
+	//System.out.println(m);
+    }
     
 }
