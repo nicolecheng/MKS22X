@@ -124,6 +124,8 @@ public class MyLinkedList<T> implements Iterable<T>{
 	    size--;
 	    if(head == null){
 		tail = null;
+	    }else{
+		head.setPrev(null);
 	    }
 	    return temp.getValue();
 	}else{
@@ -133,8 +135,10 @@ public class MyLinkedList<T> implements Iterable<T>{
 		tail = p;
 	    }
 	    p.setNext(p.getNext().getNext());
-	    temp = p.getNext();
-	    temp.setPrev(p);
+	    if(p.getNext() != null){
+		temp = p.getNext();
+		temp.setPrev(p);
+	    }
 	    size --;
 	    return temp.getValue();
 	}
