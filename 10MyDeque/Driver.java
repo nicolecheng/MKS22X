@@ -10,30 +10,32 @@ public class Driver{
 	ArrayDeque<Integer> a = new ArrayDeque<Integer>();
 
 	// Add to the head and to the tail
-	/*
-	  for (int i = 0; i < 1000; i++) {
-	  Integer n = (int)(Math.random()*10000);
-	  d.addFirst(n);
-	  a.addFirst(n);
-	  }
+        
+	for (int i = 0; i < 10000; i++) {
+	    Integer n = (int)(Math.random()*10000);
+	    d.addFirst(n);
+	    a.addFirst(n);
+	}
 		
-	  for (int i = 0; i < 1000; i++) {
-	  Integer r2 = (int)(Math.random()*10000);
-	  d.addLast(n);
-	  a.addLast(n);
-	  }*/
+	for (int i = 0; i < 10000; i++) {
+	    Integer n = (int)(Math.random()*10000);
+	    d.addLast(n);
+	    a.addLast(n);
+	}
 
-	for(int i = 0; i < 10000; i++){
-	//for(int i = 0; i < 25; i++){
+	/*
+	//for(int i = 0; i < 10000; i++){
+	for(int i = 0; i < 30; i++){
 	    d.addFirst(i);
 	    a.addFirst(i);
 	}
-
+	*/
 
 	for (int i = 0; i < 5000; i++) {
-	    //System.out.println(d.toString1());
-	    //d.debug();
+	//for(int i = 0; i < 15; i++){
+	    
 	    if (!d.getFirst().equals(a.getFirst())) {
+		d.debug();
 		System.out.println(d.getFirst()+"\t"+a.getFirst());
 		System.out.println("addFirst() failed at: " + i);
 		System.exit(0);
@@ -41,8 +43,7 @@ public class Driver{
 			
 	    if (!d.getLast().equals(a.getLast())) {
 		System.out.println(d.toString1());
-		d.debug();
-			    
+		d.debug();			    
 		System.out.println(d);
 		System.out.println(a);
 		System.out.println(d.getLast()+"\t"+a.getLast());
@@ -74,7 +75,7 @@ public class Driver{
 		System.exit(0);
 	    }
 	    
-	    System.out.println(i);
+	    //System.out.println(i);
 	}
 
 	System.out.println("HURRAH!");

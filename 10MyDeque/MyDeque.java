@@ -91,7 +91,7 @@ public class MyDeque<T>{
 	    throw new NoSuchElementException();
 	}else{
 	    hold = data[start];
-	    if(start==size-1){
+	    if(start==data.length-1){
 		start = 0;
 	    }else{
 		start++;
