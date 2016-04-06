@@ -4,6 +4,7 @@ public class Driver{
     public static void main(String[]args){
         MyLinkedList<String> m = new MyLinkedList<String>();
         ArrayList<String>    n = new ArrayList<String>();
+
 	/*
         for(int i = 0; i < 10; i++){
             n.add(""+i);
@@ -35,10 +36,10 @@ public class Driver{
         }catch(IndexOutOfBoundsException e){
 
         }
+	*/
+	
 
-
-
-
+	/*
 
         //replace toString(true) with a debug to string that shows the head/tail
         System.out.println(m.toString(true));
@@ -71,31 +72,38 @@ public class Driver{
         n.add("Z-END!");
         System.out.println(m.toString(true));
         System.out.println(n);
-*/
+	*/
+
+	
         //test remove random items:
         Random rand = new Random(0);
         for(int i = 0; i < 6000; i++){
             int op = rand.nextInt(4);
-
             if(op == 0){//ensure never empty
                 n.add(""+i);
                 m.add(""+i);
-            }else if(op == 1|| n.size()==0 ){
+	    }else if(op == 1|| n.size()==0 ){
                 int x = rand.nextInt(n.size()+1);
                 n.add(x,""+i);
                 m.add(x,""+i);
             }else{
                 int x = rand.nextInt(n.size());
 		//System.out.println("x:"+x);
+		//System.out.println(n.remove(x)+"\t"+m.remove(x));
                 if(!n.remove(x).equals(m.remove(x))){
                     System.out.println("Non matching elements removed\n");
                     System.exit(1);
                 }
+		
+		//System.out.println();
             }
         }
         System.out.println(m.toString(true));
         System.out.println(n);
-
+	if(n.toString().equals(m.toString())){
+	    System.out.println("SUCCESS. MATCHING ARRAYS");
+	}
+	
         /*test speed of add in front and at end.
         long start,end;
         System.out.println("Add 100k to front");

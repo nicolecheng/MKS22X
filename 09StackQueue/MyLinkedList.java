@@ -136,8 +136,9 @@ public class MyLinkedList<T> implements Iterable<T>{
 	    }
 	    p.setNext(p.getNext().getNext());
 	    if(p.getNext() != null){
-		temp = p.getNext();
-		temp.setPrev(p);
+		//temp = p.getNext();
+		//temp.setPrev(p);
+		p.getNext().setPrev(p);
 	    }
 	    size --;
 	    return temp.getValue();
