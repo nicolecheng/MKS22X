@@ -8,6 +8,7 @@ public class MyDeque<T>{
 
     public void debug(){
 	System.out.println("size: "+size);
+	System.out.println("arylen: "+data.length);
 	System.out.println("start: "+start);
 	System.out.println("end: "+end);
 	System.out.println("first: "+getFirst());
@@ -23,7 +24,10 @@ public class MyDeque<T>{
 	end = 0;
 	size = 0;
     }
-    
+
+    public int size(){
+	return size;
+    }
 
     // 0b. You need a private method to grow the array and copy over the values.
     @SuppressWarnings("unchecked")	    
@@ -40,8 +44,8 @@ public class MyDeque<T>{
 	}
 	data = hold;
 	start = 0;
-	end = size;
-	size *= 2;
+	end = size-1;
+	//size *= 2;
     }
 
     
@@ -81,29 +85,35 @@ public class MyDeque<T>{
     // 3. T removeFirst(), 4. T removeLast()  
     // -NoSuchElementException is thrown when there are no elements.
 
-    public void removeFirst(){
+    public T removeFirst(){
+	T hold;
 	if(size==0){
 	    throw new NoSuchElementException();
 	}else{
+	    hold = data[start];
 	    if(start==size-1){
 		start = 0;
 	    }else{
 		start++;
 	    }
 	    size--;
+	    return hold;
 	}
     }
 
-    public void removeLast(){
+    public T removeLast(){
+	T hold;
 	if(size==0){
 	    throw new NoSuchElementException();
 	}else{
+	    hold = data[end];
 	    if(end==0){
-		end = size-1;
+		end = data.length-1;
 	    }else{
 		end--;
 	    }
 	    size--;
+	    return hold;
 	}
     }
 
@@ -151,13 +161,17 @@ public class MyDeque<T>{
 	return s + "]";
     }
 
-    /*
+    
     public static void main(String[]args){
 	MyDeque<Integer> m = new MyDeque<Integer>();
+	/*
 	m.addLast(9);
 	//m.debug();
 	m.addFirst(1); // [1,9]
-	System.out.println(m);
+	System.out.println(m.getLast());
+	m.removeLast();
+	System.out.println(m.getLast());
+
 	
 	//m.debug();
 	m.addFirst(10);
@@ -176,6 +190,7 @@ public class MyDeque<T>{
 	System.out.println(m);
 	m.removeFirst(); // [3,0,10,1]
 	System.out.println(m);
+	*/
     }
-    */
+    
 }
