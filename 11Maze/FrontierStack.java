@@ -1,7 +1,11 @@
-public class FrontierStack<T> extends MyStack<T> implements Frontier<T>{
+public class FrontierStack<T> implements Frontier<T>{
 
-    MyStack<T>frontier = new MyStack<T>(); // [1,2,3,4,5,6]
-    
+    MyStack<T>frontier;
+
+    public FrontierStack(){
+	frontier = new MyStack<T>();
+    }
+	
     public void add(T element){
 	frontier.push(element);
     }
