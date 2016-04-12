@@ -4,16 +4,26 @@ import java.io.*;
 public class BetterMaze{
 
     private class Node{
-	int id;
+	int id,x,y;
 	Node prev;
 
 	public Node(int id, Node prev){
 	    this.id = id;
 	    this.prev = prev;
+	    x = id%cols;
+	    y = id/cols;
 	}
 
 	public int getID(){
 	    return id;
+	}
+
+	public int getX(){
+	    return x;
+	}
+
+	public int getY(){
+	    return y;
 	}
 
 	public void setID(int i){
@@ -80,36 +90,34 @@ public class BetterMaze{
     }    
 
     private boolean canMove(Node n){
-	int y = n.getID()/rows;
-	int x = n.getID()%cols;
-	return (maze[x][y]==' ' || maze[x][y]=='E');
+	return (maze[n.getX()][n.getY()]==' ' || maze[n.getX()][n.getY()]=='E');
     }
 
     private void processNode(Node n){
 	Node temp = new Node(n.getID(), n); // new node with prev ref to n
 	// right
-	if(n.getID()%cols!=cols-1){ // if not on right border
+	if(n.getX()!=cols-1){ // if not on right border
 	    temp.setID(n.getID()+1);
 	    if(canMove(temp)){
 		placesToGo.add(temp);
 	    }
 	}
 	// left
-	if(n.getID()%cols!=0){ // if not on left border
+	if(n.getX()!=0){ // if not on left border
 	    temp.setID(n.getID()-1);
 	    if(canMove(temp)){
 		placesToGo.add(temp);
 	    }
 	}
 	// up
-	if(n.getID()>=cols){ //  if not on upper border
+	if(n.getY()!=0){ //  if not on upper border
 	    temp.setID(n.getID()-cols);
 	    if(canMove(temp)){
 		placesToGo.add(temp);
 	    }
 	}
 	// down
-	if(n.getID()/rows!=rows-1){ // if not on lower border
+	if(n.getY()!=rows-1){ // if not on lower border
 	    temp.setID(n.getID()+cols);
 	    if(canMove(temp)){
 		placesToGo.add(temp);
