@@ -1,4 +1,3 @@
-// not actually /my/ linked list
 import java.util.*;
 
 public class MyLinkedList<T> implements Iterable<T>{

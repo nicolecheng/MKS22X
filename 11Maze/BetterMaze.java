@@ -34,6 +34,10 @@ public class BetterMaze{
 	    return prev;
 	}
 
+	public boolean hasPrev(){
+	    return prev != null;
+	}
+
     }
 
     private char[][] maze;
@@ -42,23 +46,39 @@ public class BetterMaze{
     private Frontier<Node> placesToGo;
     private boolean  animate;//default to false
     private int rows, cols;
+    private Node sol;
+    private int steps;
 
-   /**return a COPY of solution.
+    /**return a COPY of solution.
      *This should be : [x1,y1,x2,y2,x3,y3...]
      *the coordinates of the solution from start to end.
      *Precondition : one of the solveXXX methods has already been 
      * called (solveBFS OR solveDFS OR solveAStar)
      *(otherwise an empty array is returned)
      *Postcondition:  the correct solution is in the returned array
-    **/
+     **/
     public int[] solutionCoordinates(){
-        /** IMPLEMENT THIS **/      
-	return new int[1];
+	this.solution = new int[steps*2];
+        /** IMPLEMENT THIS **/
+	Node temp = new Node(sol.getID(), sol.getPrev());
+	int count = 0;
+	while(temp.hasPrev()){
+	    if(count!=0){
+		temp = temp.getPrev();
+	    }
+	    solution[count] = temp.getX();
+	    count++;
+	    solution[count] = temp.getY();
+	    count++;
+	    
+	}
+	// need to reverse int[]
+	return solution;
     }    
 
 
     /**initialize the frontier as a queue and call solve
-    **/
+     **/
     public boolean solveBFS(){  
         /** IMPLEMENT THIS **/
 	placesToGo = new FrontierQueue<Node>();
@@ -66,16 +86,16 @@ public class BetterMaze{
     }   
 
 
-   /**initialize the frontier as a stack and call solve
-    */ 
+    /**initialize the frontier as a stack and call solve
+     */ 
     public boolean solveDFS(){  
         /** IMPLEMENT THIS **/
 	placesToGo = new FrontierStack<Node>();
 	return solve();
     }    
 
-   /**Search for the end of the maze using the frontier. 
-      Keep going until you find a solution or run out of elements on the frontier.
+    /**Search for the end of the maze using the frontier. 
+       Keep going until you find a solution or run out of elements on the frontier.
     **/
     private boolean solve(){  
         /** IMPLEMENT THIS **/ 
@@ -83,14 +103,21 @@ public class BetterMaze{
 	while(placesToGo.hasNext()){
 	    Node n = placesToGo.next();
 	    processNode(n);
-	    // animate
-	    // check for solution
+	    toString();
+	    if(foundEnd(n)){
+		return true;
+	    }
+	    steps++;
 	}
 	return false;
     }    
 
     private boolean canMove(Node n){
 	return (maze[n.getX()][n.getY()]==' ' || maze[n.getX()][n.getY()]=='E');
+    }
+
+    private boolean foundEnd(Node n){
+	return (maze[n.getX()][n.getY()]=='E');
     }
 
     private void processNode(Node n){
@@ -125,7 +152,7 @@ public class BetterMaze{
 	}
     }
      
-   /**mutator for the animate variable  **/
+    /**mutator for the animate variable  **/
     public void setAnimate(boolean b){  /** IMPLEMENT THIS **/ }    
 
 
@@ -221,10 +248,13 @@ public class BetterMaze{
 	}
     } 
     
+    /*
+    public static void main(String[]args){
+	BetterMaze m = new BetterMaze("data1.dat");
+	//m.solveBFS();
+	//System.out.println(m);
 
-
-       
+    }    
+    */
     
-    
-
 }
