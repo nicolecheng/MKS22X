@@ -45,7 +45,9 @@ public class BetterMaze{
     /**initialize the frontier as a queue and call solve
     **/
     public boolean solveBFS(){  
-        /** IMPLEMENT THIS **/      
+        /** IMPLEMENT THIS **/
+	placesToGo = new FrontierQueue<Node>();
+	solve();
 	return false;
     }   
 
@@ -53,7 +55,9 @@ public class BetterMaze{
    /**initialize the frontier as a stack and call solve
     */ 
     public boolean solveDFS(){  
-        /** IMPLEMENT THIS **/  
+        /** IMPLEMENT THIS **/
+	placesToGo = new FrontierStack<Node>();
+	solve();
 	return false;
     }    
 
