@@ -16,6 +16,10 @@ public class BetterMaze{
 	    return id;
 	}
 
+	public void setID(int i){
+	    this.id = i;
+	}
+
 	public Node getPrev(){
 	    return prev;
 	}
@@ -27,6 +31,7 @@ public class BetterMaze{
     private int      startRow,startCol;
     private Frontier<Node> placesToGo;
     private boolean  animate;//default to false
+    private int rows, cols;
 
    /**return a COPY of solution.
      *This should be : [x1,y1,x2,y2,x3,y3...]
@@ -47,8 +52,7 @@ public class BetterMaze{
     public boolean solveBFS(){  
         /** IMPLEMENT THIS **/
 	placesToGo = new FrontierQueue<Node>();
-	solve();
-	return false;
+	return solve();
     }   
 
 
@@ -57,17 +61,61 @@ public class BetterMaze{
     public boolean solveDFS(){  
         /** IMPLEMENT THIS **/
 	placesToGo = new FrontierStack<Node>();
-	solve();
-	return false;
+	return solve();
     }    
 
    /**Search for the end of the maze using the frontier. 
       Keep going until you find a solution or run out of elements on the frontier.
     **/
     private boolean solve(){  
-        /** IMPLEMENT THIS **/  
+        /** IMPLEMENT THIS **/ 
+	placesToGo.add(new Node(0,null));
+	while(placesToGo.hasNext()){
+	    Node n = placesToGo.next();
+	    processNode(n);
+	    // animate
+	    // check for solution
+	}
 	return false;
     }    
+
+    private boolean canMove(Node n){
+	int y = n.getID()/rows;
+	int x = n.getID()%cols;
+	return (maze[x][y]==' ' || maze[x][y]=='E');
+    }
+
+    private void processNode(Node n){
+	Node temp = new Node(n.getID(), n); // new node with prev ref to n
+	// right
+	if(n.getID()%cols!=cols-1){ // if not on right border
+	    temp.setID(n.getID()+1);
+	    if(canMove(temp)){
+		placesToGo.add(temp);
+	    }
+	}
+	// left
+	if(n.getID()%cols!=0){ // if not on left border
+	    temp.setID(n.getID()-1);
+	    if(canMove(temp)){
+		placesToGo.add(temp);
+	    }
+	}
+	// up
+	if(n.getID()>=cols){ //  if not on upper border
+	    temp.setID(n.getID()-cols);
+	    if(canMove(temp)){
+		placesToGo.add(temp);
+	    }
+	}
+	// down
+	if(n.getID()/rows!=rows-1){ // if not on lower border
+	    temp.setID(n.getID()+cols);
+	    if(canMove(temp)){
+		placesToGo.add(temp);
+	    }
+	}
+    }
      
    /**mutator for the animate variable  **/
     public void setAnimate(boolean b){  /** IMPLEMENT THIS **/ }    
@@ -111,6 +159,8 @@ public class BetterMaze{
 		startRow = i / maxc;
 	    }
 	}
+	rows = maxr;
+	cols = maxc;
     }
 
 
