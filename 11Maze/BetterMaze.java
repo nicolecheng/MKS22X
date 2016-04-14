@@ -2,7 +2,7 @@ import java.util.*;
 import java.io.*;
 
 public class BetterMaze{
-    private boolean DEBUG = true;
+    private boolean DEBUG = false;
 
     private class Node{
 	int id,x,y;
@@ -288,7 +288,7 @@ public class BetterMaze{
 
     public static void main(String[] args) {
 		BetterMaze a = new BetterMaze("data1.dat");
-		//a.setAnimate(true);
+		a.setAnimate(true);
 		System.out.println(a.solveDFS());
 		
 		try {
