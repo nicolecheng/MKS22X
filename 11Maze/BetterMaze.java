@@ -2,6 +2,7 @@ import java.util.*;
 import java.io.*;
 
 public class BetterMaze{
+    private boolean DEBUG = false;
 
     private class Node{
 	int id,x,y;
@@ -117,10 +118,9 @@ public class BetterMaze{
 		return true;
 	    }
 	    if(!placesToGo.hasNext()){
-		System.out.println("ran out of places to go");		  
+		debug("ran out of places to go");		  
 		return false;
 	    }
-	    System.out.println("debugging");
 	    if (animate) {
 		clearTerminal();
 		System.out.println(toString());
@@ -139,52 +139,58 @@ public class BetterMaze{
     private boolean canMove(Node n){
 	return (maze[n.getX()][n.getY()]==' ' || maze[n.getX()][n.getY()]=='E');
     }
+    private boolean canMove(int x, int y){
+	return maze[y][x]==' ';
+    }
 
     private boolean foundEnd(Node n){
 	return (maze[n.getX()][n.getY()]=='E');
     }
 
     private void processNode(Node n){
-	Node temp = new Node(n.getID(), n); // new node with prev ref to n
 	int x = n.getX();
 	int y = n.getY();
 	// right
 	if(n.getX()!=cols-1){ // if not on right border
-	    temp.setID(n.getID()+1);
-	    if(canMove(temp)){
-		System.out.println("right");
-		placesToGo.add(temp);
+	    debug("right");
+	    if(canMove(x,y+1)){		
+		placesToGo.add(new Node(x,y+1,n));
 	    }
 	}
 	// left
 	if(n.getX()!=0){ // if not on left border
-	    temp.setID(n.getID()-1);
-	    if(canMove(temp)){
-		System.out.println("left");
-		placesToGo.add(temp);
+	    debug("left");
+	    if(canMove(x,y-1)){		
+		placesToGo.add(new Node(x,y-1,n));
 	    }
 	}
 	// up
 	if(n.getY()!=0){ //  if not on upper border
-	    temp.setID(n.getID()-cols);
-	    if(canMove(temp)){
-		System.out.println("up");
-		placesToGo.add(temp);
+	    debug("up");
+	    if(canMove(x+1,y)){		
+		placesToGo.add(new Node(x+1,y,n));
 	    }
 	}
 	// down
 	if(n.getY()!=rows-1){ // if not on lower border
-	    temp.setID(n.getID()+cols);
-	    if(canMove(temp)){
-		System.out.println("down");
-		placesToGo.add(temp);
+	    debug("down");
+	    if(canMove(x-1,y)){		
+		placesToGo.add(new Node(x-1,y,n));
 	    }
 	}
 	maze[y][x]='*';
     }
+
+    private void debug(String s){
+	if(DEBUG){
+	    System.out.println(s);
+	}
+    }
      
     /**mutator for the animate variable  **/
-    public void setAnimate(boolean b){  /** IMPLEMENT THIS **/ }    
+    public void setAnimate(boolean b){  /** IMPLEMENT THIS **/
+	animate = b;
+    }    
 
 
     public BetterMaze(String filename){
