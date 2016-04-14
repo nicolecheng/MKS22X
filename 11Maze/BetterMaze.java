@@ -1,3 +1,4 @@
+
 import java.util.*;
 import java.io.*;
 
@@ -117,6 +118,7 @@ public class BetterMaze{
 		return true;
 	    }
 	    processNode(n);
+	    // credits to noah for animation snippet
 	    if (animate) {
 		clearTerminal();
 		System.out.println(toString());
@@ -146,38 +148,22 @@ public class BetterMaze{
     private void processNode(Node n){
 	int x = n.getX();
 	int y = n.getY();
-	// right
-	//if(n.getX()!=cols-1){ // if not on right border
-	    
-	    if(canMove(x,y+1)){
-		debug("down");
-		placesToGo.add(new Node(x,y+1,n));
-	    }
-	    //}
-	// left
-	//if(n.getX()!=0){ // if not on left border
-	    
-	    if(canMove(x,y-1)){
-		debug("up");
-		placesToGo.add(new Node(x,y-1,n));
-	    }
-	    //}
-	// up
-	//if(n.getY()!=0){ //  if not on upper border
-	    
-	    if(canMove(x+1,y)){
-		debug("right");
-		placesToGo.add(new Node(x+1,y,n));
-	    }
-	    //}
-	// down
-	//if(n.getY()!=rows-1){ // if not on lower border
-	    
-	    if(canMove(x-1,y)){
-		debug("left");
-		placesToGo.add(new Node(x-1,y,n));
-	    }
-	    //}
+	if(canMove(x,y+1)){
+	    debug("down");
+	    placesToGo.add(new Node(x,y+1,n));
+	}
+	if(canMove(x,y-1)){
+	    debug("up");
+	    placesToGo.add(new Node(x,y-1,n));
+	}
+	if(canMove(x+1,y)){
+	    debug("right");
+	    placesToGo.add(new Node(x+1,y,n));
+	}
+	if(canMove(x-1,y)){
+	    debug("left");
+	    placesToGo.add(new Node(x-1,y,n));
+	}
 	maze[y][x]='*';
     }
 
@@ -297,7 +283,7 @@ public class BetterMaze{
 		catch (Exception e) {
 			System.out.println("waiting failed");
 		}
-		/*
+		
 		BetterMaze a2 = new BetterMaze("data1.dat");
 		a2.setAnimate(true);
 		System.out.println(a2.solveBFS());
@@ -308,7 +294,7 @@ public class BetterMaze{
 		catch (Exception e) {
 			System.out.println("waiting failed");
 		}
-		
+		/*
 		BetterMaze b = new BetterMaze("data2.dat");
 		b.setAnimate(true);
 		System.out.println(b.solveDFS());
@@ -325,14 +311,5 @@ public class BetterMaze{
 		System.out.println(b2.solveBFS());
 		*/
 	}
-    
-    /*
-    public static void main(String[]args){
-	BetterMaze m = new BetterMaze("data1.dat");
-	//m.solveBFS();
-	//System.out.println(m);
-
-    }    
-    */
     
 }
