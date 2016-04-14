@@ -14,6 +14,13 @@ public class BetterMaze{
 	    y = id/cols;
 	}
 
+	public Node(int x, int y, Node prev){
+	    this.x = x;
+	    this.y = y;
+	    this.prev = prev;
+	    id = y * cols + x;
+	}
+
 	public int getID(){
 	    return id;
 	}
@@ -48,6 +55,7 @@ public class BetterMaze{
     private int rows, cols;
     private Node sol;
     private int steps;
+    private boolean solved;
 
     /**return a COPY of solution.
      *This should be : [x1,y1,x2,y2,x3,y3...]
@@ -99,17 +107,33 @@ public class BetterMaze{
     **/
     private boolean solve(){  
         /** IMPLEMENT THIS **/ 
-	placesToGo.add(new Node(0,null));
-	while(placesToGo.hasNext()){
+	placesToGo.add(new Node(startCol,startRow,null));
+	while(!solved){
 	    Node n = placesToGo.next();
 	    processNode(n);
-	    toString();
+	    //toString();
 	    if(foundEnd(n)){
+		solved = true;
 		return true;
+	    }
+	    if(!placesToGo.hasNext()){
+		System.out.println("ran out of places to go");		  
+		return false;
+	    }
+	    System.out.println("debugging");
+	    if (animate) {
+		clearTerminal();
+		System.out.println(toString());
+		try {
+		    Thread.sleep(300);
+		}
+		catch (Exception e) {
+		    System.out.println("waiting failed");
+		}
 	    }
 	    steps++;
 	}
-	return false;
+	return true;
     }    
 
     private boolean canMove(Node n){
@@ -122,10 +146,13 @@ public class BetterMaze{
 
     private void processNode(Node n){
 	Node temp = new Node(n.getID(), n); // new node with prev ref to n
+	int x = n.getX();
+	int y = n.getY();
 	// right
 	if(n.getX()!=cols-1){ // if not on right border
 	    temp.setID(n.getID()+1);
 	    if(canMove(temp)){
+		System.out.println("right");
 		placesToGo.add(temp);
 	    }
 	}
@@ -133,6 +160,7 @@ public class BetterMaze{
 	if(n.getX()!=0){ // if not on left border
 	    temp.setID(n.getID()-1);
 	    if(canMove(temp)){
+		System.out.println("left");
 		placesToGo.add(temp);
 	    }
 	}
@@ -140,6 +168,7 @@ public class BetterMaze{
 	if(n.getY()!=0){ //  if not on upper border
 	    temp.setID(n.getID()-cols);
 	    if(canMove(temp)){
+		System.out.println("up");
 		placesToGo.add(temp);
 	    }
 	}
@@ -147,9 +176,11 @@ public class BetterMaze{
 	if(n.getY()!=rows-1){ // if not on lower border
 	    temp.setID(n.getID()+cols);
 	    if(canMove(temp)){
+		System.out.println("down");
 		placesToGo.add(temp);
 	    }
 	}
+	maze[y][x]='*';
     }
      
     /**mutator for the animate variable  **/
@@ -158,6 +189,7 @@ public class BetterMaze{
 
     public BetterMaze(String filename){
 	animate = false;
+	solved = false;
 	int maxc = 0;
 	int maxr = 0;
 	startRow = -1;
@@ -247,6 +279,45 @@ public class BetterMaze{
 	    return ans + color(37,40) + "\n";
 	}
     } 
+
+    public static void main(String[] args) {
+		BetterMaze a = new BetterMaze("data1.dat");
+		a.setAnimate(true);
+		System.out.println(a.solveDFS());
+		
+		try {
+			Thread.sleep(1000);
+		}
+		catch (Exception e) {
+			System.out.println("waiting failed");
+		}
+		
+		BetterMaze a2 = new BetterMaze("data1.dat");
+		a2.setAnimate(true);
+		System.out.println(a2.solveBFS());
+		
+		try {
+			Thread.sleep(1000);
+		}
+		catch (Exception e) {
+			System.out.println("waiting failed");
+		}
+		
+		BetterMaze b = new BetterMaze("data2.dat");
+		b.setAnimate(true);
+		System.out.println(b.solveDFS());
+		
+		try {
+			Thread.sleep(1000);
+		}
+		catch (Exception e) {
+			System.out.println("waiting failed");
+		}
+		
+		BetterMaze b2 = new BetterMaze("data2.dat");
+		b2.setAnimate(true);
+		System.out.println(b2.solveBFS());
+	}
     
     /*
     public static void main(String[]args){

@@ -4,20 +4,38 @@ import java.io.*;
 public class BetterMaze{
 
     private class Node{
-	int id;
+	int id,x,y;
 	Node prev;
 
 	public Node(int id, Node prev){
 	    this.id = id;
 	    this.prev = prev;
+	    x = id%cols;
+	    y = id/cols;
 	}
 
 	public int getID(){
 	    return id;
 	}
 
+	public int getX(){
+	    return x;
+	}
+
+	public int getY(){
+	    return y;
+	}
+
+	public void setID(int i){
+	    this.id = i;
+	}
+
 	public Node getPrev(){
 	    return prev;
+	}
+
+	public boolean hasPrev(){
+	    return prev != null;
 	}
 
     }
@@ -27,45 +45,114 @@ public class BetterMaze{
     private int      startRow,startCol;
     private Frontier<Node> placesToGo;
     private boolean  animate;//default to false
+    private int rows, cols;
+    private Node sol;
+    private int steps;
 
-   /**return a COPY of solution.
+    /**return a COPY of solution.
      *This should be : [x1,y1,x2,y2,x3,y3...]
      *the coordinates of the solution from start to end.
      *Precondition : one of the solveXXX methods has already been 
      * called (solveBFS OR solveDFS OR solveAStar)
      *(otherwise an empty array is returned)
      *Postcondition:  the correct solution is in the returned array
-    **/
+     **/
     public int[] solutionCoordinates(){
-        /** IMPLEMENT THIS **/      
-	return new int[1];
+	this.solution = new int[steps*2];
+        /** IMPLEMENT THIS **/
+	Node temp = new Node(sol.getID(), sol.getPrev());
+	int count = 0;
+	while(temp.hasPrev()){
+	    if(count!=0){
+		temp = temp.getPrev();
+	    }
+	    solution[count] = temp.getX();
+	    count++;
+	    solution[count] = temp.getY();
+	    count++;
+	    
+	}
+	// need to reverse int[]
+	return solution;
     }    
 
 
     /**initialize the frontier as a queue and call solve
-    **/
+     **/
     public boolean solveBFS(){  
-        /** IMPLEMENT THIS **/      
-	return false;
+        /** IMPLEMENT THIS **/
+	placesToGo = new FrontierQueue<Node>();
+	return solve();
     }   
 
 
-   /**initialize the frontier as a stack and call solve
-    */ 
+    /**initialize the frontier as a stack and call solve
+     */ 
     public boolean solveDFS(){  
-        /** IMPLEMENT THIS **/  
+        /** IMPLEMENT THIS **/
+	placesToGo = new FrontierStack<Node>();
+	return solve();
+    }    
+
+    /**Search for the end of the maze using the frontier. 
+       Keep going until you find a solution or run out of elements on the frontier.
+    **/
+    private boolean solve(){  
+        /** IMPLEMENT THIS **/ 
+	placesToGo.add(new Node(0,null));
+	while(placesToGo.hasNext()){
+	    Node n = placesToGo.next();
+	    processNode(n);
+	    toString();
+	    if(foundEnd(n)){
+		return true;
+	    }
+	    steps++;
+	}
 	return false;
     }    
 
-   /**Search for the end of the maze using the frontier. 
-      Keep going until you find a solution or run out of elements on the frontier.
-    **/
-    private boolean solve(){  
-        /** IMPLEMENT THIS **/  
-	return false;
-    }    
+    private boolean canMove(Node n){
+	return (maze[n.getX()][n.getY()]==' ' || maze[n.getX()][n.getY()]=='E');
+    }
+
+    private boolean foundEnd(Node n){
+	return (maze[n.getX()][n.getY()]=='E');
+    }
+
+    private void processNode(Node n){
+	Node temp = new Node(n.getID(), n); // new node with prev ref to n
+	// right
+	if(n.getX()!=cols-1){ // if not on right border
+	    temp.setID(n.getID()+1);
+	    if(canMove(temp)){
+		placesToGo.add(temp);
+	    }
+	}
+	// left
+	if(n.getX()!=0){ // if not on left border
+	    temp.setID(n.getID()-1);
+	    if(canMove(temp)){
+		placesToGo.add(temp);
+	    }
+	}
+	// up
+	if(n.getY()!=0){ //  if not on upper border
+	    temp.setID(n.getID()-cols);
+	    if(canMove(temp)){
+		placesToGo.add(temp);
+	    }
+	}
+	// down
+	if(n.getY()!=rows-1){ // if not on lower border
+	    temp.setID(n.getID()+cols);
+	    if(canMove(temp)){
+		placesToGo.add(temp);
+	    }
+	}
+    }
      
-   /**mutator for the animate variable  **/
+    /**mutator for the animate variable  **/
     public void setAnimate(boolean b){  /** IMPLEMENT THIS **/ }    
 
 
@@ -107,6 +194,8 @@ public class BetterMaze{
 		startRow = i / maxc;
 	    }
 	}
+	rows = maxr;
+	cols = maxc;
     }
 
 
@@ -159,10 +248,13 @@ public class BetterMaze{
 	}
     } 
     
+    /*
+    public static void main(String[]args){
+	BetterMaze m = new BetterMaze("data1.dat");
+	//m.solveBFS();
+	//System.out.println(m);
 
-
-       
+    }    
+    */
     
-    
-
 }
