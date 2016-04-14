@@ -71,19 +71,20 @@ public class BetterMaze{
 	this.solution = new int[steps*2];
         /** IMPLEMENT THIS **/
 	Node temp = new Node(sol.getID(), sol.getPrev());
-	int count = 0;
+	int count = steps*2;
 	while(temp.hasPrev()){
-	    if(count!=0){
+	    if(count!=steps*2){
 		temp = temp.getPrev();
 	    }
 	    solution[count] = temp.getX();
-	    count++;
+	    count--;
 	    solution[count] = temp.getY();
-	    count++;
+	    count--;
 	    
 	}
 	// need to reverse int[]
-	return solution;
+	int[]hold = solution;
+	return hold;
     }    
 
 
@@ -114,6 +115,9 @@ public class BetterMaze{
 	while(placesToGo.hasNext()){
 	    n = placesToGo.next();
 	    if(maze[n.getY()][n.getX()]=='E'){
+		//sol = new Node(n.getX(),n.getY(),n.getPrev());
+		//System.out.println(sol.getX());
+		sol = n;
 		debug("SOLVED");
 		return true;
 	    }
@@ -139,10 +143,6 @@ public class BetterMaze{
     }
     private boolean canMove(int x, int y){
 	return maze[y][x]==' ';
-    }
-
-    private boolean foundEnd(Node n){
-	return (maze[n.getY()][n.getX()]=='E');
     }
 
     private void processNode(Node n){
@@ -273,8 +273,9 @@ public class BetterMaze{
     } 
 
     public static void main(String[] args) {
+	/*
 		BetterMaze a = new BetterMaze("data1.dat");
-		a.setAnimate(true);
+		//a.setAnimate(true);
 		System.out.println(a.solveDFS());
 		
 		try {
@@ -283,9 +284,10 @@ public class BetterMaze{
 		catch (Exception e) {
 			System.out.println("waiting failed");
 		}
+		System.out.println(a.solutionCoordinates());
 		
 		BetterMaze a2 = new BetterMaze("data1.dat");
-		a2.setAnimate(true);
+		//a2.setAnimate(true);
 		System.out.println(a2.solveBFS());
 		
 		try {
@@ -294,7 +296,7 @@ public class BetterMaze{
 		catch (Exception e) {
 			System.out.println("waiting failed");
 		}
-		/*
+		*/
 		BetterMaze b = new BetterMaze("data2.dat");
 		b.setAnimate(true);
 		System.out.println(b.solveDFS());
@@ -309,7 +311,7 @@ public class BetterMaze{
 		BetterMaze b2 = new BetterMaze("data2.dat");
 		b2.setAnimate(true);
 		System.out.println(b2.solveBFS());
-		*/
+		
 	}
     
 }
