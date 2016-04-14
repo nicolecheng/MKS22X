@@ -108,9 +108,10 @@ public class BetterMaze{
     **/
     private boolean solve(){  
         /** IMPLEMENT THIS **/ 
-	placesToGo.add(new Node(startCol,startRow,null));
+	Node n = new Node(startCol,startRow,null);;
+	placesToGo.add(n);
 	while(!solved){
-	    Node n = placesToGo.next();
+	    n = placesToGo.next();
 	    processNode(n);
 	    //toString();
 	    if(foundEnd(n)){
@@ -133,6 +134,7 @@ public class BetterMaze{
 	    }
 	    steps++;
 	}
+	maze[n.getY()][n.getX()] = '*';
 	return true;
     }    
 
