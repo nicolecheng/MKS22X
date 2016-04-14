@@ -68,24 +68,39 @@ public class BetterMaze{
      *Postcondition:  the correct solution is in the returned array
      **/
     public int[] solutionCoordinates(){
-	this.solution = new int[steps*2];
-        /** IMPLEMENT THIS **/
-	Node temp = new Node(sol.getID(), sol.getPrev());
-	int count = steps*2;
-	while(temp.hasPrev()){
-	    if(count!=steps*2){
-		temp = temp.getPrev();
-	    }
-	    solution[count] = temp.getX();
-	    count--;
-	    solution[count] = temp.getY();
-	    count--;
-	    
+	int[]ret = new int[steps*2];
+	solution = new int[steps*2];
+	//System.out.println(steps);
+	//System.out.println(sol.getX()+"..."+sol.getY()+"..."+sol.getPrev().getX()+"..."+sol.getPrev().getY());
+        for(int i = 0; i < steps*2; i++){
+	    solution[i] = sol.getY();
+	    i++;
+	    solution[i] = sol.getX();
+	    sol = sol.getPrev();
 	}
-	// need to reverse int[]
-	int[]hold = solution;
-	return hold;
-    }    
+	System.out.println(solution.length);
+	ret = reverse(solution);
+	return ret;
+    }
+    public int[] reverse(int[]validData){
+	for(int i = 0; i < validData.length / 2; i++){
+		int temp = validData[i];
+		validData[i] = validData[validData.length - i - 1];
+		validData[validData.length - i - 1] = temp;
+	}
+	return validData;
+    }
+    
+    public void printCoordinates(){
+	String s = "[";
+	for(int i = 0; i < solution.length; i++){
+	    s += solution[i];
+	    if(i<solution.length-1){
+		s+=",";
+	    }
+	}
+	System.out.println(s+"]");
+    }
 
 
     /**initialize the frontier as a queue and call solve
@@ -298,9 +313,12 @@ public class BetterMaze{
 			System.out.println("waiting failed");
 		}
 		*/
+	/*
 		BetterMaze b = new BetterMaze("data2.dat");
 		b.setAnimate(true);
 		System.out.println(b.solveDFS());
+		System.out.println(b.solutionCoordinates());
+		b.printCoordinates();
 		
 		try {
 			Thread.sleep(1000);
@@ -310,8 +328,9 @@ public class BetterMaze{
 		}
 		
 		BetterMaze b2 = new BetterMaze("data2.dat");
-		b2.setAnimate(true);
-		System.out.println(b2.solveBFS());
+		//b2.setAnimate(true);
+		//System.out.println(b2.solveBFS());
+		*/
 		
 	}
     
