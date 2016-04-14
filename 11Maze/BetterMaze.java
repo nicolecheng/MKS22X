@@ -139,10 +139,11 @@ public class BetterMaze{
     }    
 
     private boolean canMove(Node n){
-	return (maze[n.getY()][n.getX()]==' ');
+	return (maze[n.getY()][n.getX()]==' ' || 
+		maze[n.getY()][n.getX()]=='E');
     }
     private boolean canMove(int x, int y){
-	return maze[y][x]==' ';
+	return maze[y][x]==' ' || maze[y][x]=='E';
     }
 
     private void processNode(Node n){
