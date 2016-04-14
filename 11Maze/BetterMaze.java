@@ -2,7 +2,7 @@ import java.util.*;
 import java.io.*;
 
 public class BetterMaze{
-    private boolean DEBUG = false;
+    private boolean DEBUG = true;
 
     private class Node{
 	int id,x,y;
@@ -110,18 +110,13 @@ public class BetterMaze{
         /** IMPLEMENT THIS **/ 
 	Node n = new Node(startCol,startRow,null);;
 	placesToGo.add(n);
-	while(!solved){
+	while(placesToGo.hasNext()){
 	    n = placesToGo.next();
-	    processNode(n);
-	    //toString();
-	    if(foundEnd(n)){
-		solved = true;
+	    if(maze[n.getY()][n.getX()]=='E'){
+		debug("SOLVED");
 		return true;
 	    }
-	    if(!placesToGo.hasNext()){
-		debug("ran out of places to go");		  
-		return false;
-	    }
+	    processNode(n);
 	    if (animate) {
 		clearTerminal();
 		System.out.println(toString());
@@ -134,52 +129,55 @@ public class BetterMaze{
 	    }
 	    steps++;
 	}
-	maze[n.getY()][n.getX()] = '*';
 	return true;
     }    
 
     private boolean canMove(Node n){
-	return (maze[n.getX()][n.getY()]==' ' || maze[n.getX()][n.getY()]=='E');
+	return (maze[n.getY()][n.getX()]==' ');
     }
     private boolean canMove(int x, int y){
 	return maze[y][x]==' ';
     }
 
     private boolean foundEnd(Node n){
-	return (maze[n.getX()][n.getY()]=='E');
+	return (maze[n.getY()][n.getX()]=='E');
     }
 
     private void processNode(Node n){
 	int x = n.getX();
 	int y = n.getY();
 	// right
-	if(n.getX()!=cols-1){ // if not on right border
-	    debug("right");
-	    if(canMove(x,y+1)){		
+	//if(n.getX()!=cols-1){ // if not on right border
+	    
+	    if(canMove(x,y+1)){
+		debug("down");
 		placesToGo.add(new Node(x,y+1,n));
 	    }
-	}
+	    //}
 	// left
-	if(n.getX()!=0){ // if not on left border
-	    debug("left");
-	    if(canMove(x,y-1)){		
+	//if(n.getX()!=0){ // if not on left border
+	    
+	    if(canMove(x,y-1)){
+		debug("up");
 		placesToGo.add(new Node(x,y-1,n));
 	    }
-	}
+	    //}
 	// up
-	if(n.getY()!=0){ //  if not on upper border
-	    debug("up");
-	    if(canMove(x+1,y)){		
+	//if(n.getY()!=0){ //  if not on upper border
+	    
+	    if(canMove(x+1,y)){
+		debug("right");
 		placesToGo.add(new Node(x+1,y,n));
 	    }
-	}
+	    //}
 	// down
-	if(n.getY()!=rows-1){ // if not on lower border
-	    debug("down");
-	    if(canMove(x-1,y)){		
+	//if(n.getY()!=rows-1){ // if not on lower border
+	    
+	    if(canMove(x-1,y)){
+		debug("left");
 		placesToGo.add(new Node(x-1,y,n));
 	    }
-	}
+	    //}
 	maze[y][x]='*';
     }
 
@@ -290,7 +288,7 @@ public class BetterMaze{
 
     public static void main(String[] args) {
 		BetterMaze a = new BetterMaze("data1.dat");
-		a.setAnimate(true);
+		//a.setAnimate(true);
 		System.out.println(a.solveDFS());
 		
 		try {
@@ -299,7 +297,7 @@ public class BetterMaze{
 		catch (Exception e) {
 			System.out.println("waiting failed");
 		}
-		
+		/*
 		BetterMaze a2 = new BetterMaze("data1.dat");
 		a2.setAnimate(true);
 		System.out.println(a2.solveBFS());
@@ -325,6 +323,7 @@ public class BetterMaze{
 		BetterMaze b2 = new BetterMaze("data2.dat");
 		b2.setAnimate(true);
 		System.out.println(b2.solveBFS());
+		*/
 	}
     
     /*
