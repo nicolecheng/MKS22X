@@ -56,7 +56,7 @@ public class BSTree<T extends Comparable<T>>{
 	}
 
 	public String toString(){
-	    String s = " "+value;
+	    String s = " "+data;
 	    if(left==null){
 		s+=" _";
 	    }else{
