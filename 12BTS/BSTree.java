@@ -55,9 +55,20 @@ public class BSTree<T extends Comparable<T>>{
 	    }
 	}
 
-	//public String toString(){
-	//    return "";
-	//}
+	public String toString(){
+	    String s = " "+value;
+	    if(left==null){
+		s+=" _";
+	    }else{
+	        s+=left.toString();
+	    }
+	    if(right==null){
+	        s+=" _";
+	    }else{
+		s+=right.toString();
+	    }
+	    return s;
+	}
 
 	private boolean contains(T value){
 	    if(data.equals(value)){
@@ -99,24 +110,11 @@ public class BSTree<T extends Comparable<T>>{
 	    if(root==null){
 		return "";
 	    }else{
-	       return toString(root); 
+		return root.toString(); 
 	    }
 	}
 
-	public String toString(Node start){
-	    String s = " "+start.get();
-	    if(start.getLeft()==null){
-		s+=" _";
-	    }else{
-	        s+=toString(start.getLeft());
-	    }
-	    if(start.getRight()==null){
-	        s+=" _";
-	    }else{
-		s+=toString(start.getRight());
-	    }
-	    return s;
-	}
+
 	/*
 	public boolean contains(T value){
 	    if(root==null){}
