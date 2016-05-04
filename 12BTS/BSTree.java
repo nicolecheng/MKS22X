@@ -78,51 +78,54 @@ public class BSTree<T extends Comparable<T>>{
 		    return false;
 		}else if(left==null && right!=null){
 		    return right.contains(value);
-		}//etc
-		return false;
+		}else if(left!=null && right==null){
+		    return left.contains(value);
+		}else{
+		    return right.contains(value) || left.contains(value);
+		}
 	    }
 	
 	}
     }
 
-	private Node root;
+    private Node root;
 
-	//OUTER methods here are wrapper methods for the root
-	public int getHeight(){
-	    //call the root's methods
-	    //check for empty first!
-	    if(root==null){
-		return 0;
-	    }
-	    return root.height();
+    //OUTER methods here are wrapper methods for the root
+    public int getHeight(){
+	//call the root's methods
+	//check for empty first!
+	if(root==null){
+	    return 0;
 	}
+	return root.height();
+    }
 
-	public void add(T value){
-	    if(root==null){
-		root = new Node(value);
-	    }else{
-		root.add(value);
-	    }
+    public void add(T value){
+	if(root==null){
+	    root = new Node(value);
+	}else{
+	    root.add(value);
 	}
+    }
 
-	public String toString(){
-	    String s = "";
-	    if(root==null){
-		return "";
-	    }else{
-		return root.toString(); 
-	    }
+    public String toString(){
+	String s = "";
+	if(root==null){
+	    return "";
+	}else{
+	    return root.toString(); 
 	}
+    }
 
 
 	
-	public boolean contains(T value){
-	    if(root==null){
-		return false;
-	    }else{
-		return root.contains(T);
-	    }
+    public boolean contains(T value){
+	if(root==null){
+	    return false;
+	}else{
+	    return root.contains(value);
 	}
+    }
 
     public static void main(String[] args) {
 	BSTree<String> t = new BSTree<String>();
