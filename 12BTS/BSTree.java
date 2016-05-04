@@ -86,18 +86,50 @@ public class BSTree<T extends Comparable<T>>{
 	    }
 	
 	}
+
+	private T remove(T value){
+	    T hold = value;
+	    Node L = this;
+	    if(left!=null && left.equals(value)){
+		hold = left.data;
+		shift(left);
+		//L = L.left;
+		//
+		left = null;
+	    }else if(right!=null && right.equals(value)){
+		hold = right.data;
+		shift(right);
+		right = null;
+	    }else{
+		if(left!=null){left.remove(value);}
+		if(right!=null){right.remove(value);}
+	    }
+	    return hold;
+	}
+
+	private void shift(Node n){
+	    Node L = n.left;
+	    T val;
+	    while(L.right!=null && L.right.right!=null){
+		L = L.right;
+	    }
+	    val = L.right.data;
+	    n.set(val);
+	    n.left = L.left;
+	    L.right = null; // make it disappear from the bottom of the tree
+	}
+	
     }
 
     private Node root;
 
     //OUTER methods here are wrapper methods for the root
     public int getHeight(){
-	//call the root's methods
-	//check for empty first!
 	if(root==null){
 	    return 0;
+	}else{
+	    return root.height();
 	}
-	return root.height();
     }
 
     public void add(T value){
@@ -116,14 +148,20 @@ public class BSTree<T extends Comparable<T>>{
 	    return root.toString(); 
 	}
     }
-
-
 	
     public boolean contains(T value){
 	if(root==null){
 	    return false;
 	}else{
 	    return root.contains(value);
+	}
+    }
+
+    public T remove(T value){
+	if(root==null || !root.contains(value)){
+	    return null;
+	}else{
+	    return root.remove(value);
 	}
     }
 
@@ -136,6 +174,7 @@ public class BSTree<T extends Comparable<T>>{
 	t.add("f");
 	t.add("e");
 	t.add("g");
+	t.remove("g");
 	System.out.println(t);
 	
 	//System.out.println("Contains q: " + contains("q"));
