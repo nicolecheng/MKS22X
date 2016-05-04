@@ -115,13 +115,14 @@ public class BSTree<T extends Comparable<T>>{
 	}
 
 
-	/*
+	
 	public boolean contains(T value){
-	    if(root==null){}
-	    //check for empty before you do things with root.
-	    return false;
+	    if(root==null){
+		return false;
+	    }else{
+		return root.contains(T);
+	    }
 	}
-	*/
 
     public static void main(String[] args) {
 	BSTree<String> t = new BSTree<String>();
