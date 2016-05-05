@@ -165,6 +165,7 @@ public class BSTree<T extends Comparable<T>>{
 	}
     }
 
+    /*
     public static void main(String[] args) {
 	BSTree<String> t = new BSTree<String>();
 		
@@ -180,5 +181,6 @@ public class BSTree<T extends Comparable<T>>{
 	//System.out.println("Contains q: " + contains("q"));
 	//System.out.println("Contains g: " + contains("g"));
     }
+    */
 
 }
