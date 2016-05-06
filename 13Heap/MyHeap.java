@@ -7,13 +7,13 @@ public class MyHeap<T extends Comparable<T>>{
     private boolean isMax;
 
     public MyHeap(){
-	T[]ary=new T[0]ary;
-	MyHeap(ary);
+        T[]ary = (T[])new Comparable[1];
+        size = 1;
     }
-
+    
     public MyHeap(T[]x){
 	size = x.length+1;
-	data = new T[size];
+	data = (T[]) new Comparable[size]; //data = new T[size];
 	for(int i = 1; i < size; i++){
 	    data[i]=x[i-1];
 	}
@@ -45,7 +45,7 @@ public class MyHeap<T extends Comparable<T>>{
 	
     }
 
-    public T delete(){}
+    //public T delete(){}
 
     public void add(T x){}
 
@@ -62,8 +62,18 @@ public class MyHeap<T extends Comparable<T>>{
 	return s;
     }
 
-	//do this last
+    //do this last
     public MyHeap(boolean isMax){}
     public MyHeap(T[] array, boolean isMax){}
 
+    public static void main(String[]args){
+
+        Integer[]a = new Integer[5];
+	for(int i =0;i<a.length;i++){
+	    a[i] = i;
 	}
+	MyHeap<Integer> m = new MyHeap<Integer>(a);
+
+    }
+
+}
