@@ -154,7 +154,7 @@ public class MyHeap<T extends Comparable<T>>{
 	return s+"]";
     }
 
-
+    /*
     public static void main(String[]args){
 
 	Integer[]a = new Integer[5];
@@ -176,5 +176,5 @@ public class MyHeap<T extends Comparable<T>>{
 	System.out.println(m);
 
     }
-
+    */
 }
