@@ -21,6 +21,18 @@ public class MyHeap<T extends Comparable<T>>{
 	//data[0]=size;
     }
 
+    //do this last
+    public MyHeap(boolean isMax){
+	this();
+	this.isMax = isMax;
+    }
+    public MyHeap(T[] array, boolean isMax){
+	this(array);
+	this.isMax = isMax;
+    }
+
+    
+    
     private void swap(int a, int b){
 	T hold = data[a];
 	data[a]=data[b];
@@ -142,9 +154,6 @@ public class MyHeap<T extends Comparable<T>>{
 	return s+"]";
     }
 
-    //do this last
-    public MyHeap(boolean isMax){}
-    public MyHeap(T[] array, boolean isMax){}
 
     public static void main(String[]args){
 
