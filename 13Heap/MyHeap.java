@@ -77,10 +77,29 @@ public class MyHeap<T extends Comparable<T>>{
     }
 
     private void heapify(){
-	
+	for(int i = level; i > 0; i--){
+	    pushDown(i);
+	}
     }
 
-    public T delete(){}
+    public T delete(){ // remove the root
+	T hold = data[1];
+	data[1] = data[size];
+	data[size] = null;
+	pushDown(1);
+	size--;
+	return hold;
+    }
+
+    public T remove(){ // remove the root
+	T hold = data[1];
+	data[1] = data[size];
+	data[size] = null;
+	pushDown(1);
+	size--;
+	return hold;
+    }
+
 
     public void add(T x){
 	size++;
