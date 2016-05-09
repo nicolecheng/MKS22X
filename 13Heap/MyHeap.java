@@ -9,16 +9,15 @@ public class MyHeap<T extends Comparable<T>>{
     public MyHeap(){
         size = 0;
 	data = (T[]) new Comparable[size+1];
-	//data[0] = 0;
     }
     
     public MyHeap(T[]x){
 	size = x.length;
-	data = (T[]) new Comparable[size+1]; //data = new T[size];
+	data = (T[]) new Comparable[size+1]; 
 	for(int i = 0; i < size; i++){
 	    data[i+1]=x[i];
 	}
-	//data[0]=size;
+	heapify();
     }
 
     //do this last
@@ -115,16 +114,6 @@ public class MyHeap<T extends Comparable<T>>{
 	size--;
 	return hold;
     }
-
-    public T remove(){ // remove the root
-	T hold = data[1];
-	data[1] = data[size];
-	data[size] = null;
-	pushDown(1);
-	size--;
-	return hold;
-    }
-
 
     public void add(T x){
 	size++;
