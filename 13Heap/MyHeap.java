@@ -120,12 +120,16 @@ public class MyHeap<T extends Comparable<T>>{
 	if(size>=data.length){
 	    doubleSize();
 	}
-	data[size] = x;
-	pushUp(size);
+	if(size==1){
+	    data[1]=x;
+	}else{
+	    data[size] = x;
+	    pushUp(size);
+	}
     }
 
     private void doubleSize(){
-	T[]a = (T[]) new Comparable[size*2-1];
+	T[]a = (T[]) new Comparable[size*2];
 	for(int i = 0; i < size; i++){
 	    a[i] = data[i];
 	}
@@ -166,4 +170,20 @@ public class MyHeap<T extends Comparable<T>>{
 
     }
     */
+
+    public static void main(String[] args) {
+	MyHeap a = new MyHeap<Integer>();
+	//System.out.println(a);
+	a.add(2);
+	a.add(5);
+	a.add(-1);
+	a.add(7);
+	a.add(9);
+	System.out.println(a);
+	a.delete();
+	System.out.println(a);
+	Integer[] bA = {-1, -2, 4, 11, 7, 0, 3};
+	MyHeap b = new MyHeap<Integer>(bA);
+	System.out.println(b);
+    }
 }
