@@ -1,0 +1,15 @@
+public class RunningMedian extends MyHeap{
+
+    public RunningMedian(){
+
+    }
+
+    public double getMedian(){
+
+    }
+
+    public void add(Integer n){
+
+    }
+
+}
