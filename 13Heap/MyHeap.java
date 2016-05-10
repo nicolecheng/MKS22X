@@ -107,6 +107,9 @@ public class MyHeap<T extends Comparable<T>>{
     }
 
     public T delete(){ // remove the root
+	if(size==0){
+	    throw(NoSuchElementException e);
+	}
 	T hold = data[1];
 	data[1] = data[size];
 	data[size] = null;
@@ -145,6 +148,14 @@ public class MyHeap<T extends Comparable<T>>{
 	    }
 	}
 	return s+"]";
+    }
+
+    public T peek(){
+	if(size==0){
+	    throw(NoSuchElementException e);
+	}else{
+	    return data[1];
+	}
     }
 
     /*
