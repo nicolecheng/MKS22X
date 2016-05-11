@@ -52,6 +52,10 @@ public class RunningMedian{
 	}
     }
 
+    public String toString() {
+	return MAX.toString()+" "+MIN.toString();
+    }
+
     public static void main(String[] args) {
 	RunningMedian m = new RunningMedian();
 	m.add(0);
@@ -61,6 +65,9 @@ public class RunningMedian{
 	m.add(-1);
 	m.add(7);
 	m.add(2);
+	m.add(12);
+	m.add(10);
+	m.add(8);
 	System.out.println(m);
 	System.out.println(m.getMedian());
 	m.add(5);

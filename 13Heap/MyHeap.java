@@ -47,8 +47,8 @@ public class MyHeap<T extends Comparable<T>>{
 
     private void pushDown(int k){
 	if(isMax){
-	    while((ok(k*2) && data[k].compareTo(data[k*2])<0) ||
-		  (ok(k*2+1) && data[k].compareTo(data[k*2+1])<0)){
+	    while(ok(k*2) && ok(k*2+1) &&
+		  (data[k].compareTo(data[k*2])<0 || data[k].compareTo(data[k*2+1])<0)){
 		if(data[k*2+1].compareTo(data[k*2])>0){
 		    swap(k,k*2+1);
 		    k = k*2+1;
@@ -58,8 +58,8 @@ public class MyHeap<T extends Comparable<T>>{
 		}
 	    }
 	}else{
-	    while((ok(k*2) && data[k].compareTo(data[k*2])>0) ||
-		  (ok(k*2+1) && data[k].compareTo(data[k*2+1])>0)){
+	    while(ok(k*2) && ok(k*2+1) &&
+		  (data[k].compareTo(data[k*2])>0 || data[k].compareTo(data[k*2+1])>0)){
 		if(data[k*2+1].compareTo(data[k*2])>0){
 		    swap(k,k*2);
 		    k *= 2;
@@ -162,6 +162,10 @@ public class MyHeap<T extends Comparable<T>>{
 	}
     }
 
+    public int size(){
+	return size;
+    }
+
     /*
     public static void main(String[]args){
 
@@ -185,7 +189,7 @@ public class MyHeap<T extends Comparable<T>>{
 
     }
     */
-    
+    /*
     public static void main(String[] args) {
 	MyHeap a = new MyHeap<Integer>();
 	//System.out.println(a);
@@ -201,5 +205,5 @@ public class MyHeap<T extends Comparable<T>>{
 	MyHeap b = new MyHeap<Integer>(bA);
 	System.out.println(b);
     }
-    
+    */
 }

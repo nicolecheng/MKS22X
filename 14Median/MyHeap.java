@@ -47,8 +47,8 @@ public class MyHeap<T extends Comparable<T>>{
 
     private void pushDown(int k){
 	if(isMax){
-	    while((ok(k*2) && data[k].compareTo(data[k*2])<0) ||
-		  (ok(k*2+1) && data[k].compareTo(data[k*2+1])<0)){
+	    while(ok(k*2) && ok(k*2+1) &&
+		  (data[k].compareTo(data[k*2])<0 || data[k].compareTo(data[k*2+1])<0)){
 		if(data[k*2+1].compareTo(data[k*2])>0){
 		    swap(k,k*2+1);
 		    k = k*2+1;
@@ -58,8 +58,8 @@ public class MyHeap<T extends Comparable<T>>{
 		}
 	    }
 	}else{
-	    while((ok(k*2) && data[k].compareTo(data[k*2])>0) ||
-		  (ok(k*2+1) && data[k].compareTo(data[k*2+1])>0)){
+	    while(ok(k*2) && ok(k*2+1) &&
+		  (data[k].compareTo(data[k*2])>0 || data[k].compareTo(data[k*2+1])>0)){
 		if(data[k*2+1].compareTo(data[k*2])>0){
 		    swap(k,k*2);
 		    k *= 2;
@@ -111,6 +111,10 @@ public class MyHeap<T extends Comparable<T>>{
 	    throw new NoSuchElementException();
 	}
 	T hold = data[1];
+	if(size==1){
+	    data[1]=null;
+	    return hold;
+	}
 	data[1] = data[size];
 	data[size] = null;
 	pushDown(1);
@@ -192,7 +196,7 @@ public class MyHeap<T extends Comparable<T>>{
 	a.add(2);
 	a.add(5);
 	a.add(-1);
-	a.add(7);
+	a.add(-7);
 	a.add(9);
 	System.out.println(a);
 	a.delete();
