@@ -1,21 +1,27 @@
+import java.util.*;
+
 public class RunningMedian{
 
-    MyHeap MIN, MAX;
+    MyHeap<Integer> MIN, MAX;
     int oddMedian;
 
     // Create an empty running median set.
     public RunningMedian(){
-	MyHeap<Integer> MIN = new MyHeap<Integer>();
-	MyHeap<Integer> MAX = new MyHeap<Integer>();
+        MIN = new MyHeap<Integer>();
+	MAX = new MyHeap<Integer>(true);
+	oddMedian = 0;
     }
 
     // When empty: throws new NoSuchElementException()
     // Returns the median value
     public double getMedian(){
-	if(oddMedian!=null){
+	if(MIN.size()==0 && MAX.size()==0){
+	    throw new NoSuchElementException();
+	}
+	if(MIN.size()!=MAX.size()){
 	    return oddMedian;
 	}else{
-	    return (double)(MIN.peek()+MAX.peek())/2;
+	    return (double)((int)MIN.peek()+(int)MAX.peek())/2;
 	}
     }
 
@@ -23,33 +29,31 @@ public class RunningMedian{
     // add to the "BigValue" heap otherwise. 
     // balance the two heaps so that their size differ by no more than 1. 
     public void add(Integer n){
-	if(MIN.size>0 && MAX.size>0 && n < getMedian()){
+	if(MIN.size()>0 && MAX.size()>0 && n < getMedian()){
 	    MAX.add(n);
 	}else{
 	    MIN.add(n);
-	    if(MIN.size==1){
+	    if(MIN.size()==1){
 		oddMedian=n;
 	    }
 	}
-	while(MAX.size-MIN.size > 1){
+	while(MAX.size()-MIN.size() > 1){
 	    Integer hold = (Integer)MAX.delete();
 	    MIN.add(hold);
 	}
-	while(MIN.size-MAX.size > 1){
+	while(MIN.size()-MAX.size() > 1){
 	    Integer hold = (Integer)MIN.delete();
 	    MAX.add(hold);
 	}
-	if(MIN.size>MAX.size){
+	if(MIN.size()>MAX.size()){
 	    oddMedian = (int)MIN.peek();
-	}else if(MAX.size>MIN.size){
+	}else if(MAX.size()>MIN.size()){
 	    oddMedian = (int)MAX.peek();
-	}else{
-	    oddMedian = null;
 	}
     }
 
     public static void main(String[] args) {
-	Median m = new Median();
+	RunningMedian m = new RunningMedian();
 	m.add(0);
 	m.add(3);
 	m.add(3);
@@ -58,10 +62,10 @@ public class RunningMedian{
 	m.add(7);
 	m.add(2);
 	System.out.println(m);
-	System.out.println(m.median());
+	System.out.println(m.getMedian());
 	m.add(5);
 	System.out.println(m);
-	System.out.println(m.median());
+	System.out.println(m.getMedian());
     }
 
 }

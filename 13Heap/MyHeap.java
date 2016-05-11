@@ -108,9 +108,13 @@ public class MyHeap<T extends Comparable<T>>{
 
     public T delete(){ // remove the root
 	if(size==0){
-	    throw(NoSuchElementException e);
+	    throw new NoSuchElementException();
 	}
 	T hold = data[1];
+	if(size==1){
+	    data[1]=null;
+	    return hold;
+	}
 	data[1] = data[size];
 	data[size] = null;
 	pushDown(1);
@@ -152,7 +156,7 @@ public class MyHeap<T extends Comparable<T>>{
 
     public T peek(){
 	if(size==0){
-	    throw(NoSuchElementException e);
+	    throw new NoSuchElementException();
 	}else{
 	    return data[1];
 	}
@@ -181,14 +185,14 @@ public class MyHeap<T extends Comparable<T>>{
 
     }
     */
-
+    
     public static void main(String[] args) {
 	MyHeap a = new MyHeap<Integer>();
 	//System.out.println(a);
 	a.add(2);
 	a.add(5);
 	a.add(-1);
-	a.add(7);
+	a.add(-7);
 	a.add(9);
 	System.out.println(a);
 	a.delete();
@@ -197,4 +201,5 @@ public class MyHeap<T extends Comparable<T>>{
 	MyHeap b = new MyHeap<Integer>(bA);
 	System.out.println(b);
     }
+    
 }
